@@ -13,7 +13,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers company-rtags flycheck-rtags auto-complete cmake-ide rtags flycheck-apertium))))
+    (cmake-ide rtags auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers company-rtags flycheck-rtags auto-complete flycheck-apertium))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
