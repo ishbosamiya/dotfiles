@@ -13,7 +13,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (cmake-ide rtags auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers company-rtags flycheck-rtags auto-complete flycheck-apertium))))
+    (rtags auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers company-rtags flycheck-rtags auto-complete flycheck-apertium))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -78,6 +78,35 @@
 (add-hook 'c-mode-hook #'my-flycheck-rtags-setup)
 (add-hook 'c++-mode-hook #'my-flycheck-rtags-setup)
 (add-hook 'objc-mode-hook #'my-flycheck-rtags-setup)
+
+;; Let emacs learn and set style from a C file
+(defun infer-indentation-style ()
+  (interactive)
+  ;; if our source file uses tabs, we use tabs, if spaces spaces, and
+  ;; if neither, we use the current indent-tabs-mode
+  (let ((space-count (how-many "^  " (point-min) (point-max)))
+        (tab-count (how-many "^\t" (point-min) (point-max))))
+    (if (> space-count tab-count) (setq indent-tabs-mode nil))
+    (if (> tab-count space-count) (setq indent-tabs-mode t)))
+  (message "Inferred indentation"))
+(defun c-guess-and-set-style ()		; TODO: Check file size and
+					; ask for permission if too
+					; large, to speed things up
+					; for large files.
+  (interactive)
+  (let
+      ((stylename (concat "guessed-style-" (file-name-base))))
+    (c-guess-buffer-no-install)
+    (c-guess-install stylename)
+    (c-set-style stylename)
+    (message (concat "Installed and set " stylename))))
+(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    (infer-indentation-style)
+	    ;; (c-guess-and-set-style)
+	    ;; ;; Disabled guessing by default, to speed up file
+	    ;; ;; opens for large files.
+	    ))
 
 ;; c++ mode
 (c-add-style "c++-style"
