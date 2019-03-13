@@ -13,7 +13,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (rtags auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers company-rtags flycheck-rtags auto-complete flycheck-apertium))))
+    (cmake-ide rtags auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers company-rtags flycheck-rtags auto-complete flycheck-apertium))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -27,6 +27,9 @@
 
 ;; Disable audible bell
 (setq ring-bell-function 'ignore)
+
+;; Set up gdb to use the many-windows functionality
+(setq gdb-many-windows t)
 
 ;; Ensure that copying from another program and then running a kill
 ;; command in emacs doesn't cause things to disappear from the
