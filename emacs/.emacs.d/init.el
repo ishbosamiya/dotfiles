@@ -86,11 +86,10 @@
 (defun infer-indentation-style ()
   (interactive)
   ;; if our source file uses tabs, we use tabs, if spaces spaces, and
-  ;; if neither, we use the current indent-tabs-mode
+  ;; if neither, we use the tab mode
   (let ((space-count (how-many "^  " (point-min) (point-max)))
         (tab-count (how-many "^\t" (point-min) (point-max))))
-    (if (> space-count tab-count) (setq indent-tabs-mode nil))
-    (if (> tab-count space-count) (setq indent-tabs-mode t)))
+    (if (> space-count tab-count) (setq indent-tabs-mode nil) (setq indent-tabs-mode t)))
   (message "Inferred indentation"))
 (defun c-guess-and-set-style ()		; TODO: Check file size and
 					; ask for permission if too
@@ -105,6 +104,7 @@
     (message (concat "Installed and set " stylename))))
 (add-hook 'c-mode-common-hook
 	  (lambda ()
+	    (setq tab-width 4)
 	    (infer-indentation-style)
 	    ;; (c-guess-and-set-style)
 	    ;; ;; Disabled guessing by default, to speed up file
