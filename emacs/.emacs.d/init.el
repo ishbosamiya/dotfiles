@@ -13,7 +13,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (cmake-ide rtags auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers company-rtags flycheck-rtags auto-complete flycheck-apertium))))
+    (writegood-mode org cmake-ide rtags auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers company-rtags flycheck-rtags auto-complete flycheck-apertium))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -39,6 +39,16 @@
 ;; Prevent stale elisp bytecode from shadowing more up-to-date source
 ;; files
 (setq load-prefer-newer t)
+
+;; Help writing correct text. TODO: Figure out how to make it trigger
+;; only in "pure text" buffers
+(require 'writegood-mode)
+(add-hook 'text-mode-hook
+	  (lambda ()
+	    (flyspell-mode t)
+	    (flyspell-buffer)
+	    (writegood-mode t)
+	    (visual-line-mode t)))
 
 ;; Show whitespaces at the end of the line
 (setq-default show-trailing-whitespace t)
