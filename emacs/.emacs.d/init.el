@@ -50,6 +50,36 @@
 	    (writegood-mode t)
 	    (visual-line-mode t)))
 
+;; Adding a word to the flycheck dictionary causes it to stop showing
+;; the rest of the underlined words. The following adds "advice" to
+;; run (flycheck-buffer) after saving a word to the dictionary.
+(defun flyspell-buffer-after-pdict-save (&rest _)
+  (flyspell-buffer))
+(advice-add 'ispell-pdict-save :after
+	    #'flyspell-buffer-after-pdict-save)
+
+;; Set C-` to correct word using flyspell, and F9 to flyspell the
+;; entire buffer. C-F9 to disable flyspell.
+(global-set-key (kbd "C-`")
+		'flyspell-correct-word-before-point)
+(defun flyspell-enable ()
+  (interactive)
+  (if (derived-mode-p 'prog-mode)
+      (flyspell-prog-mode)
+    (flyspell-mode t))
+  (flyspell-buffer)
+  (message "Turned on flyspell-mode"))
+(defun flyspell-disable ()
+  (interactive)
+  (flyspell-mode -1)
+  (message "Turned off flyspell-mode"))
+(global-set-key (kbd "<f9>") 'flyspell-enable)
+(global-set-key (kbd "C-<f9>") 'flyspell-disable)
+
+;; Speed up flyspell by using no messages
+(setq-default flyspell-issue-message-flag nil)
+
+
 ;; Show whitespaces at the end of the line
 (setq-default show-trailing-whitespace t)
 
