@@ -13,7 +13,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (clang-format ggtags writegood-mode org cmake-ide rtags auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers company-rtags flycheck-rtags auto-complete flycheck-apertium))))
+    (clang-format ggtags writegood-mode org auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers auto-complete flycheck-apertium))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -98,29 +98,11 @@
 ;; M-left, M-right.
 (windmove-default-keybindings 'meta)
 
-;; cmake-ide setup
-(require 'rtags) ;; optional, must have rtags installed
-(cmake-ide-setup)
-(setq rtags-path "/home/ish/rtags/bin")
-(add-hook 'c-mode-hook 'rtags-start-process-unless-running) ;; starting rdm (rtags daemon)
-(add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
-(add-hook 'objc-mode-hook 'rtags-start-process-unless-running)
-(rtags-enable-standard-keybindings) ;; C-c r as rtags shortcut
-
 ;; flycheck setup
 (when (locate-library "flycheck-apertium")
   (require 'flycheck-apertium)
   (add-hook 'nxml-mode-hook 'flycheck-mode))
 (add-hook 'after-init-hook #'global-flycheck-mode)
-
-(require 'flycheck-rtags)
-(defun my-flycheck-rtags-setup ()
-  "Configure flycheck-rtags for better experience."
-  (flycheck-select-checker 'rtags)
-  )
-(add-hook 'c-mode-hook #'my-flycheck-rtags-setup)
-(add-hook 'c++-mode-hook #'my-flycheck-rtags-setup)
-(add-hook 'objc-mode-hook #'my-flycheck-rtags-setup)
 
 ;; Let emacs learn and set style from a C file
 (defun infer-indentation-style ()
