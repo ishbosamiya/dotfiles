@@ -160,3 +160,9 @@
 (add-hook 'c-mode-hook (lambda () (add-to-list 'before-save-hook 'clang-format-buffer)))
 (add-hook 'c++-mode-hook (lambda () (add-to-list 'before-save-hook 'clang-format-buffer)))
 (add-hook 'glsl-mode-hook (lambda () (add-to-list 'before-save-hook 'clang-format-buffer)))
+
+
+;; Use ggtags-mode for c c++ and glsl files
+(add-hook `c-mode-hook (lambda() (ggtags-mode)))
+(add-hook `c++-mode-hook (lambda() (ggtags-mode)))
+(add-hook `glsl-mode-hook (lambda() (ggtags-mode)))
