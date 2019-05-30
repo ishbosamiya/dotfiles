@@ -36,7 +36,10 @@
   (progn
     (ac-config-default)
     (global-auto-complete-mode t)
-    ))
+    )
+  (setq ac-auto-show-menu nil)
+  (setq ac-auto-start nil)
+  (setq ac-trigger-key "C-<tab>"))
 
 ;; Disable audible bell
 (setq ring-bell-function 'ignore)
@@ -161,7 +164,7 @@
   :ensure t
   :delight
   :hook (after-init . global-company-mode)
-  :bind (("C-<tab>" . company-complete)))
+  :bind (("C-M-`" . company-complete)))
 
 
 ;; To use clang format for all c c++ and glsl files
