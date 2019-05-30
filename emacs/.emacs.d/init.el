@@ -39,7 +39,7 @@
     )
   (setq ac-auto-show-menu nil)
   (setq ac-auto-start nil)
-  (setq ac-trigger-key "C-<tab>"))
+  (setq ac-trigger-key "C-M-`"))
 
 ;; Disable audible bell
 (setq ring-bell-function 'ignore)
@@ -164,7 +164,8 @@
   :ensure t
   :delight
   :hook (after-init . global-company-mode)
-  :bind (("C-M-`" . company-complete)))
+  :bind (("C-<tab>" . company-complete))
+  :config (add-to-list 'company-backends 'company-gtags))
 
 
 ;; To use clang format for all c c++ and glsl files
@@ -177,4 +178,4 @@
 ;; first
 (use-package ggtags
   :ensure t
-  :hook ((c-mode c++-mode-hook glsl-mode-hook) . ggtags-mode))
+  :hook ((c-mode c++-mode glsl-mode) . ggtags-mode))
