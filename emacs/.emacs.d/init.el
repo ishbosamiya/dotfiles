@@ -21,7 +21,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -30,8 +30,13 @@
  )
 
 ;; auto-complete global
-;; (require 'auto-complete)
-;; (global-auto-complete-mode t)
+(use-package auto-complete
+  :ensure t
+  :init
+  (progn
+    (ac-config-default)
+    (global-auto-complete-mode t)
+    ))
 
 ;; Disable audible bell
 (setq ring-bell-function 'ignore)
