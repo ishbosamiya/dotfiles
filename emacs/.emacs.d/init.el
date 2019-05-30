@@ -3,6 +3,14 @@
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
 
+
+(eval-when-compile
+  (or (require 'use-package nil t)
+      (progn
+	(package-refresh-contents)
+	(package-install 'use-package)
+	(message "On a new system. Just installed use-package!"))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -13,7 +21,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (clang-format ggtags writegood-mode org auto-complete-c-headers company flycheck flycheck-clang-analyzer company-c-headers auto-complete flycheck-apertium))))
+    (clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -56,7 +64,7 @@
 (defun flyspell-buffer-after-pdict-save (&rest _)
   (flyspell-buffer))
 (advice-add 'ispell-pdict-save :after
-	    #'flyspell-buffer-after-pdict-save)
+#'flyspell-buffer-after-pdict-save)
 
 ;; Set C-` to correct word using flyspell, and F9 to flyspell the
 ;; entire buffer. C-F9 to disable flyspell.
@@ -97,12 +105,6 @@
 ;; Be able to move between buffers more easily, using M-up, M-down,
 ;; M-left, M-right.
 (windmove-default-keybindings 'meta)
-
-;; flycheck setup
-(when (locate-library "flycheck-apertium")
-  (require 'flycheck-apertium)
-  (add-hook 'nxml-mode-hook 'flycheck-mode))
-(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; Let emacs learn and set style from a C file
 (defun infer-indentation-style ()
@@ -148,11 +150,13 @@
   (c-toggle-auto-hungry-state 1)
   )
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
-;; company mode
-(add-hook 'after-init-hook 'global-company-mode)
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-c-headers)
-  )
+
+;; Turn on global auto completion
+(use-package company
+  :ensure t
+  :delight
+  :hook (after-init . global-company-mode)
+  :bind (("C-<tab>" . company-complete)))
 
 
 ;; To use clang format for all c c++ and glsl files
