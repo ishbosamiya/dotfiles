@@ -41,6 +41,9 @@
   (setq ac-auto-start nil)
   (setq ac-trigger-key "C-M-`"))
 
+;; backspace is used for delete-region, makes it similar to other programs
+(delete-selection-mode 1)
+
 ;; Disable audible bell
 (setq ring-bell-function 'ignore)
 
@@ -136,7 +139,7 @@
     (message (concat "Installed and set " stylename))))
 (add-hook 'c-mode-common-hook
 	  (lambda ()
-	    (setq tab-width 4)
+	    (setq tab-width 2)
 	    (infer-indentation-style)
 	    ;; (c-guess-and-set-style)
 	    ;; ;; Disabled guessing by default, to speed up file
@@ -147,7 +150,7 @@
 (c-add-style "c++-style"
 	     '("linux"
 	       (indent-tabs-mode . nil)
-	       (c-basic-offset . 4)
+	       (c-basic-offset . 2)
 	       (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
 				   (brace-list-open . 0)
 				   (statement-case-open . +)))
@@ -158,6 +161,7 @@
   (c-toggle-auto-hungry-state 1)
   )
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+(add-hook 'c++-mode-hook (lambda() (setq comment-start "/* " comment-end "*/")))
 
 ;; Turn on global auto completion
 (use-package company
