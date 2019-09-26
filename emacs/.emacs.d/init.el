@@ -21,7 +21,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -183,3 +183,9 @@
 (use-package ggtags
   :ensure t
   :hook ((c-mode c++-mode glsl-mode) . ggtags-mode))
+
+;; Python environment
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
