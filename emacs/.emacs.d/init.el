@@ -115,7 +115,13 @@
 
 ;; Be able to move between buffers more easily, using M-up, M-down,
 ;; M-left, M-right.
-(windmove-default-keybindings 'meta)
+(use-package windmove
+  :config
+  (bind-key* "M-<left>" 'windmove-left)
+  (bind-key* "M-<right>" 'windmove-right)
+  (bind-key* "M-<up>" 'windmove-up)
+  (bind-key* "M-<down>" 'windmove-down)
+  (windmove-default-keybindings))
 
 ;; Let emacs learn and set style from a C file
 (defun infer-indentation-style ()
@@ -188,4 +194,8 @@
 (use-package elpy
   :ensure t
   :init
+  (bind-key "C-c M-<left>" 'elpy-nav-indent-shift-left)
+  (bind-key "C-c M-<right>" 'elpy-nav-indent-shift-right)
+  (bind-key "C-c M-<up>" 'elpy-nav-indent-shift-up)
+  (bind-key "C-c M-<down>" 'elpy-nav-indent-shift-down)
   (elpy-enable))
