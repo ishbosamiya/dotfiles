@@ -199,3 +199,14 @@
   (bind-key "C-c M-<up>" 'elpy-nav-indent-shift-up)
   (bind-key "C-c M-<down>" 'elpy-nav-indent-shift-down)
   (elpy-enable))
+
+
+;; Blender Addon Development Environment
+(setq blender-python-launch-path "/media/ish/data/extra/blender-git/blender_emacs/launch_blender.py")
+(setq blender-path "/media/ish/data/extra/blender-git/build_master/bin/blender")
+(setq blender-emacs-python-script "/media/ish/data/extra/blender-git/blender_emacs/__init__.py")
+(setq blender-addon-source-path "")
+(defun blender-start ()
+  (interactive)
+  (require 'subr-x)
+  (start-process "blender" "*blender-output-buffer*" "python3" blender-python-launch-path "--blender"  blender-path "--blender-emacs" blender-emacs-python-script "--source-path" (string-trim-right (read-shell-command "Addon Location: "))))
