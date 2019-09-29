@@ -6,3 +6,5 @@ emacs/.emacs.d/elpa
 emacs/.emacs.d/games
 emacs/.emacs.d/session.*
 emacs/.emacs.d/.emacs.desktop
+emacs/.emacs.d/elpy/
+*%*%*
