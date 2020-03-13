@@ -21,7 +21,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -210,3 +210,7 @@
   (interactive)
   (require 'subr-x)
   (start-process "blender" "*blender-output-buffer*" "python3" blender-python-launch-path "--blender"  blender-path "--blender-emacs" blender-emacs-python-script "--source-path" (string-trim-right (read-shell-command "Addon Location: "))))
+
+;; Front-end for The Silver Searcher (ag)
+(use-package ag
+  :ensure t)
