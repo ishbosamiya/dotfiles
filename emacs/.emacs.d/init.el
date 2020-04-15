@@ -21,7 +21,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (pdf-tools ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -214,3 +214,11 @@
 ;; Front-end for The Silver Searcher (ag)
 (use-package ag
   :ensure t)
+
+;; pdf-tools replacement for docview
+;; since it doesn't work well with linum-mode, it must be disabled
+(use-package pdf-tools
+  :ensure t
+  :init
+  (pdf-tools-install))
+(add-hook 'pdf-view-mode-hook (lambda() (linum-mode -1)))
