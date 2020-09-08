@@ -229,3 +229,6 @@
 ;; Preview for OpenSCAD code
 (use-package scad-preview
   :ensure t)
+
+;; Org mode settings
+(setq org-src-fontify-natively t)
