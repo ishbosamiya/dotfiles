@@ -203,7 +203,7 @@
 
 ;; Blender Addon Development Environment
 (setq blender-python-launch-path "/media/ish/data/extra/blender-git/blender_emacs/launch_blender.py")
-(setq blender-path "/media/ish/data/extra/blender-git/build_master/bin/blender")
+(setq blender-path "/media/ish/data/extra/blender-git/build_master_ninja/bin/blender")
 (setq blender-emacs-python-script "/media/ish/data/extra/blender-git/blender_emacs/__init__.py")
 (setq blender-addon-source-path "")
 (defun blender-start ()
