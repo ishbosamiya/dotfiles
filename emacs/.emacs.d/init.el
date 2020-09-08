@@ -21,7 +21,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (pdf-tools ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -222,3 +222,10 @@
   :init
   (pdf-tools-install))
 (add-hook 'pdf-view-mode-hook (lambda() (linum-mode -1)))
+
+;; Major mode for editing OpenSCAD code
+(use-package scad-mode
+  :ensure t)
+;; Preview for OpenSCAD code
+(use-package scad-preview
+  :ensure t)
