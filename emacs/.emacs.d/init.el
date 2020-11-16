@@ -21,7 +21,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -198,7 +198,8 @@
   (bind-key "C-c M-<right>" 'elpy-nav-indent-shift-right)
   (bind-key "C-c M-<up>" 'elpy-nav-indent-shift-up)
   (bind-key "C-c M-<down>" 'elpy-nav-indent-shift-down)
-  (elpy-enable))
+  (elpy-enable)
+  (add-hook 'python-mode-hook 'infer-indentation-style))
 
 
 ;; Blender Addon Development Environment
