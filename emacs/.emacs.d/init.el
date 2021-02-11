@@ -19,6 +19,7 @@
  '(custom-enabled-themes (quote (tango-dark)))
  '(flyspell-default-dictionary "english")
  '(inhibit-startup-screen t)
+ '(global-auto-revert-mode t)
  '(package-selected-packages
    (quote
     (centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
