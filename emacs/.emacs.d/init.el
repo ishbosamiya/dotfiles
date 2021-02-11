@@ -60,6 +60,9 @@
 ;; files
 (setq load-prefer-newer t)
 
+;; Prevent C-z from accidentally sending the window to background
+(global-unset-key (kbd "C-z"))
+
 ;; Help writing correct text. TODO: Figure out how to make it trigger
 ;; only in "pure text" buffers
 (require 'writegood-mode)
