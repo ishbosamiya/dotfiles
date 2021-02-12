@@ -289,7 +289,10 @@
 
 ;; Center window config
 (use-package centered-window
-  :ensure t)
+  :ensure t
+  :bind (("C-c M" . centered-window-mode))
+  :config
+  (setq cwm-centered-window-width 90))
 
 ;; Be able to unfill paragraphs
 (use-package unfill
