@@ -3,6 +3,10 @@
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
 
+;; Remove annoying UI elements
+(menu-bar-mode -1)
+;; (scroll-bar-mode -1)
+(tool-bar-mode -1)
 
 (eval-when-compile
   (or (require 'use-package nil t)
