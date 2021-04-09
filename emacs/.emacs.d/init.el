@@ -302,3 +302,4 @@
 (use-package unfill
   :ensure t
   :bind (("M-Q" . unfill-paragraph)))
+(put 'upcase-region 'disabled nil)
