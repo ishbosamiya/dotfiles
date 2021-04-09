@@ -26,7 +26,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -291,12 +291,15 @@
   :hook (rust-mode . flycheck-popup-tip-mode)
 )
 
-;; Center window config
-(use-package centered-window
+;; Get some distraction free goodness :)
+;; Center the buffer
+(use-package olivetti
   :ensure t
-  :bind (("C-c M" . centered-window-mode))
+  :bind ("C-<f11>" . olivetti-mode)
   :config
-  (setq cwm-centered-window-width 90))
+  (progn
+    (setq olivetti-hide-mode-line t)
+    (setq-default olivetti-body-width 116)))
 
 ;; Be able to unfill paragraphs
 (use-package unfill
