@@ -26,7 +26,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang clang-format ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -186,11 +186,14 @@
   :config (add-to-list 'company-backends 'company-gtags))
 
 
-;; To use clang format for all c c++ and glsl files
+;; To use clang format for all c and c++ files
 ;; This is the standard for Blender
-(add-hook 'c-mode-hook (lambda () (add-to-list 'before-save-hook 'clang-format-buffer)))
-(add-hook 'c++-mode-hook (lambda () (add-to-list 'before-save-hook 'clang-format-buffer)))
-(add-hook 'glsl-mode-hook (lambda () (add-to-list 'before-save-hook 'clang-format-buffer)))
+(use-package clang-format+
+  :ensure t
+  :init
+  (add-hook 'c-mode-hook #'clang-format+-mode)
+  (add-hook 'c++-mode-hook #'clang-format+-mode)
+  )
 
 ;; To use gtags, must have run `apt install global exuberant-ctags`
 ;; first
