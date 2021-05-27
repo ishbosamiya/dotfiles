@@ -26,7 +26,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -309,3 +309,38 @@
   :ensure t
   :bind (("M-Q" . unfill-paragraph)))
 (put 'upcase-region 'disabled nil)
+
+;; Shows key bindings
+(use-package which-key
+  :ensure t
+  :demand t
+  :config (which-key-mode))
+
+;; amx -- newer fork of smex which stopped development in 2015
+(use-package amx
+  :ensure t
+  :demand t
+  :bind (; Replace with amx
+	 ("M-x" . amx)
+	 ("M-X" . amx-major-mode-commands)
+	 ; and maintain old M-x via C-c M-x
+	 ("C-c M-x" . execute-extended-command)))
+
+(use-package ido
+  :ensure t
+  :config (ido-mode t))
+
+(use-package flx-ido
+  :ensure t
+  :config (flx-ido-mode t))
+
+(ido-everywhere t)
+
+(use-package ido-completing-read+
+  :ensure t
+  :config (ido-ubiquitous-mode t))
+
+;; Use projectile for easily moving around in projects
+(use-package projectile
+  :ensure t
+  :bind-keymap ("C-c p" . projectile-command-map))

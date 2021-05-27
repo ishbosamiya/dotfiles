@@ -9,3 +9,5 @@ emacs/.emacs.d/.emacs.desktop
 emacs/.emacs.d/elpy/
 *%*%*
 emacs/.emacs.d/smex-items
+emacs/.emacs.d/amx-items
+emacs/.emacs.d/ido.last
