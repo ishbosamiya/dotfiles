@@ -26,7 +26,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
+    (sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -344,3 +344,8 @@
 (use-package projectile
   :ensure t
   :bind-keymap ("C-c p" . projectile-command-map))
+
+;; Allow sourcetrail interaction, jump from sourcetrail to emacs
+;; and such
+(use-package sourcetrail
+  :ensure t)
