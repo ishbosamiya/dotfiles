@@ -345,6 +345,16 @@
   :ensure t
   :bind-keymap ("C-c p" . projectile-command-map))
 
+;; Handle escape sequence colorization properly for compilation-mode
+;; See : https://emacs.stackexchange.com/a/38531
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  "Colorize from `compilation-filter-start' to `point'."
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region
+     compilation-filter-start (point))))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
 ;; Allow sourcetrail interaction, jump from sourcetrail to emacs
 ;; and such
 (use-package sourcetrail
