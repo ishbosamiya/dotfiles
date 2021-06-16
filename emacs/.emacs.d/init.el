@@ -34,6 +34,13 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; set utf-8 as default for all
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment 'utf-8)
+
 ;; auto-complete global
 (use-package auto-complete
   :ensure t
