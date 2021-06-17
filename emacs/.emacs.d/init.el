@@ -2,6 +2,8 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
+(when (< emacs-major-version 27)
+  (package-initialize))
 
 ;; Remove annoying UI elements
 (menu-bar-mode -1)
@@ -25,7 +27,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
+   '(dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((projectile-project-test-cmd . "../build_linux_debug/bin/tests/blenlib_test --gtest_filter=\"generational_arena.*\"")
      (projectile-project-run-cmd . "../build_linux_debug/bin/blender")
@@ -375,3 +377,33 @@
 ;; Use using C-; when over a symbol
 (use-package iedit
   :ensure t)
+
+;; Language server using lsp-mode
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :init (setq lsp-keymap-prefix "C-c l")
+  :hook ((c++-mode . lsp-deferred)
+	 (c-mode . lsp-deferred)
+	 (lsp-mode . lsp-enable-which-key-integration))
+  :config (setq lsp-enable-symbol-highlighting nil))
+
+;; nice lsp ui features
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode
+  :after (lsp-mode)
+  :hook (lsp-mode-hook . lsp-ui-mode)
+  :bind (:map lsp-ui-mode-map
+         ("C-?" . 'lsp-ui-doc-glance)
+         ("C-]" . 'lsp-ui-peek-find-references))
+  :init
+  ;; Make sure lsp prefers flycheck over flymake
+  (setq lsp-prefer-flymake nil)
+  ;; Disable the semi-annoying hover-to-see-docs view
+  (setq lsp-ui-doc-enable nil))
+
+;; a fix to make lsp-mode work
+;; might need to `list-packages` and install `dash` from `MELPA`
+(use-package dash
+    :ensure t)
