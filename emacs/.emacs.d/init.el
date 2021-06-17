@@ -20,18 +20,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (tango-dark)))
+ '(custom-enabled-themes '(tango-dark))
  '(flyspell-default-dictionary "english")
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   (quote
-    (sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete)))
+   '(iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))
  '(safe-local-variable-values
-   (quote
-    ((projectile-project-test-cmd . "../build_linux_debug/bin/tests/blenlib_test --gtest_filter=\"generational_arena.*\"")
+   '((projectile-project-test-cmd . "../build_linux_debug/bin/tests/blenlib_test --gtest_filter=\"generational_arena.*\"")
      (projectile-project-run-cmd . "../build_linux_debug/bin/blender")
-     (projectile-project-compilation-cmd . "make debug")))))
+     (projectile-project-compilation-cmd . "make debug"))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
