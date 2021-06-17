@@ -25,7 +25,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ac-clang ggtags writegood-mode org auto-complete-c-headers company company-c-headers auto-complete))
+   '(iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((projectile-project-test-cmd . "../build_linux_debug/bin/tests/blenlib_test --gtest_filter=\"generational_arena.*\"")
      (projectile-project-run-cmd . "../build_linux_debug/bin/blender")
@@ -45,17 +45,17 @@
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment 'utf-8)
 
-;; auto-complete global
-(use-package auto-complete
-  :ensure t
-  :init
-  (progn
-    (ac-config-default)
-    (global-auto-complete-mode t)
-    )
-  (setq ac-auto-show-menu nil)
-  (setq ac-auto-start nil)
-  (setq ac-trigger-key "C-M-`"))
+;; ;; auto-complete global
+;; (use-package auto-complete
+;;   :ensure t
+;;   :init
+;;   (progn
+;;     (ac-config-default)
+;;     (global-auto-complete-mode t)
+;;     )
+;;   (setq ac-auto-show-menu nil)
+;;   (setq ac-auto-start nil)
+;;   (setq ac-trigger-key "C-M-`"))
 
 ;; backspace is used for delete-region, makes it similar to other programs
 (delete-selection-mode 1)
