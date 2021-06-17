@@ -372,3 +372,8 @@
 ;; and such
 (use-package sourcetrail
   :ensure t)
+
+;; Allow multi line editing.
+;; Use using C-; when over a symbol
+(use-package iedit
+  :ensure t)
