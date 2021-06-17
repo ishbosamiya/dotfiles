@@ -196,7 +196,7 @@
   :delight
   :hook (after-init . global-company-mode)
   :bind (("C-<tab>" . company-complete))
-  :config (add-to-list 'company-backends 'company-gtags))
+  :custom (company-backends '(company-capf company-gtags)))
 
 
 ;; To use clang format for all c and c++ files
