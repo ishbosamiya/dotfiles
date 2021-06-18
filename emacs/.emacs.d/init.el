@@ -386,7 +386,9 @@
   :hook ((c++-mode . lsp-deferred)
 	 (c-mode . lsp-deferred)
 	 (lsp-mode . lsp-enable-which-key-integration))
-  :config (setq lsp-enable-symbol-highlighting nil))
+  :config
+  (setq lsp-enable-symbol-highlighting nil)
+  (yas-global-mode t))
 
 ;; nice lsp ui features
 (use-package lsp-ui
