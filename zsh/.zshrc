@@ -107,6 +107,15 @@ if command -v exa >/dev/null; then alias ls=exa; fi
 # Replace `cat` with `bat` when available
 if command -v bat >/dev/null; then alias cat=bat; fi
 
+# In case something changes the folder, run make
+function waitmake() {
+    while true; do
+	inotifywait -e modify -r .
+	make "$@"
+	sleep 0.1
+    done
+}
+
 fpath+=~/.zsh_functions
 
 autoload -U compinit && compinit
