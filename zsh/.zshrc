@@ -101,8 +101,11 @@ source $ZSH/oh-my-zsh.sh
 alias ncdu='ncdu -rx' # Make ncdu safe (no delete) and fast (don't
 		      # cross FS boundary)
 
-alias ls=exa
-alias cat=bat
+# Replace `ls` with `exa` when available
+if command -v exa >/dev/null; then alias ls=exa; fi
+
+# Replace `cat` with `bat` when available
+if command -v bat >/dev/null; then alias cat=bat; fi
 
 fpath+=~/.zsh_functions
 
