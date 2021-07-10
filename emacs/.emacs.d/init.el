@@ -391,6 +391,7 @@
 	 (c-mode . lsp-deferred)
 	 (rust-mode . lsp-deferred)
 	 (lsp-mode . lsp-enable-which-key-integration))
+  :bind (("C--" . lsp-iedit-highlights))
   :config
   (setq lsp-enable-symbol-highlighting nil)
   (yas-global-mode t))
