@@ -392,6 +392,9 @@
 	 (rust-mode . lsp-deferred)
 	 (lsp-mode . lsp-enable-which-key-integration))
   :bind (("C--" . lsp-iedit-highlights))
+  :custom
+  ;; use cargo clippy instead of cargo check for rust
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
   :config
   (setq lsp-enable-symbol-highlighting nil)
   (yas-global-mode t))
