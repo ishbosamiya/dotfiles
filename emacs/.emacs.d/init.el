@@ -27,7 +27,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window flycheck-popup-tip flycheck-pos-tip flycheck-rust racer cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
+   '(dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((projectile-project-test-cmd . "../build_linux_debug/bin/tests/bke_cloth_remesh_test --gtest_filter=\"cloth_remesh.*\"")
      (projectile-project-test-cmd . "../build_linux_debug/bin/tests/blender_test --gtest_filter=\"cloth_remesh.*\"")
@@ -275,41 +275,6 @@
   :ensure t
   :after rust-mode
   :hook (rust-mode . cargo-minor-mode))
-
-;; Use lsp-mode instead of racer for now, just testing
-;; (use-package racer
-;;   :ensure t
-;;   :after rust-mode
-;;   :hook (rust-mode . racer-mode)
-;;   :config
-;;   (add-hook 'racer-mode-hook #'eldoc-mode)
-;;   (add-hook 'racer-mode-hook #'company-mode)
-;;   ;; (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-;;   (setq company-tooltip-align-annotations t)
-;;   (setq racer-rust-src-path
-;;         ;; Workaround for changes to where std is stored until (see
-;;         ;; https://github.com/racer-rust/emacs-racer/pull/143)
-;;       (let* ((sysroot (string-trim
-;;                        (shell-command-to-string "rustc --print sysroot")))
-;;              (lib-path (concat sysroot "/lib/rustlib/src/rust/library"))
-;;               (src-path (concat sysroot "/lib/rustlib/src/rust/src")))
-;;         (or (when (file-exists-p lib-path) lib-path)
-;;             (when (file-exists-p src-path) src-path))))
-;;   :bind (:map racer-mode-map
-;;          ("C-'" . racer-find-definition-other-window)))
-;; (use-package flycheck-rust
-;;   :ensure t
-;;   :after rust-mode
-;;   :hook (flycheck-mode . flycheck-rust-setup)
-;;   :hook (rust-mode . flycheck-mode))
-;; (use-package flycheck-pos-tip
-;;   :ensure t
-;;   ;; :hook (rust-mode . flycheck-pos-tip-mode)
-;; )
-;; (use-package flycheck-popup-tip
-;;   :ensure t
-;;   :hook (rust-mode . flycheck-popup-tip-mode)
-;; )
 
 ;; Get some distraction free goodness :)
 ;; Center the buffer
