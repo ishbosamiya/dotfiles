@@ -27,7 +27,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
+   '(fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((projectile-project-test-cmd . "../build_linux_debug/bin/tests/bke_cloth_remesh_test --gtest_filter=\"cloth_remesh.*\"")
      (projectile-project-test-cmd . "../build_linux_debug/bin/tests/blender_test --gtest_filter=\"cloth_remesh.*\"")
@@ -383,3 +383,12 @@
 ;; might need to `list-packages` and install `dash` from `MELPA`
 (use-package dash
     :ensure t)
+
+;; fold-this
+(use-package fold-this
+  :ensure t
+  :demand t
+  :bind (("C-c C-f" . fold-this-all)
+	 ("C-c C-S-f" . fold-this)
+	 ("C-c M-f" . fold-this-unfold-at-point)
+	 ("C-c M-F" . fold-this-unfold-all)))
