@@ -27,7 +27,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
+   '(general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((projectile-project-test-cmd . "../build_linux_debug/bin/tests/bke_cloth_remesh_test --gtest_filter=\"cloth_remesh.*\"")
      (projectile-project-test-cmd . "../build_linux_debug/bin/tests/blender_test --gtest_filter=\"cloth_remesh.*\"")
@@ -382,7 +382,7 @@
 ;; a fix to make lsp-mode work
 ;; might need to `list-packages` and install `dash` from `MELPA`
 (use-package dash
-    :ensure t)
+  :ensure t)
 
 ;; fold-this
 (use-package fold-this
@@ -392,3 +392,30 @@
 	 ("C-c C-S-f" . fold-this)
 	 ("C-c M-f" . fold-this-unfold-at-point)
 	 ("C-c M-F" . fold-this-unfold-all)))
+
+;; general: a easy way to setup keybindings
+(use-package general
+  :ensure t)
+
+;; Debug Adapter Protocol through dap-mode
+(use-package dap-mode
+  :ensure t
+  :config
+  ;; On a new system need to call `dap-gdb-lldb-setup` to setup the
+  ;; vscode extension automagically
+  (require 'dap-gdb-lldb)
+
+  ;; Bind `C-c l d` to `dap-hydra` for easy access
+  (general-define-key
+    :keymaps 'lsp-mode-map
+    :prefix lsp-keymap-prefix
+    "d" '(dap-hydra t :wk "debugger")))
+
+;; example rust debug template
+;; (dap-register-debug-template "Rust::GDB Run Configuration"
+;;                              (list :type "gdb"
+;;                                    :request "launch"
+;;                                    :name "GDB::Run"
+;;                            :gdbpath "rust-gdb"
+;;                                    :target nil
+;;                                    :cwd nil))

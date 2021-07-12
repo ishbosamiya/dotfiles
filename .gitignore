@@ -13,3 +13,6 @@ emacs/.emacs.d/amx-items
 emacs/.emacs.d/ido.last
 emacs/.emacs.d/.lsp-session-*
 emacs/.emacs.d/.cache/
+emacs/.emacs.d/.dap-breakpoints
+emacs/.emacs.d/.extension/
+emacs/.emacs.d/url/
