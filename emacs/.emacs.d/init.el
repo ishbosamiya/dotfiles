@@ -27,7 +27,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
+   '(magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((eval progn
 	   (dap-register-debug-template "Blender Debug"
@@ -422,3 +422,11 @@
 ;;                            :gdbpath "rust-gdb"
 ;;                                    :target nil
 ;;                                    :cwd nil))
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status))
+  :config
+  ;; Disable Emacs's normal VCS stuff, since I'm never using it, and
+  ;; am using only Magit instead.
+  (setq vc-handled-backends nil))
