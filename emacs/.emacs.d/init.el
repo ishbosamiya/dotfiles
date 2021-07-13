@@ -29,7 +29,10 @@
  '(package-selected-packages
    '(general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
-   '((projectile-project-test-cmd . "../build_linux_debug/bin/tests/bke_cloth_remesh_test --gtest_filter=\"cloth_remesh.*\"")
+   '((eval progn
+	   (dap-register-debug-template "Blender Debug"
+					(list :type "gdb" :request "launch" :name "Blender Debug" :target "${workspaceFolder}/../build_linux_debug/bin/blender" :cwd nil)))
+     (projectile-project-test-cmd . "../build_linux_debug/bin/tests/bke_cloth_remesh_test --gtest_filter=\"cloth_remesh.*\"")
      (projectile-project-test-cmd . "../build_linux_debug/bin/tests/blender_test --gtest_filter=\"cloth_remesh.*\"")
      (projectile-project-test-cmd . "../build_linux_debug/bin/tests/blenlib_test --gtest_filter=\"generational_arena.*\"")
      (projectile-project-run-cmd . "../build_linux_debug/bin/blender")
