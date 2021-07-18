@@ -27,7 +27,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex elpy ess ggtags writegood-mode org company company-c-headers))
+   '(lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((eval progn
 	   (dap-register-debug-template "Blender Debug"
@@ -219,18 +219,6 @@
   :ensure t
   :hook ((c-mode c++-mode glsl-mode) . ggtags-mode))
 
-;; Python environment
-(use-package elpy
-  :ensure t
-  :init
-  (bind-key "C-c M-<left>" 'elpy-nav-indent-shift-left)
-  (bind-key "C-c M-<right>" 'elpy-nav-indent-shift-right)
-  (bind-key "C-c M-<up>" 'elpy-nav-indent-shift-up)
-  (bind-key "C-c M-<down>" 'elpy-nav-indent-shift-down)
-  (elpy-enable)
-  (add-hook 'python-mode-hook 'infer-indentation-style))
-
-
 ;; Blender Addon Development Environment
 (setq blender-python-launch-path "/media/ish/data/extra/blender-git/blender_emacs/launch_blender.py")
 (setq blender-path "/media/ish/data/extra/blender-git/build_master_ninja/bin/blender")
@@ -381,6 +369,14 @@
   (setq lsp-prefer-flymake nil)
   ;; Disable the semi-annoying hover-to-see-docs view
   (setq lsp-ui-doc-enable nil))
+
+;; lsp mode for python
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-python-ms)
+                         (lsp-deferred))))
 
 ;; a fix to make lsp-mode work
 ;; might need to `list-packages` and install `dash` from `MELPA`
