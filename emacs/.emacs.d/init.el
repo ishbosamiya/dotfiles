@@ -410,14 +410,23 @@
     :prefix lsp-keymap-prefix
     "d" '(dap-hydra t :wk "debugger")))
 
-;; example rust debug template
-;; (dap-register-debug-template "Rust::GDB Run Configuration"
-;;                              (list :type "gdb"
-;;                                    :request "launch"
-;;                                    :name "GDB::Run"
-;;                            :gdbpath "rust-gdb"
-;;                                    :target nil
-;;                                    :cwd nil))
+;; rust debug template
+(dap-register-debug-template "rust debug main"
+                             (list :type "gdb"
+                                   :request "launch"
+                                   :name "rust debug main"
+                           :gdbpath "rust-gdb"
+                                   :target "${workspaceFolder}/target/debug/main"
+                                   :cwd nil))
+
+;; rust release template
+(dap-register-debug-template "rust release main"
+                             (list :type "gdb"
+                                   :request "launch"
+                                   :name "rust release main"
+                           :gdbpath "rust-gdb"
+                                   :target "${workspaceFolder}/target/release/main"
+                                   :cwd nil))
 
 (use-package magit
   :ensure t
