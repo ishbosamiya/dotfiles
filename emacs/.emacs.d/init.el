@@ -434,7 +434,8 @@
   :config
   ;; Disable Emacs's normal VCS stuff, since I'm never using it, and
   ;; am using only Magit instead.
-  (setq vc-handled-backends nil))
+  (setq vc-handled-backends nil)
+  (magit-add-section-hook 'magit-status-sections-hook 'magit-insert-ignored-files nil t))
 
 ;; Be able to restart emacs from within emacs
 (use-package restart-emacs
