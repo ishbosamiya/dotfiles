@@ -87,13 +87,15 @@
 
 ;; Help writing correct text. TODO: Figure out how to make it trigger
 ;; only in "pure text" buffers
-(require 'writegood-mode)
-(add-hook 'text-mode-hook
+(use-package writegood-mode
+  :ensure t
+  :config
+  (add-hook 'text-mode-hook
 	  (lambda ()
 	    (flyspell-mode t)
 	    (flyspell-buffer)
 	    (writegood-mode t)
-	    (visual-line-mode t)))
+	    (visual-line-mode t))))
 
 ;; Adding a word to the flycheck dictionary causes it to stop showing
 ;; the rest of the underlined words. The following adds "advice" to
