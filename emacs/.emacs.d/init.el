@@ -27,7 +27,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(yasnippet cmake-mode restart-emacs lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
+   '(flycheck yasnippet cmake-mode restart-emacs lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((eval progn
 	   (dap-register-debug-template "Blender Debug"
@@ -342,6 +342,13 @@
 
 ;; yasnippit, needed by lsp
 (use-package yasnippet
+  :ensure t)
+
+;; flycheck
+;;
+;; Need this explicitly so that flycheck is used over flymake by
+;; lsp-mode
+(use-package flycheck
   :ensure t)
 
 ;; Language server using lsp-mode
