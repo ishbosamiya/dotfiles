@@ -26,10 +26,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-export PATH="$PATH:/home/ish/.arcanist/arcanist/bin/"
+export PATH="$PATH:$HOME/.arcanist/arcanist/bin/"
 
 # Speed up compile times using ccache if available
 if [ -d /usr/lib/ccache ]; then
     export PATH="/usr/lib/ccache:$PATH"
 fi
-source "$HOME/.cargo/env"
+. "$HOME/.cargo/env"
