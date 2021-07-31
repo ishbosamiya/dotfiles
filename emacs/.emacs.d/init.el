@@ -451,3 +451,10 @@
 (use-package cmake-mode
   :ensure t)
 
+;; Be able to open gnome-terminal with some nice keybindings
+(setenv "SHELL" "/usr/bin/zsh")
+(defun open-gnome-terminal-in-directory (dir)
+  (interactive "D")
+  (let ((dir (expand-file-name dir)))
+    (start-process "gnome-terminal" nil "dbus-launch" "gnome-terminal" dir)))
+(global-set-key (kbd "C-x C-t") 'open-gnome-terminal-in-directory)
