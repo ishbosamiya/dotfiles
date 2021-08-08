@@ -465,3 +465,12 @@
   (let ((dir (expand-file-name dir)))
     (start-process "gnome-terminal" nil "dbus-launch" "gnome-terminal" dir)))
 (global-set-key (kbd "C-x C-t") 'open-gnome-terminal-in-directory)
+
+(use-package glsl-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.glsl\\'" . glsl-mode))
+  (add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
+  (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
+  (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode))
+  )
