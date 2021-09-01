@@ -463,7 +463,7 @@
 (defun open-gnome-terminal-in-directory (dir)
   (interactive "D")
   (let ((dir (expand-file-name dir)))
-    (start-process "gnome-terminal" nil "dbus-launch" "gnome-terminal" dir)))
+    (start-process "gnome-terminal" nil "dbus-launch" "gnome-terminal" "--working-directory" dir)))
 (global-set-key (kbd "C-x C-t") 'open-gnome-terminal-in-directory)
 
 (use-package glsl-mode
