@@ -139,7 +139,10 @@
 	      scroll-down-aggressively 0.01)
 
 ;; Turn on line numbers for all buffers
-(global-linum-mode)
+(global-linum-mode t)
+
+;; Turn on column-number-mode for all buffers
+(column-number-mode t)
 
 ;; Be able to move between buffers more easily, using M-up, M-down,
 ;; M-left, M-right.
