@@ -469,6 +469,13 @@
     (start-process "gnome-terminal" nil "dbus-launch" "gnome-terminal" "--working-directory" dir)))
 (global-set-key (kbd "C-x C-t") 'open-gnome-terminal-in-directory)
 
+;; Be able to open nautilus with some nice keybindings
+(defun open-nautilus-in-directory (dir)
+  (interactive "D")
+  (let ((dir (expand-file-name dir)))
+    (start-process "nautilus" nil "dbus-launch" "nautilus" dir)))
+(global-set-key (kbd "C-x C-y") 'open-nautilus-in-directory)
+
 (use-package glsl-mode
   :ensure t
   :config
