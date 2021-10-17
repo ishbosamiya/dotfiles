@@ -27,7 +27,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(flycheck yasnippet cmake-mode restart-emacs lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
+   '(rg flycheck yasnippet cmake-mode restart-emacs lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((eval progn
 	   (dap-register-debug-template "Blender Debug"
@@ -484,3 +484,13 @@
   (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
   (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode))
   )
+
+;; Be able to use rg from emacs
+(use-package rg
+  :ensure t
+  :config
+  (setq rg-executable "rg") ;; Use rg from the $PATH; allows working
+			    ;; via TRAMP too!
+  (setq rg-default-alias-fallback "everything")
+  :bind (("M-s M-s" . 'rg-dwim)
+	 ("M-s s"   . 'rg-menu)))
