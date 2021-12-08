@@ -1,0 +1,58 @@
+#compdef flamegraph
+
+autoload -U is-at-least
+
+_flamegraph() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" \
+'-p+[Profile a running process by pid]' \
+'--pid=[Profile a running process by pid]' \
+'(-p --pid)--completions=[Generate shell completions for the given shell]' \
+'-o+[Output file, flamegraph.svg if not present]' \
+'--output=[Output file, flamegraph.svg if not present]' \
+'-F+[Sampling frequency]' \
+'--freq=[Sampling frequency]' \
+'-c+[Custom command for invoking perf/dtrace]' \
+'--cmd=[Custom command for invoking perf/dtrace]' \
+'--notes=[Set embedded notes in SVG]' \
+'--min-width=[Omit functions smaller than <FLOAT> pixels]' \
+'--image-width=[Image width in pixels]' \
+'--palette=[Color palette]: :(hot mem io red green blue aqua yellow purple orange wakeup java perl js rust)' \
+'(-p --pid)--perfdata=[]' \
+'-v[Print extra output to help debug problems]' \
+'--verbose[Print extra output to help debug problems]' \
+'--open[Open the output .svg file with default program]' \
+'--root[Run with root privileges (using `sudo`)]' \
+'--deterministic[Colors are selected such that the color of a function does not change between runs]' \
+'-i[Plot the flame graph up-side-down]' \
+'--inverted[Plot the flame graph up-side-down]' \
+'--reverse[Generate stack-reversed flame graph]' \
+'--no-inline[Disable inlining for perf script because of performance issues]' \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+'::trailing-arguments:_files' \
+&& ret=0
+    
+}
+
+(( $+functions[_flamegraph_commands] )) ||
+_flamegraph_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'flamegraph commands' commands "$@"
+}
+
+_flamegraph "$@"
