@@ -270,7 +270,11 @@
 (use-package cargo
   :ensure t
   :after rust-mode
-  :hook (rust-mode . cargo-minor-mode))
+  :hook (rust-mode . cargo-minor-mode)
+  :config
+  ;; cargo clippy no longer requires that nightly only
+  ;; unstable-options argument for the workaround
+  (setq cargo-process--command-clippy "clippy"))
 
 ;; Get some distraction free goodness :)
 ;; Center the buffer
