@@ -325,7 +325,11 @@
 ;; Use projectile for easily moving around in projects
 (use-package projectile
   :ensure t
-  :bind-keymap ("C-c p" . projectile-command-map))
+  :bind-keymap ("C-c p" . projectile-command-map)
+  :config
+  ;; use comint mode for run command to allow user input through the
+  ;; mini buffer for the compilation buffer (comint functionality)
+  (setq projectile-run-use-comint-mode t))
 
 ;; Handle escape sequence colorization properly for compilation-mode
 ;; See : https://emacs.stackexchange.com/a/38531
