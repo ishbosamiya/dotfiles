@@ -139,7 +139,10 @@
 	      scroll-down-aggressively 0.01)
 
 ;; Turn on line numbers for all buffers
-(global-linum-mode t)
+(when (version<= "26.0.50" emacs-version)
+  (global-display-line-numbers-mode))
+(when (version<= emacs-version "26.0.50")
+  (global-linum-mode t))
 
 ;; Turn on column-number-mode for all buffers
 (column-number-mode t)
@@ -245,6 +248,8 @@
   :init
   (pdf-tools-install))
 (add-hook 'pdf-view-mode-hook (lambda() (linum-mode -1)))
+(when (version<= "26.0.50" emacs-version )
+  (add-hook 'pdf-view-mode-hook (lambda() (display-line-numbers-mode -1))))
 
 ;; Major mode for editing OpenSCAD code
 (use-package scad-mode
