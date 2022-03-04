@@ -559,3 +559,17 @@
   (impatient-mode)
   (imp-set-user-filter 'impatient-github-markdown-filter)
   (imp-visit-buffer))
+
+;; To make navigation easier
+;;
+;; It is very similar to `move-to-window-line-top-bottom` but this
+;; function works in the file line space where as the inbuilt function
+;; `move-to-window-line-top-bottom` works in the virtual window line
+;; space.
+(defun move-cursor-middle-line-of-window ()
+  "Move the cursor to the middle line of the window"
+  (interactive)
+  (let* ((begin (line-number-at-pos (window-start)))
+	 (end (line-number-at-pos (window-end)))
+	 (middle (/ (+ end begin) 2)))
+    (goto-line middle)))
