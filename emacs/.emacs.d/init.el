@@ -44,6 +44,9 @@
 ;; Set up gdb to use the many-windows functionality
 (setq gdb-many-windows t)
 
+;; Make minibuffer history persist across sessions
+(savehist-mode 1)
+
 ;; Ensure that copying from another program and then running a kill
 ;; command in emacs doesn't cause things to disappear from the
 ;; clipboard
