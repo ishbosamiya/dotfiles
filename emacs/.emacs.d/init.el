@@ -21,13 +21,6 @@
 (setq custom-file (locate-user-emacs-file "custom_variables.el"))
 (load custom-file)
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
 ;; set utf-8 as default for all
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -547,3 +540,8 @@
 	 (end (line-number-at-pos (window-end)))
 	 (middle (/ (+ end begin) 2)))
     (goto-line middle)))
+
+;; Cycle between snake case, camel case, etc.
+(use-package string-inflection
+  :ensure t
+  :bind ("C-c i" . string-inflection-cycle))

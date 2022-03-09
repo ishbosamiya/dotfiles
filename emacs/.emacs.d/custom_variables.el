@@ -8,7 +8,7 @@
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(impatient-mode simple-httpd rg flycheck yasnippet cmake-mode restart-emacs lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
+   '(string-inflection impatient-mode simple-httpd rg flycheck yasnippet cmake-mode restart-emacs lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((projectile-project-run-cmd . "cd ../../rusted-keys/.dep/egui_glfw/ && cargo run --example simple_gui")
      (projectile-project-run-cmd . "mold -run cargo run")
@@ -21,3 +21,10 @@
      (projectile-project-test-cmd . "../build_linux_debug/bin/tests/blenlib_test --gtest_filter=\"generational_arena.*\"")
      (projectile-project-run-cmd . "../build_linux_debug/bin/blender")
      (projectile-project-compilation-cmd . "make debug"))))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
