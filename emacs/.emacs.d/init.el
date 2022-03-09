@@ -35,18 +35,6 @@
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment 'utf-8)
 
-;; ;; auto-complete global
-;; (use-package auto-complete
-;;   :ensure t
-;;   :init
-;;   (progn
-;;     (ac-config-default)
-;;     (global-auto-complete-mode t)
-;;     )
-;;   (setq ac-auto-show-menu nil)
-;;   (setq ac-auto-start nil)
-;;   (setq ac-trigger-key "C-M-`"))
-
 ;; backspace is used for delete-region, makes it similar to other programs
 (delete-selection-mode 1)
 
