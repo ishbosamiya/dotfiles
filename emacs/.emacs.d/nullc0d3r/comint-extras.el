@@ -1,4 +1,26 @@
-;; -*- lexical-binding: t; -*-
+;;; comint-extras.el --- extra functionalities for comint mode                     -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2022  Ish Bosamiya
+
+;; Author: Ish Bosamiya <ishbosamiya@gmail.com>
+;; Keywords: lisp comint compilation
+;; Version: 0.1.0
+
+;; TODO: license
+
+;;; Commentary:
+
+;; Comint extras adds additional functionality to comint mode to make
+;; life easier.
+;;
+;; Features:
+;;
+;; * Switch to compilation-mode for "*compilation*" buffer after
+;;   process has exited. It ensures that any other sentinels are also
+;;   run. reference:
+;;   https://www.eigenbahn.com/2020/05/13/emacs-comint-buffer-auto-close
+
+;;; Code:
 
 (defun compilation-mode-on-exit-sentinel (process output)
   "Process sentinel to set \"*compilation*\" buffer to
@@ -49,3 +71,4 @@ of the current one and
 (add-hook 'comint-mode-hook #'compilation-mode-on-exit-comint-hook)
 
 (provide 'comint-extras)
+;;; comint-extras.el ends here
