@@ -20,17 +20,20 @@ compilation-mode once PROCESS dies."
   "Replace current process sentinel with a new sentinel composed
 of the current one and
 `compilation-mode-on-exit-sentinel'."
-  (let* ((buffer (get-buffer "*compilation*"))
-	 (process (get-buffer-process buffer)))
-    ;; (when (bound-and-true-p process)
-    (let* ((og-sentinel (process-sentinel process))
-	   (sentinel-list (-remove #'null
-				   (list og-sentinel #'compilation-mode-on-exit-sentinel)))
-	   (combined-sentinel
-	    (lambda (process line)
-	      (--each sentinel-list
-		(funcall it process line)))))
-      (setf (process-sentinel process) combined-sentinel))))
+  (let* ((buffer (get-buffer "*compilation*")))
+    (when buffer
+      (let* ((process (get-buffer-process buffer)))
+	(if process
+	    (let* ((og-sentinel (process-sentinel process))
+		   (sentinel-list (-remove #'null
+					   (list og-sentinel #'compilation-mode-on-exit-sentinel)))
+		   (combined-sentinel
+		    (lambda (process line)
+		      (--each sentinel-list
+			(funcall it process line)))))
+	      (setf (process-sentinel process) combined-sentinel))
+	  (with-current-buffer buffer
+	    (compilation-mode)))))))
 
 (defun async-funcall (function &optional buffer args delay)
   "Run FUNCTION with ARGS in the buffer after a short DELAY."
