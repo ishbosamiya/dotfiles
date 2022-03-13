@@ -132,3 +132,29 @@ autoload -U compinit && compinit
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export PATH="/usr/local/bin/ccache_bin/:$PATH"
+
+# Find a directory quickly with shortcut `C-l`.
+#
+# Requires fd and fzf to work, complains if not available.
+#
+# From Kaustubh plus modifications.
+fzf-dir() {
+    if command -v fd >/dev/null; then ; else echo "install fd for fzf-dir() to work" ; zle reset-prompt ; return -1 ; fi
+    if command -v fzf >/dev/null; then ; else echo "install fzf for fzf-dir() to work"; zle reset-prompt ; return -1 ; fi
+    local dir ret=$?
+    dir=$(fd . $HOME /mnt /media -Ha --type directory | fzf --height=40%)
+    if [ -z "$dir" ]; then
+        zle redisplay
+        return 0
+    fi
+    cd $dir
+    # precmd functions are the functions/hooks run everytime to reset the prompt
+    local precmd
+    for precmd in $precmd_functions; do
+      $precmd
+    done
+    zle reset-prompt
+    return $ret
+}
+zle -N fzf-dir
+bindkey "^L" fzf-dir
