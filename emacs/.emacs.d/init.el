@@ -552,4 +552,12 @@
   :ensure t
   :bind ("C-c i" . string-inflection-cycle))
 
+;; Comint mode extras
+;;
+;; Custom defined - See nullc0d3r/comint-extras.el
 (use-package comint-extras)
+
+;; Expand region
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
