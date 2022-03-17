@@ -112,10 +112,47 @@
 	      scroll-down-aggressively 0.01)
 
 ;; Turn on line numbers for all buffers
-(when (version<= "26.0.50" emacs-version)
-  (global-display-line-numbers-mode))
-(when (version<= emacs-version "26.0.50")
-  (global-linum-mode t))
+(cl-assert (version<= "26.0.50" emacs-version) t "Require emacs
+version >= 26.0.50 for init.el due to display-line-numbers-mode")
+(global-display-line-numbers-mode)
+
+(defun display-line-numbers-relative-toggle ()
+  "\
+Toggle between relative and absolute line numbers in
+display-line-numbers-mode.
+
+Turns on display-line-numbers-mode if not already active."
+  (interactive)
+  (if (eq display-line-numbers-type 'relative)
+      (setq display-line-numbers-type t)
+    (setq display-line-numbers-type 'relative))
+  (display-line-numbers-mode)
+  (display-line-numbers-mode))
+
+(defun display-line-numbers-relative ()
+  "\
+Switch to relative line numbers in display-line-numbers-mode.
+
+Turns on display-line-numbers-mode if not already active."
+  (interactive)
+  (setq display-line-numbers-type 'relative)
+  (display-line-numbers-mode)
+  (display-line-numbers-mode))
+
+(defun display-line-numbers-absolute ()
+  "\
+Switch to absolute line numbers in display-line-numbers-mode.
+
+Turns on display-line-numbers-mode if not already active."
+  (interactive)
+  (setq display-line-numbers-type t)
+  (display-line-numbers-mode)
+  (display-line-numbers-mode))
+
+;; Define shortcuts for display-line-numbers
+(global-set-key (kbd "C-c l t") 'display-line-numbers-relative-toggle)
+(global-set-key (kbd "C-c l a") 'display-line-numbers-absolute)
+(global-set-key (kbd "C-c l r") 'display-line-numbers-relative)
 
 ;; Turn on column-number-mode for all buffers
 (column-number-mode t)
@@ -215,14 +252,14 @@
   :ensure t)
 
 ;; pdf-tools replacement for docview
-;; since it doesn't work well with linum-mode, it must be disabled
+;;
+;; since it doesn't work well with display-line-numbers-mode, it must
+;; be disabled
 (use-package pdf-tools
   :ensure t
   :init
   (pdf-tools-install))
-(add-hook 'pdf-view-mode-hook (lambda() (linum-mode -1)))
-(when (version<= "26.0.50" emacs-version )
-  (add-hook 'pdf-view-mode-hook (lambda() (display-line-numbers-mode -1))))
+(add-hook 'pdf-view-mode-hook (lambda() (display-line-numbers-mode -1)))
 
 ;; Major mode for editing OpenSCAD code
 (use-package scad-mode
