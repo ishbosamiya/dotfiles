@@ -598,3 +598,33 @@ Turns on display-line-numbers-mode if not already active."
 (use-package expand-region
   :ensure t
   :bind ("C-=" . er/expand-region))
+
+;; Goto line relative to the current line
+;;
+;; TODO: need to store the current line number type (absolute or
+;; relative) and revert to that after the operation.
+;;
+;; TODO: make it so that the original line number type (absolute or
+;; relative) is reverted to when `C-g` is pressed. See isearch's code
+;; to understand how it can be done (the key to handling it seems to
+;; be to define a new minor mode with keymap that overrides `C-g`).
+(defun goto-line-relative (number-of-lines)
+  "Goto line relative to the current line"
+  (interactive
+   (let* (
+	 ;; display line numbers relatively
+	 ;;
+	 ;; TODO: move display-line-numbers-relative call outside of
+	 ;; the let binding
+	 (discard-tmp (display-line-numbers-relative))
+	 ;; Read the number of lines to skip to a number
+	 (lines (string-to-number (read-string "Lines to skip (+/-): "))))
+     (list lines)))
+  (let* ((current-line-number (line-number-at-pos))
+	 (jump-to-line (+ current-line-number number-of-lines)))
+    (goto-line jump-to-line))
+  ;; Switch back to absolute numbers if needed
+  (display-line-numbers-absolute))
+
+;; Set keyboard shortcut for goto-line-relative
+(global-set-key (kbd "M-g M-g") 'goto-line-relative)
