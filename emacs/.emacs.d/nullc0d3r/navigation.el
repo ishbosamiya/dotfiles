@@ -56,8 +56,32 @@
     (with-current-buffer (current-buffer)
       (funcall 'display-line-numbers-mode -1))))
 
-;; Set keyboard shortcut for goto-line-relative
-(global-set-key (kbd "M-g M-g") 'goto-line-relative)
+(defgroup navigation nil
+  "Navigation utils."
+  :group 'convenience)
+
+;; create keymap for navigation mode
+(setq navigation-keymap (make-sparse-keymap))
+(define-key navigation-keymap (kbd "M-g M-g") 'goto-line-relative)
+
+;;;###autoload
+(define-minor-mode navigation-mode
+  "Navigation minor mode to make navigating buffers easier"
+  :init-value nil
+  :group navigation
+  :global nil
+  :lighter " Navigation"
+  :keymap navigation-keymap)
+
+;; Turn on `navigation-mode` unless it is the mini buffer
+(defun navigation--turn-on ()
+  "Turn on `navigation-mode'."
+  (unless (minibufferp)
+    (navigation-mode)))
+
+;;;###autoload
+(define-globalized-minor-mode global-navigation-mode
+  navigation-mode navigation--turn-on)
 
 (provide 'navigation)
 ;;; navigation.el ends here

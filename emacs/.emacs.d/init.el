@@ -605,4 +605,6 @@ Turns on display-line-numbers-mode if not already active."
 ;; Make navigating emacs easier
 ;;
 ;; Custom defined - See nullc0d3r/navigation.el
-(use-package navigation)
+(use-package navigation
+  :config
+  (global-navigation-mode))
