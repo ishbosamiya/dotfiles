@@ -611,20 +611,19 @@ Turns on display-line-numbers-mode if not already active."
 (defun goto-line-relative (number-of-lines)
   "Goto line relative to the current line"
   (interactive
-   (let* (
-	 ;; display line numbers relatively
-	 ;;
-	 ;; TODO: move display-line-numbers-relative call outside of
-	 ;; the let binding
-	 (discard-tmp (display-line-numbers-relative))
+   (progn
+     ;; display line numbers relatively
+     (display-line-numbers-relative)
+     ;; change back to absoluate line numbers after finishing the
+     ;; command
+     (add-hook 'post-command-hook #'display-line-numbers-absolute nil t)
+     (let
 	 ;; Read the number of lines to skip to a number
-	 (lines (string-to-number (read-string "Lines to skip (+/-): "))))
-     (list lines)))
+	 ((lines (string-to-number (read-string "Lines to skip (+/-): "))))
+       (list lines))))
   (let* ((current-line-number (line-number-at-pos))
 	 (jump-to-line (+ current-line-number number-of-lines)))
-    (goto-line jump-to-line))
-  ;; Switch back to absolute numbers if needed
-  (display-line-numbers-absolute))
+    (goto-line jump-to-line)))
 
 ;; Set keyboard shortcut for goto-line-relative
 (global-set-key (kbd "M-g M-g") 'goto-line-relative)
