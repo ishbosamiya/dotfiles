@@ -135,9 +135,7 @@ Switch to relative line numbers in display-line-numbers-mode.
 
 Turns on display-line-numbers-mode if not already active."
   (interactive)
-  (setq display-line-numbers-type 'relative)
-  (display-line-numbers-mode)
-  (display-line-numbers-mode))
+  (display-line-numbers-set-type 'relative))
 
 (defun display-line-numbers-absolute ()
   "\
@@ -145,7 +143,14 @@ Switch to absolute line numbers in display-line-numbers-mode.
 
 Turns on display-line-numbers-mode if not already active."
   (interactive)
-  (setq display-line-numbers-type t)
+  (display-line-numbers-set-type t))
+
+(defun display-line-numbers-set-type (type)
+  "\
+Set line number type for display-line-numbers-mode.
+
+Turns on display-line-numbers-mode if not already active."
+  (setq display-line-numbers-type type)
   (display-line-numbers-mode)
   (display-line-numbers-mode))
 
@@ -599,10 +604,11 @@ Turns on display-line-numbers-mode if not already active."
   :ensure t
   :bind ("C-=" . er/expand-region))
 
+(defvar-local goto-line-relative-initial-line-number-type nil
+  "`goto-line-relative`'s current line number type temporary
+  storage. Not for external use.")
+
 ;; Goto line relative to the current line
-;;
-;; TODO: need to store the current line number type (absolute or
-;; relative) and revert to that after the operation.
 ;;
 ;; TODO: make it so that the original line number type (absolute or
 ;; relative) is reverted to when `C-g` is pressed. See isearch's code
@@ -612,18 +618,19 @@ Turns on display-line-numbers-mode if not already active."
   "Goto line relative to the current line"
   (interactive
    (progn
-     ;; display line numbers relatively
-     (display-line-numbers-relative)
-     ;; change back to absoluate line numbers after finishing the
-     ;; command
-     (add-hook 'post-command-hook #'display-line-numbers-absolute nil t)
-     (let
-	 ;; Read the number of lines to skip to a number
-	 ((lines (string-to-number (read-string "Lines to skip (+/-): "))))
-       (list lines))))
+     (let ((initial-line-number-type display-line-numbers-type))
+       (setq goto-line-relative-initial-line-number-type initial-line-number-type)
+       ;; display line numbers relatively
+       (display-line-numbers-relative)
+       (let
+	   ;; Read the number of lines to skip to a number
+	   ((lines (string-to-number (read-string "Lines to skip (+/-): "))))
+	 (list lines)))))
   (let* ((current-line-number (line-number-at-pos))
 	 (jump-to-line (+ current-line-number number-of-lines)))
-    (goto-line jump-to-line)))
+    (goto-line jump-to-line))
+  ;; change back to initial line number type
+  (display-line-numbers-set-type goto-line-relative-initial-line-number-type))
 
 ;; Set keyboard shortcut for goto-line-relative
 (global-set-key (kbd "M-g M-g") 'goto-line-relative)
