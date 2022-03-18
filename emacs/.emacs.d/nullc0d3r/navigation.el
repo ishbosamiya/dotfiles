@@ -17,8 +17,12 @@
 ;;; Code:
 
 (defvar-local initial-line-number-type nil
-  "`goto-line-relative`'s current line number type temporary
-  storage. Not for external use.")
+  "`goto-line-relative`'s initial line number type temporary
+  storage.")
+
+(defvar-local display-line-numbers-mode-is-initially-active nil
+  "`goto-line-relative`'s display-line-numbers-mode is initially
+  active temporary storage.")
 
 ;; Goto line relative to the current line
 ;;
@@ -30,8 +34,11 @@
   "Goto line relative to the current line"
   (interactive
    (progn
-     (let ((line-number-type display-line-numbers-type))
+     (let ((mode-active (if display-line-numbers-mode
+			    t nil))
+	   (line-number-type display-line-numbers-type))
        (setq initial-line-number-type line-number-type)
+       (setq display-line-numbers-mode-is-initially-active mode-active)
        ;; display line numbers relatively
        (display-line-numbers-relative)
        (let
@@ -41,8 +48,13 @@
   (let* ((current-line-number (line-number-at-pos))
 	 (jump-to-line (+ current-line-number number-of-lines)))
     (goto-line jump-to-line))
-  ;; change back to initial line number type
-  (display-line-numbers-set-type initial-line-number-type))
+  ;; change back to initial config for display-line-numbers-mode
+  (display-line-numbers-set-type initial-line-number-type)
+  ;; turn off display-line-numbers-mode if it was not initially
+  ;; active
+  (unless display-line-numbers-mode-is-initially-active
+    (with-current-buffer (current-buffer)
+      (funcall 'display-line-numbers-mode -1))))
 
 ;; Set keyboard shortcut for goto-line-relative
 (global-set-key (kbd "M-g M-g") 'goto-line-relative)

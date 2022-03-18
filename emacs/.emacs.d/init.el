@@ -156,8 +156,6 @@ Turns on display-line-numbers-mode if not already active."
 
 ;; Define shortcuts for display-line-numbers
 (global-set-key (kbd "C-c l t") 'display-line-numbers-relative-toggle)
-(global-set-key (kbd "C-c l a") 'display-line-numbers-absolute)
-(global-set-key (kbd "C-c l r") 'display-line-numbers-relative)
 
 ;; Turn on column-number-mode for all buffers
 (column-number-mode t)
