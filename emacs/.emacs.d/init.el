@@ -617,7 +617,8 @@ Turns on display-line-numbers-mode if not already active."
 
 ;; Set temporary (until next emacs session) buffer local key binding
 ;;
-;; from: https://www.emacswiki.org/emacs/BufferLocalKeys
+;; from: https://www.emacswiki.org/emacs/BufferLocalKeys with
+;; modification to make amx update properly
 (defun buffer-local-set-key (key func)
   "\
 Set temporary buffer local key binding.
@@ -637,6 +638,12 @@ Set temporary buffer local key binding.
         nil " Editing" ,map))
     (eval
      `(define-key ,map ,key ',func))
-    (funcall name t)))
+    (funcall name t)
+    (message "created/updated %s with %s (%s)" mode-name func (key-description key)))
+  ;; Force update amx. There seems to be a bug in amx, it does not
+  ;; rebuild it's cache after buffer-local-set-key is run. It seems to
+  ;; do with the `amx-detect-new-commands` which doesn't pick up these
+  ;; new commands. Running `amx-update` force updates it.
+  (amx-update))
 
 (global-set-key (kbd "C-c l k") 'buffer-local-set-key)
