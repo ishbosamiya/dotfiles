@@ -116,43 +116,49 @@
 version >= 26.0.50 for init.el due to display-line-numbers-mode")
 (global-display-line-numbers-mode)
 
-(defun display-line-numbers-relative-toggle ()
+(defun display-line-numbers-relative-toggle (&optional buffer)
   "\
 Toggle between relative and absolute line numbers in
 display-line-numbers-mode.
 
 Turns on display-line-numbers-mode if not already active."
   (interactive)
-  (if (eq display-line-numbers-type 'relative)
-      (setq display-line-numbers-type t)
-    (setq display-line-numbers-type 'relative))
-  (display-line-numbers-mode)
-  (display-line-numbers-mode))
+  (unless buffer
+    (setq buffer (current-buffer)))
+  (with-current-buffer buffer
+    (if (eq display-line-numbers-type 'relative)
+	(setq display-line-numbers-type t)
+      (setq display-line-numbers-type 'relative))
+    (funcall 'display-line-numbers-mode nil)
+    (funcall 'display-line-numbers-mode t)))
 
-(defun display-line-numbers-relative ()
+(defun display-line-numbers-relative (&optional buffer)
   "\
 Switch to relative line numbers in display-line-numbers-mode.
 
 Turns on display-line-numbers-mode if not already active."
   (interactive)
-  (display-line-numbers-set-type 'relative))
+  (display-line-numbers-set-type 'relative buffer))
 
-(defun display-line-numbers-absolute ()
+(defun display-line-numbers-absolute (&optional buffer)
   "\
 Switch to absolute line numbers in display-line-numbers-mode.
 
 Turns on display-line-numbers-mode if not already active."
   (interactive)
-  (display-line-numbers-set-type t))
+  (display-line-numbers-set-type t buffer))
 
-(defun display-line-numbers-set-type (type)
+(defun display-line-numbers-set-type (type &optional buffer)
   "\
 Set line number type for display-line-numbers-mode.
 
 Turns on display-line-numbers-mode if not already active."
-  (setq display-line-numbers-type type)
-  (display-line-numbers-mode)
-  (display-line-numbers-mode))
+  (unless buffer
+    (setq buffer (current-buffer)))
+  (with-current-buffer buffer
+    (setq display-line-numbers-type type)
+    (funcall 'display-line-numbers-mode nil)
+    (funcall 'display-line-numbers-mode t)))
 
 ;; Define shortcuts for display-line-numbers
 (global-set-key (kbd "C-c l t") 'display-line-numbers-relative-toggle)
