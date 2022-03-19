@@ -614,3 +614,29 @@ Turns on display-line-numbers-mode if not already active."
 (use-package navigation
   :config
   (global-navigation-mode))
+
+;; Set temporary (until next emacs session) buffer local key binding
+;;
+;; from: https://www.emacswiki.org/emacs/BufferLocalKeys
+(defun buffer-local-set-key (key func)
+  "\
+Set temporary buffer local key binding.
+"
+  (interactive "KSet key on this buffer: \naCommand: ")
+  (let* ((mode-name (format "%s-magic" (buffer-name)))
+         (name (intern mode-name))
+         (map-name (format "%s-map" mode-name))
+         (map (intern map-name)))
+    (unless (boundp map)
+      (set map (make-sparse-keymap)))
+    (eval
+     `(define-minor-mode ,name
+        ,(concat
+          "Automagically built minor mode to define buffer-local keys.\n"
+          "\\{" map-name "}")
+        nil " Editing" ,map))
+    (eval
+     `(define-key ,map ,key ',func))
+    (funcall name t)))
+
+(global-set-key (kbd "C-c l k") 'buffer-local-set-key)
