@@ -12,17 +12,10 @@
 
 ;; Navigation provides extra functions to navigate emacs more easily.
 ;;
-;; TODO: make it a minor mode.
+;; Features:
+;; * `goto-line-relative`
 
 ;;; Code:
-
-(defvar-local initial-line-number-type nil
-  "`goto-line-relative`'s initial line number type temporary
-  storage.")
-
-(defvar-local display-line-numbers-mode-is-initially-active nil
-  "`goto-line-relative`'s display-line-numbers-mode is initially
-  active temporary storage.")
 
 ;; Goto line relative to the current line
 ;;
@@ -30,31 +23,27 @@
 ;; relative) is reverted to when `C-g` is pressed. See isearch's code
 ;; to understand how it can be done (the key to handling it seems to
 ;; be to define a new minor mode with keymap that overrides `C-g`).
-(defun goto-line-relative (number-of-lines)
+(defun goto-line-relative ()
   "Goto line relative to the current line"
-  (interactive
-   (progn
-     (let ((mode-active (if display-line-numbers-mode
-			    t nil))
-	   (line-number-type display-line-numbers-type))
-       (setq initial-line-number-type line-number-type)
-       (setq display-line-numbers-mode-is-initially-active mode-active)
-       ;; display line numbers relatively
-       (display-line-numbers-relative)
-       (let
-	   ;; Read the number of lines to skip to a number
-	   ((lines (string-to-number (read-string "Lines to skip (+/-): "))))
-	 (list lines)))))
-  (let* ((current-line-number (line-number-at-pos))
-	 (jump-to-line (+ current-line-number number-of-lines)))
-    (goto-line jump-to-line))
-  ;; change back to initial config for display-line-numbers-mode
-  (display-line-numbers-set-type initial-line-number-type)
-  ;; turn off display-line-numbers-mode if it was not initially
-  ;; active
-  (unless display-line-numbers-mode-is-initially-active
-    (with-current-buffer (current-buffer)
-      (funcall 'display-line-numbers-mode -1))))
+  (interactive)
+  (let* ((display-line-numbers-mode-is-initially-active (if display-line-numbers-mode
+							    t nil))
+	 (initial-line-number-type display-line-numbers-type))
+    ;; display line numbers relatively
+    (display-line-numbers-relative)
+    (let
+	;; Read the number of lines to skip to a number
+	((number-of-lines (string-to-number (read-string "Lines to skip (+/-): "))))
+      (let* ((current-line-number (line-number-at-pos))
+	     (jump-to-line (+ current-line-number number-of-lines)))
+	(goto-line jump-to-line))
+      ;; change back to initial config for display-line-numbers-mode
+      (display-line-numbers-set-type initial-line-number-type)
+      ;; turn off display-line-numbers-mode if it was not initially
+      ;; active
+      (unless display-line-numbers-mode-is-initially-active
+	(with-current-buffer (current-buffer)
+	  (funcall 'display-line-numbers-mode -1))))))
 
 (defgroup navigation nil
   "Navigation utils."
