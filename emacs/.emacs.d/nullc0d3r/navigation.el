@@ -23,27 +23,32 @@
 ;; relative) is reverted to when `C-g` is pressed. See isearch's code
 ;; to understand how it can be done (the key to handling it seems to
 ;; be to define a new minor mode with keymap that overrides `C-g`).
-(defun goto-line-relative ()
-  "Goto line relative to the current line"
+(defun goto-line-relative (&optional number-of-lines)
+  "\
+Goto line relative to the current line.
+
+The user is asked to provide the number of lines through the
+minibuffer if `number-of-lines` is not provided.
+"
   (interactive)
   (let* ((display-line-numbers-mode-is-initially-active (if display-line-numbers-mode
 							    t nil))
 	 (initial-line-number-type display-line-numbers-type))
     ;; display line numbers relatively
     (display-line-numbers-relative)
-    (let
-	;; Read the number of lines to skip to a number
-	((number-of-lines (string-to-number (read-string "Lines to skip (+/-): "))))
-      (let* ((current-line-number (line-number-at-pos))
-	     (jump-to-line (+ current-line-number number-of-lines)))
-	(goto-line jump-to-line))
-      ;; change back to initial config for display-line-numbers-mode
-      (display-line-numbers-set-type initial-line-number-type)
-      ;; turn off display-line-numbers-mode if it was not initially
-      ;; active
-      (unless display-line-numbers-mode-is-initially-active
-	(with-current-buffer (current-buffer)
-	  (funcall 'display-line-numbers-mode -1))))))
+    ;; read number-of-lines unless already provided
+    (unless number-of-lines
+      (setq number-of-lines (read-number "Lines to skip (+/-): ")))
+    (let* ((current-line-number (line-number-at-pos))
+	   (jump-to-line (+ current-line-number number-of-lines)))
+      (goto-line jump-to-line))
+    ;; change back to initial config for display-line-numbers-mode
+    (display-line-numbers-set-type initial-line-number-type)
+    ;; turn off display-line-numbers-mode if it was not initially
+    ;; active
+    (unless display-line-numbers-mode-is-initially-active
+      (with-current-buffer (current-buffer)
+	(funcall 'display-line-numbers-mode -1)))))
 
 (defgroup navigation nil
   "Navigation utils."
