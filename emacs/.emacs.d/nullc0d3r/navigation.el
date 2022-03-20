@@ -17,12 +17,33 @@
 
 ;;; Code:
 
+(defvar goto-line-relative-for-buffer nil
+  "stores buffer for which `goto-line-relative` is active (if
+  active)")
+
+(defvar display-line-numbers-mode-is-initially-active -1
+  "Was `display-line-numbers-mode` active before
+  `goto-line-relative` was called")
+
+(defvar initial-line-number-type nil
+  "`display-line-numbers-number-type` before `goto-line-relative`
+  was called")
+
+(defun goto-line-relative--cleanup ()
+  ;; It is not necessary the cleanup is called from the buffer that
+  ;; created the `goto-line-relative` context, thus must use that
+  ;; buffer.
+  (with-current-buffer goto-line-relative-for-buffer
+    ;; change back to initial config for display-line-numbers-mode
+    (display-line-numbers-set-type initial-line-number-type)
+    ;; turn off display-line-numbers-mode if it was not initially
+    ;; active
+    (funcall 'display-line-numbers-mode display-line-numbers-mode-is-initially-active))
+  ;; Remove the keymap override
+  (setq overriding-terminal-local-map nil)
+  (setq goto-line-relative-for-buffer nil))
+
 ;; Goto line relative to the current line
-;;
-;; TODO: make it so that the original line number type (absolute or
-;; relative) is reverted to when `C-g` is pressed. See isearch's code
-;; to understand how it can be done (the key to handling it seems to
-;; be to define a new minor mode with keymap that overrides `C-g`).
 (defun goto-line-relative (&optional number-of-lines)
   "\
 Goto line relative to the current line.
@@ -31,9 +52,20 @@ The user is asked to provide the number of lines through the
 minibuffer if `number-of-lines` is not provided.
 "
   (interactive)
-  (let* ((display-line-numbers-mode-is-initially-active (if display-line-numbers-mode
-							    t nil))
-	 (initial-line-number-type display-line-numbers-type))
+  ;; TODO: make sure the context for `goto-line-relative` is removed
+  ;; when the window changes (move out of minibuffer). See how
+  ;; `isearch-mode` handles it.
+
+  ;; Make `navigation-mode-local-map` override all other maps. This is
+  ;; done so that even something `C-g` can be overriden.
+  (setq overriding-terminal-local-map navigation-mode-local-map)
+
+  (setq goto-line-relative-for-buffer (current-buffer))
+  (let* ((display-line-numbers-mode-is-initially-active-temp (if display-line-numbers-mode
+								 t -1))
+	 (initial-line-number-type-temp display-line-numbers-type))
+    (setq display-line-numbers-mode-is-initially-active display-line-numbers-mode-is-initially-active-temp)
+    (setq initial-line-number-type initial-line-number-type-temp)
     ;; display line numbers relatively
     (display-line-numbers-relative)
     ;; read number-of-lines unless already provided
@@ -41,22 +73,17 @@ minibuffer if `number-of-lines` is not provided.
       (setq number-of-lines (read-number "Lines to skip (+/-): ")))
     (let* ((current-line-number (line-number-at-pos))
 	   (jump-to-line (+ current-line-number number-of-lines)))
-      (goto-line jump-to-line))
-    ;; change back to initial config for display-line-numbers-mode
-    (display-line-numbers-set-type initial-line-number-type)
-    ;; turn off display-line-numbers-mode if it was not initially
-    ;; active
-    (unless display-line-numbers-mode-is-initially-active
-      (with-current-buffer (current-buffer)
-	(funcall 'display-line-numbers-mode -1)))))
+      (goto-line jump-to-line)))
+  (goto-line-relative--cleanup))
 
 (defgroup navigation nil
   "Navigation utils."
   :group 'convenience)
 
 ;; create keymap for navigation mode
-(setq navigation-keymap (make-sparse-keymap))
-(define-key navigation-keymap (kbd "M-g M-g") 'goto-line-relative)
+(defvar navigation-keymap (let ((map (make-sparse-keymap)))
+			    (define-key map (kbd "M-g M-g") 'goto-line-relative)
+			    map))
 
 ;;;###autoload
 (define-minor-mode navigation-mode
@@ -76,6 +103,25 @@ minibuffer if `number-of-lines` is not provided.
 ;;;###autoload
 (define-globalized-minor-mode global-navigation-mode
   navigation-mode navigation--turn-on)
+
+;; Navigation mode local keymap
+(defvar navigation-mode-local-map (let ((map (make-sparse-keymap)))
+				    (define-key map (kbd "C-g") 'navigation-abort)
+				    map)
+  "\
+Create local keymap for navigation mode
+
+It is possible to define keys that would override even the major
+mode by setting this map in `overriding-terminal-local-map` when
+required to make this map take the highest precedence. This does
+mean more care must be taken since even `C-g` can be overridden.
+")
+
+(defun navigation-abort ()
+  (interactive)
+  (when goto-line-relative-for-buffer
+    (goto-line-relative--cleanup))
+  (minibuffer-keyboard-quit))
 
 (provide 'navigation)
 ;;; navigation.el ends here
