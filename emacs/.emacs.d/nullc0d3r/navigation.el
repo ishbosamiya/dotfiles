@@ -21,11 +21,11 @@
   "stores buffer for which `goto-line-relative` is active (if
   active)")
 
-(defvar display-line-numbers-mode-is-initially-active -1
+(defvar dln-mode-is-initially-active -1
   "Was `display-line-numbers-mode` active before
   `goto-line-relative` was called")
 
-(defvar initial-line-number-type nil
+(defvar initial-dln-type nil
   "`display-line-numbers-number-type` before `goto-line-relative`
   was called")
 
@@ -35,10 +35,10 @@
   ;; buffer.
   (with-current-buffer goto-line-relative-for-buffer
     ;; change back to initial config for display-line-numbers-mode
-    (display-line-numbers-set-type initial-line-number-type)
+    (display-line-numbers-set-type initial-dln-type)
     ;; turn off display-line-numbers-mode if it was not initially
     ;; active
-    (funcall 'display-line-numbers-mode display-line-numbers-mode-is-initially-active))
+    (funcall 'display-line-numbers-mode dln-mode-is-initially-active))
   ;; Remove the keymap override
   (setq overriding-terminal-local-map nil)
   (setq goto-line-relative-for-buffer nil))
@@ -61,11 +61,11 @@ minibuffer if `number-of-lines` is not provided.
   (setq overriding-terminal-local-map navigation-mode-local-map)
 
   (setq goto-line-relative-for-buffer (current-buffer))
-  (let* ((display-line-numbers-mode-is-initially-active-temp (if display-line-numbers-mode
+  (let* ((dln-mode-is-initially-active-temp (if display-line-numbers-mode
 								 t -1))
-	 (initial-line-number-type-temp display-line-numbers-type))
-    (setq display-line-numbers-mode-is-initially-active display-line-numbers-mode-is-initially-active-temp)
-    (setq initial-line-number-type initial-line-number-type-temp)
+	 (initial-dln-type-temp display-line-numbers-type))
+    (setq dln-mode-is-initially-active dln-mode-is-initially-active-temp)
+    (setq initial-dln-type initial-dln-type-temp)
     ;; display line numbers relatively
     (display-line-numbers-relative)
     ;; read number-of-lines unless already provided
