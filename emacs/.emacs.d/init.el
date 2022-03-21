@@ -5,10 +5,16 @@
 (when (< emacs-major-version 27)
   (package-initialize))
 
-;; Remove annoying UI elements
-(menu-bar-mode -1)
+;; Remove annoying UI elements.
+;;
+;; Instead of using (menu-bar-mode -1) and (tool-bar-mode -1) use this
+;; trick to improve startup times. Cannot for (scroll-bar-mode -1).
+;;
+;; reference:
+;; https://github.com/raxod502/radian/issues/180#issuecomment-485284949
+(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(tool-bar-lines . 0) default-frame-alist)
 ;; (scroll-bar-mode -1)
-(tool-bar-mode -1)
 
 (eval-when-compile
   (or (require 'use-package nil t)
