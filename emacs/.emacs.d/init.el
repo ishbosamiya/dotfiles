@@ -647,3 +647,12 @@ Set temporary buffer local key binding.
   (amx-update))
 
 (global-set-key (kbd "C-c l k") 'buffer-local-set-key)
+
+(use-package hl-todo
+  :ensure t
+  :bind (("C-c t p" . hl-todo-previous)
+	 ("C-c t n" . hl-todo-next)
+	 ("C-c t o" . hl-todo-occur))
+  :config
+  (setq hl-todo-wrap-movement t)
+  (global-hl-todo-mode))
