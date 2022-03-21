@@ -648,6 +648,7 @@ Set temporary buffer local key binding.
 
 (global-set-key (kbd "C-c l k") 'buffer-local-set-key)
 
+;; Highlight TODO and similar words
 (use-package hl-todo
   :ensure t
   :bind (("C-c t p" . hl-todo-previous)
@@ -656,3 +657,16 @@ Set temporary buffer local key binding.
   :config
   (setq hl-todo-wrap-movement t)
   (global-hl-todo-mode))
+
+;; Profile emacs startup
+;;
+;; Run `M-x esup RET`
+(use-package esup
+  :ensure t
+  :config
+  ;; HACK: to make it not bug out, see
+  ;; https://github.com/jschaf/esup/issues/54#issuecomment-651247749
+  ;;
+  ;; the bug: esup tries to step into the byte-compiled version of
+  ;; `cl-lib', and fails horribly
+  (setq esup-depth 0))
