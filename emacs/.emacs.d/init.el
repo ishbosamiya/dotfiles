@@ -21,7 +21,6 @@
 (setq custom-file (locate-user-emacs-file "custom_variables.el"))
 (load custom-file)
 
-
 ;; Allow loading customizations from the nullc0d3r directory
 (add-to-list 'load-path
 	     (concat user-emacs-directory
@@ -98,7 +97,6 @@
 
 ;; Speed up flyspell by using no messages
 (setq-default flyspell-issue-message-flag nil)
-
 
 ;; Show whitespaces at the end of the line
 (setq-default show-trailing-whitespace t)
@@ -230,7 +228,6 @@ Turns on display-line-numbers-mode if not already active."
   :bind (("C-<tab>" . company-complete))
   :custom (company-backends '(company-capf company-gtags)))
 
-
 ;; To use clang format for all c and c++ files
 ;; This is the standard for Blender
 (use-package clang-format+
@@ -258,7 +255,8 @@ Turns on display-line-numbers-mode if not already active."
 
 ;; Front-end for The Silver Searcher (ag)
 (use-package ag
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; pdf-tools replacement for docview
 ;;
@@ -266,16 +264,20 @@ Turns on display-line-numbers-mode if not already active."
 ;; be disabled
 (use-package pdf-tools
   :ensure t
-  :init
+  :defer t
+  :config
   (pdf-tools-install))
 (add-hook 'pdf-view-mode-hook (lambda() (display-line-numbers-mode -1)))
 
 ;; Major mode for editing OpenSCAD code
 (use-package scad-mode
-  :ensure t)
+  :ensure t
+  :defer t)
+
 ;; Preview for OpenSCAD code
 (use-package scad-preview
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; Org mode settings
 (setq org-src-fontify-natively t)
@@ -384,7 +386,8 @@ Turns on display-line-numbers-mode if not already active."
 ;; Need this explicitly so that flycheck is used over flymake by
 ;; lsp-mode
 (use-package flycheck
-  :ensure t)
+  :ensure t
+  :defer 2)
 
 ;; Language server using lsp-mode
 (use-package lsp-mode
@@ -421,6 +424,7 @@ Turns on display-line-numbers-mode if not already active."
 ;; lsp mode for python
 (use-package lsp-python-ms
   :ensure t
+  :defer t
   :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
                          (require 'lsp-python-ms)
@@ -447,6 +451,7 @@ Turns on display-line-numbers-mode if not already active."
 ;; Debug Adapter Protocol through dap-mode
 (use-package dap-mode
   :ensure t
+  :defer 5
   :config
   ;; On a new system need to call `dap-gdb-lldb-setup` to setup the
   ;; vscode extension automagically
@@ -454,27 +459,27 @@ Turns on display-line-numbers-mode if not already active."
 
   ;; Bind `C-c l d` to `dap-hydra` for easy access
   (general-define-key
-    :keymaps 'lsp-mode-map
-    :prefix lsp-keymap-prefix
-    "d" '(dap-hydra t :wk "debugger")))
+   :keymaps 'lsp-mode-map
+   :prefix lsp-keymap-prefix
+   "d" '(dap-hydra t :wk "debugger"))
 
-;; rust debug template
-(dap-register-debug-template "rust debug main"
-                             (list :type "gdb"
-                                   :request "launch"
-                                   :name "rust debug main"
-                           :gdbpath "rust-gdb"
-                                   :target "${workspaceFolder}/target/debug/main"
-                                   :cwd nil))
+  ;; rust debug template
+  (dap-register-debug-template "rust debug main"
+                               (list :type "gdb"
+                                     :request "launch"
+                                     :name "rust debug main"
+				     :gdbpath "rust-gdb"
+                                     :target "${workspaceFolder}/target/debug/main"
+                                     :cwd nil))
 
-;; rust release template
-(dap-register-debug-template "rust release main"
-                             (list :type "gdb"
-                                   :request "launch"
-                                   :name "rust release main"
-                           :gdbpath "rust-gdb"
-                                   :target "${workspaceFolder}/target/release/main"
-                                   :cwd nil))
+  ;; rust release template
+  (dap-register-debug-template "rust release main"
+                               (list :type "gdb"
+                                     :request "launch"
+                                     :name "rust release main"
+				     :gdbpath "rust-gdb"
+                                     :target "${workspaceFolder}/target/release/main"
+                                     :cwd nil)))
 
 (use-package magit
   :ensure t
@@ -520,6 +525,7 @@ Turns on display-line-numbers-mode if not already active."
 ;; Be able to use rg from emacs
 (use-package rg
   :ensure t
+  :defer 2
   :config
   (setq rg-executable "rg") ;; Use rg from the $PATH; allows working
 			    ;; via TRAMP too!
