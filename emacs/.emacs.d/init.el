@@ -682,3 +682,12 @@ Set temporary buffer local key binding.
   ;; the bug: esup tries to step into the byte-compiled version of
   ;; `cl-lib', and fails horribly
   (setq esup-depth 0))
+
+;; Navigation by jumping within the current visible regions.
+(use-package avy
+  :ensure t
+  :bind (("M-j" . avy-goto-char-timer)
+	 (:map isearch-mode-map
+	       ("M-j" . avy-isearch)))
+  :config
+  (setq avy-single-candidate-jump nil))
