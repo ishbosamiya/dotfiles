@@ -60,12 +60,12 @@ minibuffer if `number-of-lines` is not provided.
   ;; TODO: make sure the context for `goto-line-relative` is removed
   ;; when the window changes (move out of minibuffer). See how
   ;; `isearch-mode` handles it. When mouse is used to leave the buffer
-  ;; works (see mouse-leave-buffer-hook) already.  One solution to
-  ;; this could be to figure out which buffers have the
-  ;; `goto-line-relative` active and store the various variables
-  ;; required in lists in the order of the recursive edit. This would
-  ;; the user to use `enable-recursive-minibuffers` but that's a good
-  ;; thing right??
+  ;; works (see mouse-leave-buffer-hook) already. It is not possible
+  ;; to have a list of currently active `goto-line-relative` and
+  ;; handle things that way since `overriding-terminal-local-map`
+  ;; would cause problems, only one can be set at a time and
+  ;; `set-transient-map` cannot be used since the map would be removed
+  ;; if any key other than in the `navigation-mode-local-map` is used.
 
 
   ;; Make `navigation-mode-local-map` override all other maps. This is
