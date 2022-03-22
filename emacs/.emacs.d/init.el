@@ -691,3 +691,9 @@ Set temporary buffer local key binding.
 	       ("M-j" . avy-isearch)))
   :config
   (setq avy-single-candidate-jump nil))
+
+;; Add automated performance mitigations for files with excessively
+;; long lines.
+(use-package so-long
+  :ensure t
+  :init (global-so-long-mode t))
