@@ -697,3 +697,7 @@ Set temporary buffer local key binding.
 (use-package so-long
   :ensure t
   :init (global-so-long-mode t))
+
+(use-package fzf
+  :ensure t
+  :bind (("C-c C-x C-f" . 'fzf-find-file)))
