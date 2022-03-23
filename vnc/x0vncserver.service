@@ -1,0 +1,24 @@
+[Unit]
+Description=Remote desktop service (VNC) for display
+
+# Require start of
+Requires=display-manager.service
+
+# Wait for
+After=network-online.target
+After=display-manager.service
+
+[Service]
+Type=forking
+User=nullc0d3r
+Group=nullc0d3r
+
+# Start command
+ExecStart=/usr/local/bin/x0vnc.sh
+
+# Restart service after session log out
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
