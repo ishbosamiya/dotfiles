@@ -667,7 +667,7 @@ Set temporary buffer local key binding.
 	 ("C-c t n" . hl-todo-next)
 	 ("C-c t o" . hl-todo-occur))
   :config
-  (setq hl-todo-wrap-movement t)
+  (setq hl-todo-wrap-movement nil)
   (global-hl-todo-mode))
 
 ;; Profile emacs startup
