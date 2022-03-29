@@ -701,3 +701,7 @@ Set temporary buffer local key binding.
 (use-package fzf
   :ensure t
   :bind (("C-c C-x C-f" . 'fzf-find-file)))
+
+(use-package command-log-mode
+  :ensure t
+  :defer t)
