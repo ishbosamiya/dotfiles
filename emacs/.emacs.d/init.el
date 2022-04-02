@@ -410,7 +410,15 @@ Turns on display-line-numbers-mode if not already active."
   (lsp-rust-analyzer-cargo-watch-command "clippy")
   :config
   (setq lsp-enable-symbol-highlighting nil)
-  (yas-global-mode t))
+  (yas-global-mode t)
+  ;; limit the lsp-signature doc lines to 2 instead of 20. This
+  ;; reduces how intrusive lsp is while still being useful. If full
+  ;; docs are needed, can use `lsp-signature-toggle-full-docs` (M-a).
+  (setq lsp-signature-doc-lines 2)
+  ;; do not auto activate lsp-signature, use `lsp-signature-activate`
+  ;; (C-S-SPC) to activate it and `lsp-signature-stop` (C-g) to
+  ;; disable it.
+  (setq lsp-signature-auto-activate nil))
 
 ;; nice lsp ui features
 (use-package lsp-ui
