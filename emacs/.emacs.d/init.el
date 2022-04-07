@@ -713,3 +713,6 @@ Set temporary buffer local key binding.
 (use-package command-log-mode
   :ensure t
   :defer t)
+
+;; make the dired file sizes human readable
+(setq dired-listing-switches "-alh")
