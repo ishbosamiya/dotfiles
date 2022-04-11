@@ -518,7 +518,6 @@ Turns on display-line-numbers-mode if not already active."
   (interactive "D")
   (let ((dir (expand-file-name dir)))
     (start-process "gnome-terminal" nil "dbus-launch" "gnome-terminal" "--working-directory" dir)))
-(global-set-key (kbd "C-x C-t") 'open-gnome-terminal-in-directory)
 
 ;; Be able to open alacritty with some nice keybindings
 (setenv "SHELL" "/usr/bin/zsh")
@@ -526,7 +525,22 @@ Turns on display-line-numbers-mode if not already active."
   (interactive "D")
   (let ((dir (expand-file-name dir)))
     (start-process "alacritty" nil "dbus-launch" "alacritty" "--working-directory" dir)))
-(global-set-key (kbd "C-x C-a") 'open-alacritty-in-directory)
+
+(defun open-terminal-in-directory (dir)
+  "\
+Try to open terminal in directory in the preferencial order of
+alacritty > gnome-terminal.
+
+TODO: Make it so that the preferencial order is defined by the
+user.
+"
+  (interactive "D")
+  (let ((alacritty-exists (call-process-shell-command "command -v alacritty")))
+    (if alacritty-exists
+	(open-alacritty-in-directory dir)
+      (open-gnome-terminal-in-directory dir))))
+
+(global-set-key (kbd "C-x C-t") 'open-terminal-in-directory)
 
 ;; Be able to open nautilus with some nice keybindings
 (defun open-nautilus-in-directory (dir)
