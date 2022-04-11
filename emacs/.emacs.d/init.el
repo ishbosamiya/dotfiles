@@ -520,6 +520,14 @@ Turns on display-line-numbers-mode if not already active."
     (start-process "gnome-terminal" nil "dbus-launch" "gnome-terminal" "--working-directory" dir)))
 (global-set-key (kbd "C-x C-t") 'open-gnome-terminal-in-directory)
 
+;; Be able to open alacritty with some nice keybindings
+(setenv "SHELL" "/usr/bin/zsh")
+(defun open-alacritty-in-directory (dir)
+  (interactive "D")
+  (let ((dir (expand-file-name dir)))
+    (start-process "alacritty" nil "dbus-launch" "alacritty" "--working-directory" dir)))
+(global-set-key (kbd "C-x C-a") 'open-alacritty-in-directory)
+
 ;; Be able to open nautilus with some nice keybindings
 (defun open-nautilus-in-directory (dir)
   (interactive "D")
