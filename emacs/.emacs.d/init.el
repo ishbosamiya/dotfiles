@@ -393,7 +393,12 @@ Turns on display-line-numbers-mode if not already active."
 ;; lsp-mode
 (use-package flycheck
   :ensure t
-  :defer 2)
+  :defer 2
+  :config
+  ;; TODO: need to find a way to make this a toggle, it is sometimes
+  ;; useful to have the underlines that indicate the location of the
+  ;; warning/error but it is distracting most of the time.
+  (setq flycheck-highlighting-mode nil))
 
 ;; Language server using lsp-mode
 (use-package lsp-mode
