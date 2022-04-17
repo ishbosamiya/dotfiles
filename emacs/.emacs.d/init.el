@@ -395,10 +395,27 @@ Turns on display-line-numbers-mode if not already active."
   :ensure t
   :defer 2
   :config
-  ;; TODO: need to find a way to make this a toggle, it is sometimes
-  ;; useful to have the underlines that indicate the location of the
-  ;; warning/error but it is distracting most of the time.
-  (setq flycheck-highlighting-mode nil))
+  ;; disable underlining of errors and warnings by default
+  (setq flycheck-highlighting-mode nil)
+  (defun flycheck-toggle-highlighting-mode (&optional buffer)
+    "Toggle `flycheck-highlighting-mode` between no underlining
+and underlining symbols.
+
+Note: `flycheck-highlighting-mode` is not buffer local thus the
+mode is toggled globally but only the `buffer` (or
+`current-buffer`) is actually refreshed after the toggle."
+    (interactive)
+    (unless buffer
+      (setq buffer (current-buffer)))
+    (with-current-buffer buffer
+      (let ((set-mode-to (if (eq flycheck-highlighting-mode 'nil)
+			     'symbols
+			   'nil)))
+	(setq flycheck-highlighting-mode set-mode-to)
+	;; force flycheck to refresh by turning it off and back on
+	(funcall 'flycheck-mode nil)
+	(funcall 'flycheck-mode t))))
+  (define-key flycheck-mode-map (kbd "C-c f t") 'flycheck-toggle-highlighting-mode))
 
 ;; Language server using lsp-mode
 (use-package lsp-mode
