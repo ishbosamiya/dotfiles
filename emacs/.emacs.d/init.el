@@ -373,10 +373,13 @@ Turns on display-line-numbers-mode if not already active."
      compilation-filter-start (point))))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
-;; Allow sourcetrail interaction, jump from sourcetrail to emacs
-;; and such
-(use-package sourcetrail
-  :ensure t)
+;; sourcetrail is no longer available on melpa sadly, the project is
+;; abandoned.
+;;
+;; Allow sourcetrail interaction, jump from sourcetrail to emacs and
+;; such.
+;; (use-package sourcetrail
+;;   :ensure t)
 
 ;; Allow multi line editing.
 ;; Use using C-; when over a symbol
