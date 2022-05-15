@@ -33,3 +33,10 @@ if [ -d /usr/lib/ccache ]; then
     export PATH="/usr/lib/ccache:$PATH"
 fi
 . "$HOME/.cargo/env"
+
+# add nix data dirs to the XDG_DATA_DIRS so that the desktop entires
+# and other stuff related to xdg works even for applications installed
+# via nix
+if [ -d $HOME/.nix-profile/share/ ]; then
+    export XDG_DATA_DIRS="$HOME/.nix-profile/share:${XDG_DATA_DIRS}"
+fi
