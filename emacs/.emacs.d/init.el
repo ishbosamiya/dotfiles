@@ -443,7 +443,9 @@ mode is toggled globally but only the `buffer` (or
   ;; do not auto activate lsp-signature, use `lsp-signature-activate`
   ;; (C-S-SPC) to activate it and `lsp-signature-stop` (C-g) to
   ;; disable it.
-  (setq lsp-signature-auto-activate nil))
+  (setq lsp-signature-auto-activate nil)
+  ;; disable annoying lens features
+  (setq lsp-lens-enable nil))
 
 ;; nice lsp ui features
 (use-package lsp-ui
