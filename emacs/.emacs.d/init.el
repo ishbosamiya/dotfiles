@@ -573,7 +573,7 @@ user.
 (defun open-nautilus-in-directory (dir)
   (interactive "D")
   (let ((dir (expand-file-name dir)))
-    (start-process "nautilus" nil "dbus-launch" "nautilus" dir)))
+    (start-process "nautilus" nil "xdg-open" dir)))
 (global-set-key (kbd "C-x C-y") 'open-nautilus-in-directory)
 
 (use-package glsl-mode
