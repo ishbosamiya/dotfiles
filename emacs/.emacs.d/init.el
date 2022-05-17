@@ -540,18 +540,20 @@ mode is toggled globally but only the `buffer` (or
   :ensure t)
 
 ;; Be able to open gnome-terminal with some nice keybindings
-(setenv "SHELL" "/usr/bin/zsh")
+(setenv "SHELL" "zsh")
 (defun open-gnome-terminal-in-directory (dir)
   (interactive "D")
   (let ((dir (expand-file-name dir)))
-    (start-process "gnome-terminal" nil "dbus-launch" "gnome-terminal" "--working-directory" dir)))
+    ;; use call-process with the destination nil to detach the process
+    (call-process "alacritty" nil 0 nil "--working-directory" dir)))
 
 ;; Be able to open alacritty with some nice keybindings
-(setenv "SHELL" "/usr/bin/zsh")
+(setenv "SHELL" "zsh")
 (defun open-alacritty-in-directory (dir)
   (interactive "D")
   (let ((dir (expand-file-name dir)))
-    (start-process "alacritty" nil "dbus-launch" "alacritty" "--working-directory" dir)))
+    ;; use call-process with the destination nil to detach the process
+    (call-process "alacritty" nil 0 nil "--working-directory" dir)))
 
 (defun open-terminal-in-directory (dir)
   "\
