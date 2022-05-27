@@ -30,3 +30,30 @@ Then run
 ``` shell
 gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal alacritty
 ```
+
+## For Nu Shell
+
+Install [Nu](https://www.nushell.sh/) by compiling it.
+
+The prompt used for `nu` is `oh-my-posh` and depends on a custom
+theme. This requires [oh-my-posh](https://ohmyposh.dev/) to be
+installed.
+
+## For oh-my-posh
+
+[Installation
+instructions](https://ohmyposh.dev/docs/installation/linux) provided
+by `oh-my-posh` installs it globally. Not really a good idea so install it using
+
+``` shell
+wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O ~/.local/bin/oh-my-posh
+chmod +x ~/.local/bin/oh-my-posh
+```
+
+For "installing" the themes, the install instructions provided on the
+website work well.
+
+### Note
+
+This requires at least one [nerd-font](https://www.nerdfonts.com/) to
+be installed.
