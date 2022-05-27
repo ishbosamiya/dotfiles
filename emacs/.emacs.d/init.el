@@ -757,13 +757,22 @@ Set temporary buffer local key binding.
   :ensure t
   :init (global-so-long-mode t))
 
+;; Use fzf for fuzzy searching files and such.
 (use-package fzf
   :ensure t
   :bind (("C-c C-x C-f" . 'fzf-find-file)))
 
+;; Log the commands used in the buffer/globally.
 (use-package command-log-mode
   :ensure t
   :defer t)
 
-;; make the dired file sizes human readable
+;; Make the dired file sizes human readable
 (setq dired-listing-switches "-alh")
+
+;; Major mode for nix files.
+(use-package nix-mode
+  :ensure t
+  :mode ("\\.nix\\'" "\\.nix.in\\'"))
+(use-package nix-repl
+  :commands (nix-repl))
