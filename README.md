@@ -16,13 +16,8 @@ configure.
 
 Install [Alacritty](https://github.com/alacritty/alacritty) by compiling it.
 
-Need to update the default terminal to be Alacritty by running
-
-``` shell
-gsettings set org.gnome.desktop.default-applications.terminal exec alacritty
-```
-This sadly doesn't update the nautilus context menu to open the
-terminal as Alacritty so manually install (installing through pip doesn't work out properly)
+To update the nautilus context menu to open the terminal as Alacritty,
+manually install (installing through pip doesn't work out properly)
 [nautilus-open-any-terminal](https://github.com/Stunkymonkey/nautilus-open-any-terminal).
 
 Then run
@@ -30,6 +25,11 @@ Then run
 ``` shell
 gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal alacritty
 ```
+
+Gnome no longer has any indication of default terminal emulator thus
+there is no way to set a default terminal. The best way is to override
+the terminal opening shortcut to open `Alacritty` instead of
+`gnome-terminal`.
 
 ## For Nu Shell
 
