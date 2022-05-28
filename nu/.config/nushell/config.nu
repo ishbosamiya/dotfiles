@@ -402,5 +402,5 @@ let-env config = {
   ]
 }
 
-oh-my-posh init nu --config "~/.poshthemes/powerlevel10k_rainbow.omp.json"
+oh-my-posh init nu --config "~/.config/nushell/theme.omp.json"
 source ~/.oh-my-posh.nu

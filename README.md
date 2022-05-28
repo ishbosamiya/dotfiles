@@ -50,9 +50,6 @@ wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-
 chmod +x ~/.local/bin/oh-my-posh
 ```
 
-For "installing" the themes, the install instructions provided on the
-website work well.
-
 ### Note
 
 This requires at least one [nerd-font](https://www.nerdfonts.com/) to
