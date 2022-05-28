@@ -399,6 +399,33 @@ let-env config = {
       mode: [emacs, vi_normal, vi_insert]
       event: { send: menu name: commands_with_description }
     }
+    # Keybinding to change directory with fd and fzf (fuzzy search
+    # directory) for current directory and its sub directories.
+    {
+      name: change_dir_with_fd_fzf
+      modifier: CONTROL
+      keycode: Char_l
+      mode: emacs
+      event: {
+        send: executehostcommand,
+        cmd: "cd (fd . -Ha --type directory | fzf --height=40% | decode utf-8 | str trim)"
+      }
+    }
+    # Keybinding to change directory with fd and fzf (fuzzy search
+    # directory) for current directory, $env.HOME, /media/ish/data/extra.
+    #
+    # TODO: need to find a way for the "user" to specify which
+    # directories to search in.
+    {
+      name: change_dir_with_fd_fzf_all
+      modifier: control
+      keycode: Char_L
+      mode: emacs
+      event: {
+        send: executehostcommand,
+	cmd: "cd (fd . $env.HOME /media/ish/data/extra -Ha --type directory | fzf --height=40% | decode utf-8 | str trim)"
+      }
+    }
   ]
 }
 
