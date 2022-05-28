@@ -426,6 +426,16 @@ let-env config = {
 	cmd: "cd (fd . $env.HOME /media/ish/data/extra -Ha --type directory | fzf --height=40% | decode utf-8 | str trim)"
       }
     }
+    # Keyboard quit on `C-g` just like emacs.
+    {
+      name: keyboard_quit
+      modifier: control
+      keycode: Char_g
+      mode: emacs
+      event: {
+        send: CtrlC,
+      }
+    }
   ]
 }
 
