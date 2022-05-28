@@ -776,3 +776,8 @@ Set temporary buffer local key binding.
   :mode ("\\.nix\\'" "\\.nix.in\\'"))
 (use-package nix-repl
   :commands (nix-repl))
+
+;; Major mode for yaml files.
+(use-package yaml-mode
+  :ensure t
+  :mode ("\\.yaml\\'" "\\.yml\\'"))
