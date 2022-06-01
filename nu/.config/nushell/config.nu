@@ -403,7 +403,7 @@ let-env config = {
     # directory) for current directory and its sub directories.
     {
       name: change_dir_with_fd_fzf
-      modifier: CONTROL
+      modifier: control
       keycode: Char_l
       mode: emacs
       event: {
@@ -418,7 +418,7 @@ let-env config = {
     # directories to search in.
     {
       name: change_dir_with_fd_fzf_all
-      modifier: control
+      modifier: alt
       keycode: Char_L
       mode: emacs
       event: {
