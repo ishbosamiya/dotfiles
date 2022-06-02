@@ -63,6 +63,14 @@
 ;; Prevent C-z from accidentally sending the window to background
 (global-unset-key (kbd "C-z"))
 
+;; Flyspell: on-the-fly spell checking
+(use-package flyspell
+  :config
+  ;; unbind `C-;` which is bound to
+  ;; `flyspell-auto-correct-previous-word` so that `C-;` remains only
+  ;; for iedit-mode
+  (unbind-key "C-;" flyspell-mode-map))
+
 ;; Help writing correct text. TODO: Figure out how to make it trigger
 ;; only in "pure text" buffers
 (use-package writegood-mode
