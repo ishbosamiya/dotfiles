@@ -14,6 +14,6 @@ lazy_static = "1.4"
 serde = { version = "1.0", features = ["derive"] }
 toml = "0.5"
 clap = { version = "3.1", features = ["derive"] }
-
-[target.'cfg(unix)'.dependencies]
+# since this wouldn't work for windows anyway, no point in adding
+# "sudo" as a dependency only for unix
 sudo = "0.6"

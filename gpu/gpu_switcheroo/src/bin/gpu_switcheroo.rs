@@ -10,12 +10,21 @@ use gpu_switcheroo::config::{self, Config};
 fn main() {
     let args = Args::parse();
 
-    let get_config = || match Config::read() {
+    sudo::escalate_if_needed().unwrap();
+
+    println!(
+        "info: attempting to read config from {}",
+        config::project_config_file_path().to_str().unwrap()
+    );
+
+    let mut config = match Config::read() {
         Ok(config) => config,
         Err(err) => {
             if !config::project_config_file_path().exists() {
                 println!("config file does not exist, creating new config");
-                Config::default()
+                let config = Config::default();
+                config.write().unwrap();
+                config
             } else {
                 eprintln!(
                     "error {} while attempting to read config, check {}",
@@ -28,19 +37,12 @@ fn main() {
     };
 
     if let Some(path) = args.set_nvidia_prime_select_path {
-        let mut config = get_config();
-
         config.nvidia_prime_select_path = Some(PathBuf::from_str(&path).unwrap());
 
         config.write().unwrap();
     }
 
-    #[cfg(unix)]
-    {
-        sudo::escalate_if_needed().unwrap();
-    }
-
-    match args.switch_to_gpu.switch(&get_config()) {
+    match args.switch_to_gpu.switch(&config) {
         Ok(_) => {
             println!("successfully switched to {:?} GPU", args.switch_to_gpu);
         }
@@ -49,7 +51,7 @@ fn main() {
                 "error while switching to {:?} GPU: {}",
                 args.switch_to_gpu, err
             );
-            eprintln!("see `gpu_switcheroo --help` for details on usage",);
+            eprintln!("see `gpu_switcheroo --help` for details on usage");
         }
     }
 }
@@ -127,9 +129,9 @@ pub enum Error {
 impl Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Error::NvidiaPrimeSelectPathUnknown => write!(f, "nvidia prime select path unknown"),
+            Error::NvidiaPrimeSelectPathUnknown => write!(f, "nvidia-prime-select path unknown"),
             Error::NvidiaPrimeSelectPathDoesNotExist => {
-                write!(f, "nvidia prime select path does not exist")
+                write!(f, "nvidia-prime-select path does not exist")
             }
         }
     }
