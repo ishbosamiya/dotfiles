@@ -54,3 +54,21 @@ chmod +x ~/.local/bin/oh-my-posh
 
 This requires at least one [nerd-font](https://www.nerdfonts.com/) to
 be installed.
+
+## For nvidia-prime-select
+
+[nvidia-prime-select](https://github.com/wildtruc/nvidia-prime-select)
+works great for switching purely to the intel GPU. The problem arises
+when switching purely to the nvidia GPU. The session doesn't start
+until `nvidia-prime-select` is uninstalled. This is annoying.
+
+Since at least one functionality of `nvidia-prime-select` works well
+(intel only) it is useful to use it but with a hack. When the nvidia
+GPU should be disabled, install `nvidia-prime-select` and set it to
+`intel mode`. When the nvidia GPU is required, uninstall
+`nvidia-prime-select`, use the [nvidia
+optimus](https://wiki.debian.org/NVIDIA%20Optimus) by setting the
+environment variables for the program (`__NV_PRIME_RENDER_OFFLOAD=1
+__GLX_VENDOR_LIBRARY_NAME=nvidia %command%`).
+
+To ease this (hacky) process, see [gpu](gpu/README.md).
