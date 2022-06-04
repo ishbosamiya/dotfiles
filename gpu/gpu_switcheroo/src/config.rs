@@ -21,7 +21,7 @@ lazy_static! {
 }
 
 lazy_static! {
-    static ref PROJECT_CONFIG_FILE_PATH: PathBuf = PROJECT_CONFIG_DIR_PATH.join("config.json");
+    static ref PROJECT_CONFIG_FILE_PATH: PathBuf = PROJECT_CONFIG_DIR_PATH.join("config.toml");
 }
 
 /// Current version of the config file that would be written.
