@@ -46,6 +46,7 @@ pub fn project_config_file_path() -> &'static Path {
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct Config {
+    config_version: u32,
     pub nvidia_prime_select_path: Option<PathBuf>,
 }
 
@@ -53,6 +54,7 @@ impl Config {
     /// Create new config.
     pub fn new() -> Self {
         Self {
+            config_version: CURRENT_CONFIG_VERSION,
             nvidia_prime_select_path: None,
         }
     }
@@ -60,33 +62,23 @@ impl Config {
     /// Write the config to disk. Location is determined by
     /// [`project_config_file_path()`].
     pub fn write(&self) -> Result<(), Error> {
-        // write the current config version followed by the serialized
-        // config
-        let file_content = format!(
-            "{}\n{}",
-            CURRENT_CONFIG_VERSION,
-            toml::to_string_pretty(self)?
-        );
-        std::fs::write(project_config_file_path(), file_content)?;
+        std::fs::write(project_config_file_path(), toml::to_string_pretty(self)?)?;
         Ok(())
     }
 
     /// Read the config from disk. Location is determined by
     /// [`project_config_file_path()`].
     pub fn read() -> Result<Self, Error> {
-        let config_file_contents = std::fs::read_to_string(project_config_file_path())?;
-        let (version, config) = config_file_contents
-            .split_once('\n')
-            .ok_or(Error::CouldNotFindConfigVersion)?;
-        let version = version.parse().map_err(|_| Error::ConfigVersionCorrupted)?;
+        let config_file_contents = std::fs::read(project_config_file_path())?;
+        let config = toml::from_slice::<Config>(&config_file_contents)?;
 
-        if !CURRENT_SUPPORTED_VERSION_RANGE.contains(&version) {
+        if !CURRENT_SUPPORTED_VERSION_RANGE.contains(&config.config_version) {
             return Err(Error::UnsupportedConfigVersion(
-                version,
+                config.config_version,
                 CURRENT_SUPPORTED_VERSION_RANGE,
             ));
         }
-        Ok(toml::from_str(config)?)
+        Ok(config)
     }
 }
 
@@ -101,8 +93,6 @@ pub enum Error {
     TomlSerialization(toml::ser::Error),
     TomlDeserialization(toml::de::Error),
     Io(std::io::Error),
-    CouldNotFindConfigVersion,
-    ConfigVersionCorrupted,
     /// Unsupported config version (got version, supported versions)
     UnsupportedConfigVersion(u32, RangeInclusive<u32>),
 }
@@ -113,8 +103,6 @@ impl Display for Error {
             Error::TomlSerialization(err) => write!(f, "toml serialization: {}", err),
             Error::TomlDeserialization(err) => write!(f, "toml deserialization: {}", err),
             Error::Io(err) => write!(f, "io: {}", err),
-            Error::CouldNotFindConfigVersion => write!(f, "couldn't find config version"),
-            Error::ConfigVersionCorrupted => write!(f, "config version corrupted"),
             Error::UnsupportedConfigVersion(got_version, supported_versions) => write!(
                 f,
                 "unsupported config version: {} must be in {}..={}",
