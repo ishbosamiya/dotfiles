@@ -69,7 +69,7 @@ pub struct Args {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, ArgEnum)]
 pub enum GPU {
     Intel,
-    Nvidia,
+    Optimus,
 }
 
 impl GPU {
@@ -87,7 +87,7 @@ impl GPU {
 
         match self {
             GPU::Intel => Self::switch_intel(&nvidia_prime_select_path),
-            GPU::Nvidia => Self::switch_nvidia(&nvidia_prime_select_path),
+            GPU::Optimus => Self::switch_nvidia(&nvidia_prime_select_path),
         }
     }
 
