@@ -22,3 +22,4 @@ emacs/.emacs.d/projectile-bookmarks.eld
 /emacs/.emacs.d/tramp
 /emacs/.emacs.d/history
 /zsh/.zsh_functions/_alacritty
+/emacs/.emacs.d/eshell/
