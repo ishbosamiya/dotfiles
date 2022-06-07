@@ -33,3 +33,11 @@ if [ -d /usr/lib/ccache ]; then
     export PATH="/usr/lib/ccache:$PATH"
 fi
 . "$HOME/.cargo/env"
+
+if [ -d $HOME/.nix-profile/etc/profile.d ]; then
+  for i in $HOME/.nix-profile/etc/profile.d/*.sh; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+fi
