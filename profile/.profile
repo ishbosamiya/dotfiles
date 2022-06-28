@@ -41,3 +41,7 @@ if [ -d $HOME/.nix-profile/etc/profile.d ]; then
     fi
   done
 fi
+
+if command -v emacs >/dev/null; then
+    export SUDO_EDITOR=`which emacs`
+fi
