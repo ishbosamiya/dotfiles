@@ -14,6 +14,7 @@
 ;;
 ;; Features:
 ;; * `goto-line-relative`
+;; * `transpose-windows`
 
 ;;; Code:
 
@@ -100,6 +101,7 @@ minibuffer if `number-of-lines` is not provided.
 ;; create keymap for navigation mode
 (defvar navigation-keymap (let ((map (make-sparse-keymap)))
 			    (define-key map (kbd "M-g M-g") 'goto-line-relative)
+			    (define-key map (kbd "C-c n w") 'transpose-windows)
 			    map))
 
 ;;;###autoload
@@ -139,6 +141,20 @@ mean more care must be taken since even `C-g` can be overridden.
   (when goto-line-relative--current-buffer
     (goto-line-relative--cleanup))
   (minibuffer-keyboard-quit))
+
+;; from https://www.emacswiki.org/emacs/TransposeWindows
+(defun transpose-windows ()
+  "Transpose two windows.  If more or less than two windows are visible, error."
+  (interactive)
+  (unless (= 2 (count-windows))
+    (error "There are not 2 windows."))
+  (let* ((windows (window-list))
+         (w1 (car windows))
+         (w2 (nth 1 windows))
+         (w1b (window-buffer w1))
+         (w2b (window-buffer w2)))
+    (set-window-buffer w1 w2b)
+    (set-window-buffer w2 w1b)))
 
 (provide 'navigation)
 ;;; navigation.el ends here
