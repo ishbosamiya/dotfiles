@@ -789,3 +789,6 @@ Set temporary buffer local key binding.
 (use-package yaml-mode
   :ensure t
   :mode ("\\.yaml\\'" "\\.yml\\'"))
+
+;; Set keyboard shortcuts for dictionary related queries.
+(bind-key "C-c d s" 'dictionary-search)
