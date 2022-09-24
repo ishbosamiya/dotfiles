@@ -70,5 +70,7 @@ of the current one and
 
 (add-hook 'comint-mode-hook #'compilation-mode-on-exit-comint-hook)
 
+(bind-key "C-c C-k" 'kill-compilation comint-mode-map)
+
 (provide 'comint-extras)
 ;;; comint-extras.el ends here
