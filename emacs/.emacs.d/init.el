@@ -255,7 +255,11 @@ Turns on display-line-numbers-mode if not already active."
 ;; first
 (use-package ggtags
   :ensure t
-  :hook ((c-mode c++-mode glsl-mode) . ggtags-mode))
+  :hook ((c-mode c++-mode glsl-mode) . ggtags-mode)
+  :custom
+  ;; disable "M-s s" in the ggtags navigation map so that it does not
+  ;; override the rg-menu binding when ggtags-mode is enabled manually
+  (unbind-key "M-s s" 'ggtags-navigation-map))
 
 ;; Blender Addon Development Environment
 (setq blender-python-launch-path "/media/ish/data/extra/blender-git/blender_emacs/launch_blender.py")
