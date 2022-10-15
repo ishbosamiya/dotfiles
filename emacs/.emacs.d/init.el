@@ -271,11 +271,6 @@ Turns on display-line-numbers-mode if not already active."
   (require 'subr-x)
   (start-process "blender" "*blender-output-buffer*" "python3" blender-python-launch-path "--blender"  blender-path "--blender-emacs" blender-emacs-python-script "--source-path" (string-trim-right (read-shell-command "Addon Location: "))))
 
-;; Front-end for The Silver Searcher (ag)
-(use-package ag
-  :ensure t
-  :defer t)
-
 ;; pdf-tools replacement for docview
 ;;
 ;; since it doesn't work well with display-line-numbers-mode, it must
