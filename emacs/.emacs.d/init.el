@@ -799,3 +799,8 @@ Set temporary buffer local key binding.
     (goto-char beg)
     (while (re-search-forward "^\\(.*\n\\)\\1+" end t)
       (replace-match "\\1"))))
+
+(defun uniquify-buffer-lines ()
+  "Remove duplicate adjacent lines in the current buffer."
+  (interactive)
+  (uniquify-region-lines (point-min) (point-max)))
