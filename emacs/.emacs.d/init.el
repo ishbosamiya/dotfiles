@@ -791,3 +791,11 @@ Set temporary buffer local key binding.
 
 ;; Set keyboard shortcuts for dictionary related queries.
 (bind-key "C-c d s" 'dictionary-search)
+
+(defun uniquify-region-lines (beg end)
+  "Remove duplicate adjacent lines in region."
+  (interactive "*r")
+  (save-excursion
+    (goto-char beg)
+    (while (re-search-forward "^\\(.*\n\\)\\1+" end t)
+      (replace-match "\\1"))))
