@@ -391,7 +391,30 @@ Turns on display-line-numbers-mode if not already active."
 ;; Allow multi line editing.
 ;; Use using C-; when over a symbol
 (use-package iedit
-  :ensure t)
+  :ensure t
+  :config
+  (defun iedit-occurrence-context-lines-change (value &optional buffer)
+      "Change the value of `iedit-occurrence-context-lines` by the
+given value."
+    (unless buffer
+      (setq buffer (current-buffer)))
+    (with-current-buffer buffer
+      (setq iedit-occurrence-context-lines (+ iedit-occurrence-context-lines value))
+      (if (< iedit-occurrence-context-lines 0)
+	  (setq iedit-occurrence-context-lines 0))
+      (iedit-show/hide-context-lines)
+      (iedit-show/hide-context-lines)
+      (message "iedit-occurrence-context-lines set to %s" iedit-occurrence-context-lines)))
+  (defun iedit-occurrence-context-lines-increase (&optional buffer)
+    "Increase the value of `iedit-occurrence-context-lines` by 1."
+    (interactive)
+    (funcall 'iedit-occurrence-context-lines-change 1))
+  (defun iedit-occurrence-context-lines-decrease (&optional buffer)
+    "Decrease the value of `iedit-occurrence-context-lines` by 1."
+    (interactive)
+    (funcall 'iedit-occurrence-context-lines-change -1))
+  (define-key iedit-lib-keymap (kbd "M-[") 'iedit-occurrence-context-lines-increase)
+  (define-key iedit-lib-keymap (kbd "M-]") 'iedit-occurrence-context-lines-decrease))
 
 ;; yasnippit, needed by lsp
 (use-package yasnippet
