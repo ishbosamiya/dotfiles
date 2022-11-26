@@ -493,12 +493,11 @@ mode is toggled globally but only the `buffer` (or
   (setq lsp-ui-doc-enable nil))
 
 ;; lsp mode for python
-(use-package lsp-python-ms
+(use-package lsp-pyright
   :ensure t
   :defer t
-  :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
+                         (require 'lsp-pyright)
                          (lsp-deferred))))
 
 ;; a fix to make lsp-mode work
