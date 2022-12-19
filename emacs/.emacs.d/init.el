@@ -459,10 +459,24 @@ mode is toggled globally but only the `buffer` (or
 	 (c-mode . lsp-deferred)
 	 (rust-mode . lsp-deferred)
 	 (lsp-mode . lsp-enable-which-key-integration))
-  :bind (("C--" . lsp-iedit-highlights))
+  :bind (("C--" . lsp-iedit-highlights)
+	 ("C-c l c" . 'lsp-rust-analyzer-cargo-watch-command-toggle))
   :custom
-  ;; use cargo clippy instead of cargo check for rust
+  ;; use cargo check as default, use
+  ;; `lsp-rust-analyzer-cargo-watch-command-toggle` to toggle between
+  ;; `clippy` and `check`
   (lsp-rust-analyzer-cargo-watch-command "clippy")
+  (defun lsp-rust-analyzer-cargo-watch-command-toggle ()
+    "Toggle between clippy and check for cargo watch command."
+    (interactive)
+    (if (string-equal lsp-rust-analyzer-cargo-watch-command "clippy")
+	(setq lsp-rust-analyzer-cargo-watch-command "check")
+      (setq lsp-rust-analyzer-cargo-watch-command "clippy"))
+    (message "lsp-rust-analyzer-cargo-watch-command set to \"%s\"" lsp-rust-analyzer-cargo-watch-command)
+    ;; HACK: to show the message for long enough for the user to read
+    ;; it, lsp dumps a lot of messages upon lsp-restart-workspace
+    (sleep-for 0.7)
+    (funcall 'lsp-restart-workspace))
   :config
   (setq lsp-enable-symbol-highlighting nil)
   (yas-global-mode t)
