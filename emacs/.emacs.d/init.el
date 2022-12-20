@@ -465,18 +465,7 @@ mode is toggled globally but only the `buffer` (or
   ;; use cargo check as default, use
   ;; `lsp-rust-analyzer-cargo-watch-command-toggle` to toggle between
   ;; `clippy` and `check`
-  (lsp-rust-analyzer-cargo-watch-command "clippy")
-  (defun lsp-rust-analyzer-cargo-watch-command-toggle ()
-    "Toggle between clippy and check for cargo watch command."
-    (interactive)
-    (if (string-equal lsp-rust-analyzer-cargo-watch-command "clippy")
-	(setq lsp-rust-analyzer-cargo-watch-command "check")
-      (setq lsp-rust-analyzer-cargo-watch-command "clippy"))
-    (message "lsp-rust-analyzer-cargo-watch-command set to \"%s\"" lsp-rust-analyzer-cargo-watch-command)
-    ;; HACK: to show the message for long enough for the user to read
-    ;; it, lsp dumps a lot of messages upon lsp-restart-workspace
-    (sleep-for 0.7)
-    (funcall 'lsp-restart-workspace))
+  (setq lsp-rust-analyzer-cargo-watch-command "check")
   :config
   (setq lsp-enable-symbol-highlighting nil)
   (yas-global-mode t)
@@ -490,6 +479,30 @@ mode is toggled globally but only the `buffer` (or
   (setq lsp-signature-auto-activate nil)
   ;; disable annoying lens features
   (setq lsp-lens-enable nil))
+
+(defun lsp--restart-workspace ()
+  "Same as `lsp-restart-workspace` but since that is made obsolete,
+it is better to have a custom function for this."
+  (interactive)
+  (--when-let (pcase (lsp-workspaces)
+                (`nil (user-error "There are no active servers in the current buffer"))
+                (`(,workspace) workspace)
+                (workspaces (lsp--completing-read "Select server: "
+                                                  workspaces
+                                                  'lsp--workspace-print nil t)))
+    (lsp-workspace-restart it)))
+
+(defun lsp-rust-analyzer-cargo-watch-command-toggle ()
+  "Toggle between clippy and check for cargo watch command."
+  (interactive)
+  (if (string-equal lsp-rust-analyzer-cargo-watch-command "clippy")
+      (setq lsp-rust-analyzer-cargo-watch-command "check")
+    (setq lsp-rust-analyzer-cargo-watch-command "clippy"))
+  (message "lsp-rust-analyzer-cargo-watch-command set to \"%s\"" lsp-rust-analyzer-cargo-watch-command)
+  ;; HACK: to show the message for long enough for the user to read
+  ;; it, lsp dumps a lot of messages upon lsp-restart-workspace
+  (sleep-for 0.7)
+  (lsp--restart-workspace))
 
 ;; nice lsp ui features
 (use-package lsp-ui
