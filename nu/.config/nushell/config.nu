@@ -408,7 +408,7 @@ let-env config = {
       mode: emacs
       event: {
         send: executehostcommand,
-        cmd: "cd (fd . -Ha --type directory | fzf --height=40% | decode utf-8 | str trim)"
+        cmd: "fuzzy_search_directories"
       }
     }
     # Keybinding to change directory with fd and fzf (fuzzy search
@@ -423,7 +423,7 @@ let-env config = {
       mode: emacs
       event: {
         send: executehostcommand,
-	cmd: "cd (fd . $env.HOME /media/ish/data/extra -Ha --type directory | fzf --height=40% | decode utf-8 | str trim)"
+	cmd: "fuzzy_search_directories [$env.HOME /media/ish/data/extra]"
       }
     }
     # Keyboard quit on `C-g` just like emacs.
@@ -447,3 +447,8 @@ source ~/.oh-my-posh.nu
 # only if it exists. So on a fresh install of the dotfiles, it will
 # fail, just create a new empty file at that path.
 source ~/.dotfiles/nu/.config/nushell/misc.nu
+
+# Fuzzy search the current directory with optional extra directories.
+def fuzzy_search_directories [extra_dirs: list = []] {
+  cd (fd . $extra_dirs -Ha --type directory | fzf --height=40% | decode utf-8 | str trim)
+}
