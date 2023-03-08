@@ -853,3 +853,6 @@ Set temporary buffer local key binding.
   "Remove duplicate adjacent lines in the current buffer."
   (interactive)
   (uniquify-region-lines (point-min) (point-max)))
+
+;; Window undo-redo
+(winner-mode t)
