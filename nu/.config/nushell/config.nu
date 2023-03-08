@@ -441,3 +441,9 @@ let-env config = {
 
 oh-my-posh init nu --config "~/.config/nushell/theme.omp.json"
 source ~/.oh-my-posh.nu
+
+# NOTE: this misc file is never uploaded to the dotfiles repository
+# and there doesn't seem to be a way to implement sourcing the file
+# only if it exists. So on a fresh install of the dotfiles, it will
+# fail, just create a new empty file at that path.
+source ~/.dotfiles/nu/.config/nushell/misc.nu
