@@ -573,28 +573,30 @@ source ~/.oh-my-posh.nu
 # fail, just create a new empty file at that path.
 source ~/.dotfiles/nu/.config/nushell/misc.nu
 
-# # Fuzzy search the current directory with optional extra directories.
-# def fuzzy_search_directories [extra_dirs: list = []] {
-#   let history_file_dir = $"($env.HOME)/.local/share/fuzzy_search_directories";
-#   if not ($history_file_dir | path exists) {
-#     mkdir ($history_file_dir)
-#     echo "created directory " $history_file_dir
-#   }
-#   let history_file_path = $"($history_file_dir)/history.log";
-#   if not ($history_file_path | path exists) {
-#     "" | save ($history_file_path)
-#     echo "created file " $history_file_path
-#   }
-#   let history = (tail -n 2 $history_file_path | lines | reverse | to text);
-#   # let dir = ([$history, (fd . $extra_dirs -Ha --type directory)] | str collect | fzf --height=40% | decode utf-8 | str trim);
-#   let dir = (fd . $extra_dirs -Ha --type directory; echo $history | fzf --height=40% | decode utf-8 | str trim);
-#   if ($dir | str length) != 0 {
-#     $"\n($dir)" | save --append ($history_file_path)
-#   }
-#   $dir
-# }
-
 # Fuzzy search the current directory with optional extra directories.
 def fuzzy_search_directories [extra_dirs: list = []] {
-  (fd . $extra_dirs -Ha --type directory | fzf --height=40% | decode utf-8 | str trim)
+  let extra_dirs = ($extra_dirs | str collect " ");
+  let history_file_dir = $"($env.HOME)/.local/share/fuzzy_search_directories";
+  if not ($history_file_dir | path exists) {
+    mkdir ($history_file_dir)
+    echo "created directory " $history_file_dir
+  }
+  let history_file_path = $"($history_file_dir)/history.log";
+  if not ($history_file_path | path exists) {
+    "" | save ($history_file_path)
+    echo "created file " $history_file_path
+  }
+  let num_history_items = 4;
+  let history = (tail -n $num_history_items $history_file_path | lines | reverse | to text);
+  let ctrl_l_run = $"fd . ($extra_dirs) -Ha --type directory";
+  let dir = (
+              echo $history |
+              fzf --height=40% --header $"Press C-l to search in . ($extra_dirs)" --bind $"ctrl-l:reload\(($ctrl_l_run)\)" |
+	      decode utf-8 |
+	      str trim
+	    );
+  if ($dir | str length) != 0 {
+    $"\n($dir)" | save --append ($history_file_path)
+  }
+  $dir
 }
