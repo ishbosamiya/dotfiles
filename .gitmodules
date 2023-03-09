@@ -1,0 +1,3 @@
+[submodule "emacs/.emacs.d/emacs-nushell"]
+	path = emacs/.emacs.d/emacs-nushell
+	url = https://github.com/azzamsa/emacs-nushell.git

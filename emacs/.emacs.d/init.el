@@ -32,6 +32,11 @@
 	     (concat user-emacs-directory
 		     (convert-standard-filename "nullc0d3r/")))
 
+;; Add emacs-nushell to load-path
+(add-to-list 'load-path
+	     (concat user-emacs-directory
+		     (convert-standard-filename "emacs-nushell/")))
+
 ;; set utf-8 as default for all
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -856,3 +861,5 @@ Set temporary buffer local key binding.
 
 ;; Window undo-redo
 (winner-mode t)
+
+(use-package nushell-mode)
