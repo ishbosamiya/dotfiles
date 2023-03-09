@@ -587,7 +587,7 @@ def fuzzy_search_directories [extra_dirs: list = []] {
     echo "created file " $history_file_path
   }
   let num_history_items = 4;
-  let history = (tail -n $num_history_items $history_file_path | lines | reverse | to text);
+  let history = (tail_unique_lines $history_file_path $num_history_items | reverse | to text);
   let ctrl_l_run = $"fd . ($extra_dirs) -Ha --type directory";
   let dir = (
               echo $history |
@@ -599,4 +599,11 @@ def fuzzy_search_directories [extra_dirs: list = []] {
     $"\n($dir)" | save --append ($history_file_path)
   }
   $dir
+}
+
+# Get `num_items` number of unique lines from the tail of the given
+# file. Returns the minimum of the number of unique lines and the
+# number of lines of the file.
+def tail_unique_lines [file: path, num_items: int] {
+  cat $file | lines | reverse | uniq | take $num_items | reverse
 }
