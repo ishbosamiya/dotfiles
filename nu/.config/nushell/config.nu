@@ -575,12 +575,12 @@ source ~/.dotfiles/nu/.config/nushell/misc.nu
 
 # # Fuzzy search the current directory with optional extra directories.
 # def fuzzy_search_directories [extra_dirs: list = []] {
-#   let history_file_dir = ([$env.HOME, '/.local/share/fuzzy_search_directories'] | str collect);
+#   let history_file_dir = $"($env.HOME)/.local/share/fuzzy_search_directories";
 #   if not ($history_file_dir | path exists) {
 #     mkdir ($history_file_dir)
 #     echo "created directory " $history_file_dir
 #   }
-#   let history_file_path = ([$history_file_dir, '/history.log'] | str collect);
+#   let history_file_path = $"($history_file_dir)/history.log";
 #   if not ($history_file_path | path exists) {
 #     "" | save ($history_file_path)
 #     echo "created file " $history_file_path
