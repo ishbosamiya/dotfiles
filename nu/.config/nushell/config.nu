@@ -586,7 +586,7 @@ def fuzzy_search_directories [extra_dirs: list = []] {
     "" | save ($history_file_path)
     echo "created file " $history_file_path
   }
-  let num_history_items = 4;
+  let num_history_items = 30;
   let history = (tail_unique_lines $history_file_path $num_history_items | reverse | to text);
   let ctrl_l_run = $"fd . ($extra_dirs) -Ha --type directory";
   let dir = (
