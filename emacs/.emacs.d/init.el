@@ -637,7 +637,17 @@ followed by the name of the file."
     "Insert commit heading(s) based on staged files. This is done by
 running `file-path-to-commit-heading` for each staged file. The
 user can then quickly delete the entires that are not required."
-    (let* ((staged-files (magit-staged-files))
+    (let* ((staged-files-stats (magit-staged-files-stats))
+	   (staged-files
+	    (mapcar
+	     (lambda (l)
+	       "Get the file name"
+	       (nth 2 l))
+	     (sort staged-files-stats
+		   (lambda (a b)
+		     "Sort by adding the added and deleted lines"
+		     (> (+ (string-to-number (nth 0 a)) (string-to-number (nth 1 a)))
+			(+ (string-to-number (nth 0 b)) (string-to-number (nth 1 b))))))))
 	   (headings (mapcar
 		      'file-path-to-commit-heading
 		      staged-files)))
