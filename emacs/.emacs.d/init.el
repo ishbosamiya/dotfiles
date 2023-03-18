@@ -596,6 +596,8 @@ it is better to have a custom function for this."
     ;; the ordering matters, these are applied in sequence
     '(;; remove `.emacs.d/init.el`
       ("/\\.emacs\\.d/init\\.el" "")
+      ;; replace `/src/` with `: `
+      ("/src/" ": ")
       ;; remove file extension
       ("\\.[^/]+$" "")
       ;; remove `/` at beginning of path
