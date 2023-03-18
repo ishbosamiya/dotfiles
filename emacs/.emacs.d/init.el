@@ -948,4 +948,11 @@ Set temporary buffer local key binding.
   :ensure t
   :bind (("C-M-=" . 'default-text-scale-increase)
 	 ("C-M--" . 'default-text-scale-decrease)
-	 ("C-M-0" . 'default-text-scale-reset)))
+	 ;; instead of using `default-text-scale-reset`, just set to
+	 ;; known `default-text-height` due to bug, see
+	 ;; <https://github.com/purcell/default-text-scale/issues/5>
+	 ("C-M-0" . (lambda ()
+		      (interactive)
+		      (setq default-text-scale--complement 0)
+		      (set-face-attribute 'default nil :height default-text-height)
+		      (message "Default font size is now %d" (face-attribute 'default :height))))))
