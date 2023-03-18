@@ -37,6 +37,13 @@
 	     (concat user-emacs-directory
 		     (convert-standard-filename "emacs-nushell/")))
 
+;; setup a default text height
+;;
+;; TODO: this might have to be different per system? 4k vs 1080p
+;; problems?
+(defvar default-text-height 98)
+(set-face-attribute 'default nil :height default-text-height)
+
 ;; set utf-8 as default for all
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
