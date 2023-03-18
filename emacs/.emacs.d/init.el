@@ -934,3 +934,11 @@ Set temporary buffer local key binding.
 (winner-mode t)
 
 (use-package nushell-mode)
+
+;; set the text scale of all the elements of emacs, not just the
+;; buffer which `C-x C-=` aka `text-scale-adjust` does
+(use-package default-text-scale
+  :ensure t
+  :bind (("C-M-=" . 'default-text-scale-increase)
+	 ("C-M--" . 'default-text-scale-decrease)
+	 ("C-M-0" . 'default-text-scale-reset)))
