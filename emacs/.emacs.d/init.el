@@ -611,6 +611,15 @@ it is better to have a custom function for this."
     "regexps to run on every file path to convert to commit heading"
     :type '(list regexp string))
 
+  (defun magit-staged-files-stats ()
+    "Get the stats for the staged files.
+
+Number of lines added, followed by number of lines deleted,
+followed by the name of the file."
+    (mapcar (lambda (line)
+	      (split-string line "\t" t))
+	    (magit-git-items "diff" "-z" "--numstat" "--cached")))
+
   (defun file-path-to-commit-heading (file-path)
     "Convert the given file path to a commit heading"
     (interactive "Ffile-path: ")
