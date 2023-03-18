@@ -599,12 +599,16 @@ it is better to have a custom function for this."
 
   (defun file-path-to-commit-heading (file-path)
     "Convert the given file path to a commit heading"
-    (message "file-path-to-commit-heading for %s" file-path)
-    (seq-reduce (lambda (path r)
-		  (message "path was %s" path)
+    (interactive "Ffile-path: ")
+    (let ((res (seq-reduce
+		(lambda (path r)
+		  (message "file-path-to-commit-heading: running `\"%s\" \"%s\"` on `%s`"
+			   (nth 0 r) (nth 1 r) path)
 		  (replace-regexp-in-string (nth 0 r) (nth 1 r) path))
 		file-path-to-commit-heading-replace-regexps
-		file-path))
+		file-path)))
+      (message "file-path-to-commit-heading: final heading: `%s`" res)
+      res))
 
   (defun insert-commit-heading-based-on-staged-files ()
     "Insert commit heading(s) based on staged files. This is done by
