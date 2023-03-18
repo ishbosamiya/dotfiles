@@ -593,7 +593,15 @@ it is better to have a custom function for this."
   (magit-add-section-hook 'magit-status-sections-hook 'magit-insert-ignored-files nil t)
 
   (defcustom file-path-to-commit-heading-replace-regexps
-    '(("/" ": "))
+    ;; the ordering matters, these are applied in sequence
+    '(;; remove `.emacs.d/init.el`
+      ("/\\.emacs\\.d/init\\.el" "")
+      ;; remove file extension
+      ("\\.[^/]+$" "")
+      ;; remove `/` at beginning of path
+      ("^/" "")
+      ;; replace all `/` of the path with `: `
+      ("/" ": "))
     "regexps to run on every file path to convert to commit heading"
     :type '(list regexp string))
 
