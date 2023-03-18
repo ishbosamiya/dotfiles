@@ -598,6 +598,10 @@ it is better to have a custom function for this."
       ("/\\.emacs\\.d/init\\.el" "")
       ;; replace `/src/` with `: `
       ("/src/" ": ")
+      ;; remove `/mod.rs`
+      ("/mod\\.rs" "")
+      ;; remove `/lib.rs`
+      ("/lib\\.rs" "")
       ;; remove file extension
       ("\\.[^/]+$" "")
       ;; remove `/` at beginning of path
