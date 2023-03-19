@@ -603,6 +603,8 @@ it is better to have a custom function for this."
     ;; the ordering matters, these are applied in sequence
     '(;; remove `.emacs.d/init.el`
       ("/\\.emacs\\.d/init\\.el" "")
+      ;; replace `gpu/gpu_proc_macros` with `gpu_proc_macros`
+      ("gpu/gpu_proc_macros" "gpu_proc_macros")
       ;; replace `/src/` with `: `
       ("/src/" ": ")
       ;; remove `/mod.rs`
