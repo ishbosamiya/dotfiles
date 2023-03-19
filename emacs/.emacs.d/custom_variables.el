@@ -8,8 +8,10 @@
  '(flyspell-default-dictionary "english")
  '(global-auto-revert-mode t)
  '(inhibit-startup-screen t)
+ '(org-agenda-files
+   '("/media/ish/data/extra/csgo_demolyzer/csgo_demolyzer_todo.org" "/media/ish/data/extra/struct_finder/struct_finder_notes.org"))
  '(package-selected-packages
-   '(yaml-mode nix-repl nix-mode command-log-mode fzf esup hl-todo hl-block-mode expand-region string-inflection impatient-mode simple-httpd rg flycheck yasnippet cmake-mode restart-emacs lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
+   '(default-text-scale winner-mode lsp-pyright yaml-mode nix-repl nix-mode command-log-mode fzf esup hl-todo hl-block-mode expand-region string-inflection impatient-mode simple-httpd rg flycheck yasnippet cmake-mode restart-emacs lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
    '((projectile-project-test-cmd . "cd gpu/gpu_switcheroo && cargo test")
      (projectile-project-run-cmd . "cd gpu/gpu_switcheroo && cargo run")
