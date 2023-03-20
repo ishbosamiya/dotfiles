@@ -490,7 +490,28 @@ mode is toggled globally but only the `buffer` (or
   ;; disable it.
   (setq lsp-signature-auto-activate nil)
   ;; disable annoying lens features
-  (setq lsp-lens-enable nil))
+  (setq lsp-lens-enable nil)
+
+  ;; make `lsp-rust` work over tramp
+  (with-eval-after-load "lsp-rust"
+    (lsp-register-client
+     (make-lsp-client
+      :new-connection (lsp-tramp-connection "rust-analyzer")
+      :remote? t
+      :major-modes '(rust-mode)
+      :initialization-options 'lsp-rust-analyzer--make-init-options
+      :notification-handlers (ht<-alist lsp-rust-notification-handlers)
+      :action-handlers (ht ("rust-analyzer.runSingle" #'lsp-rust--analyzer-run-single))
+      :library-folders-fn (lambda (_workspace) lsp-rust-analyzer-library-directories)
+      :after-open-fn (lambda ()
+                       (when lsp-rust-analyzer-server-display-inlay-hints
+			 (lsp-rust-analyzer-inlay-hints-mode)))
+      :ignore-messages nil
+      :server-id 'rust-analyzer-remote)))
+
+  ;; needed for lsp to work through tramp. see
+  ;; <https://github.com/emacs-lsp/lsp-mode/issues/3490#issuecomment-1109244725>
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
 (defun lsp--restart-workspace ()
   "Same as `lsp-restart-workspace` but since that is made obsolete,
