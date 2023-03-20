@@ -511,7 +511,8 @@ mode is toggled globally but only the `buffer` (or
 
   ;; needed for lsp to work through tramp. see
   ;; <https://github.com/emacs-lsp/lsp-mode/issues/3490#issuecomment-1109244725>
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+  (with-eval-after-load 'tramp
+    (add-to-list 'tramp-remote-path 'tramp-own-remote-path)))
 
 (defun lsp--restart-workspace ()
   "Same as `lsp-restart-workspace` but since that is made obsolete,
