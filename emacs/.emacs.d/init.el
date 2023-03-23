@@ -627,6 +627,8 @@ it is better to have a custom function for this."
       ("/\\.emacs\\.d/init\\.el" "")
       ;; replace `gpu/gpu_proc_macros` with `gpu_proc_macros`
       ("gpu/gpu_proc_macros" "gpu_proc_macros")
+      ;; remove `bin/`
+      ("bin/" "")
       ;; remove `src/`
       ("src/" "")
       ;; remove `/mod.rs`
