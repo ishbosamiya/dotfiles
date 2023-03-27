@@ -470,6 +470,7 @@ mode is toggled globally but only the `buffer` (or
   :hook ((c++-mode . lsp-deferred)
 	 (c-mode . lsp-deferred)
 	 (rust-mode . lsp-deferred)
+	 (csharp-mode . lsp-deferred)
 	 (lsp-mode . lsp-enable-which-key-integration))
   :bind (("C--" . lsp-iedit-highlights)
 	 ("C-c l c" . 'lsp-rust-analyzer-cargo-watch-command-toggle))
@@ -982,3 +983,8 @@ Set temporary buffer local key binding.
 		      (setq default-text-scale--complement 0)
 		      (set-face-attribute 'default nil :height default-text-height)
 		      (message "Default font size is now %d" (face-attribute 'default :height))))))
+
+;; C# support is added to emacs 29
+(when (< emacs-major-version 29)
+  (use-package csharp-mode
+    :ensure t))
