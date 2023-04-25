@@ -561,6 +561,17 @@ let-env config = {
         send: CtrlC,
       }
     }
+    # Reload the config.
+    {
+      name: reload_config
+      modifier: none
+      keycode: f5
+      mode: emacs
+      event: {
+        send: executehostcommand,
+        cmd: $"source '($nu.config-path)'"
+      }
+    }
   ]
 }
 
