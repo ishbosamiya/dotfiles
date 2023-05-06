@@ -752,7 +752,7 @@ shell:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+key_bindings:
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
@@ -801,6 +801,8 @@ shell:
   #- { key: L,      mods: Shift,         mode: Vi|~Search, action: Low                     }
   #- { key: B,                           mode: Vi|~Search, action: SemanticLeft            }
   #- { key: W,                           mode: Vi|~Search, action: SemanticRight           }
+  - { key: Left, mods: Control, mode: Vi|~Search, action: SemanticLeft }
+  - { key: Right, mods: Control, mode: Vi|~Search, action: SemanticRight }
   #- { key: E,                           mode: Vi|~Search, action: SemanticRightEnd        }
   #- { key: B,      mods: Shift,         mode: Vi|~Search, action: WordLeft                }
   #- { key: W,      mods: Shift,         mode: Vi|~Search, action: WordRight               }
