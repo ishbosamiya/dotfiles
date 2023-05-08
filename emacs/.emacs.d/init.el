@@ -763,6 +763,7 @@ user.
   (setq rg-executable "rg") ;; Use rg from the $PATH; allows working
 			    ;; via TRAMP too!
   (setq rg-default-alias-fallback "everything")
+  (add-to-list 'rg-custom-type-aliases (cons "candcpp" "*.c *.h *.cpp *.hpp *.cc *.hh"))
   :bind (("M-s M-s" . 'rg-dwim)
 	 ("M-s s"   . 'rg-menu)))
 
