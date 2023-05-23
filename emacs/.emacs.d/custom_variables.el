@@ -13,7 +13,16 @@
  '(package-selected-packages
    '(csharp-mode default-text-scale winner-mode lsp-pyright yaml-mode nix-repl nix-mode command-log-mode fzf esup hl-todo hl-block-mode expand-region string-inflection impatient-mode simple-httpd rg flycheck yasnippet cmake-mode restart-emacs lsp-python-ms magit general dap-mode fold-this dash lsp-ui lsp-mode iedit sourcetrail projectile ido-completing-read+ flx-ido amx which-key clang-format+ olivetti unfill centered-window cargo rust-mode arduino-mode scad-preview scad-mode pdf-tools ag glsl-mode smex ess ggtags writegood-mode org company company-c-headers))
  '(safe-local-variable-values
-   '((projectile-project-test-cmd . "cd gpu/gpu_switcheroo && cargo test")
+   '((eval setenv "LD_LIBRARY_PATH"
+	   (let
+	       ((ld_library_path
+		 (getenv "LD_LIBRARY_PATH"))
+		(to_add "/media/ish/data/extra/csgo_demolyzer/deps/shaderc/lib"))
+	     (if ld_library_path
+		 (format "%s:%s" ld_library_path to_add)
+	       to_add)))
+     (eval setenv "SHADERC_LIB_DIR" "/media/ish/data/extra/csgo_demolyzer/deps/shaderc/lib")
+     (projectile-project-test-cmd . "cd gpu/gpu_switcheroo && cargo test")
      (projectile-project-run-cmd . "cd gpu/gpu_switcheroo && cargo run")
      (projectile-project-compilation-cmd . "cd gpu/gpu_switcheroo && cargo build")
      (projectile-project-run-cmd . "cargo expand")
