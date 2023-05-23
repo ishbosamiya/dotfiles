@@ -51,6 +51,9 @@
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment 'utf-8)
 
+;; unbind `toggle-input-method`
+(unbind-key "C-\\")
+
 ;; backspace is used for delete-region, makes it similar to other programs
 (delete-selection-mode 1)
 
