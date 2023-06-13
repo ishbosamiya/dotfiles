@@ -611,17 +611,8 @@ def fuzzy_search_directories [extra_dirs: list = []] {
       $"($dir)\n" | save --append ($history_file_path);
     } else {
       let prompt = $"\"($dir)\"\ndoes not exist, delete from history? \(y/n\): "
-      loop {
-        let delete = input $prompt;
-        if $delete == "y" or $delete == "Y" {
-          let old_history_file_path = $"($history_file_path)~";
-          mv -f $history_file_path $old_history_file_path
-          cat $old_history_file_path | lines | filter {|line| $line != $dir} | save $history_file_path;
-          return;
-        } else if $delete == "n" or $delete == "N" {
-          return;
-        }
-      }
+      delete_lines_matching $history_file_path $dir $prompt;
+      return;
     }
   }
   $dir
@@ -632,4 +623,20 @@ def fuzzy_search_directories [extra_dirs: list = []] {
 # number of lines of the file.
 def tail_unique_lines [file: path, num_items: int] {
   cat $file | lines | reverse | uniq | take $num_items | reverse
+}
+
+# Delete all the lines matching the given line from the given file by
+# prompting the user for `(y/n)`.
+def delete_lines_matching [file: path, line: string, prompt: string] {
+  loop {
+    let delete = input $prompt;
+    if $delete == "y" or $delete == "Y" {
+      let old_file_path = $"($file)~";
+      mv -f $file $old_file_path
+      cat $old_file_path | lines | filter {|l| $l != $line} | save $file;
+      return;
+    } else if $delete == "n" or $delete == "N" {
+      return;
+    }
+  }
 }
