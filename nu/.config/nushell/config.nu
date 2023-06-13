@@ -533,7 +533,7 @@ let-env config = {
       mode: emacs
       event: {
         send: executehostcommand,
-        cmd: "cd (fuzzy_search_directories)"
+        cmd: "let $dir = (fuzzy_search_directories); if $dir != null { cd $dir }"
       }
     }
     # Keybinding to change directory with fd and fzf (fuzzy search
@@ -548,7 +548,7 @@ let-env config = {
       mode: emacs
       event: {
         send: executehostcommand,
-	cmd: "cd (fuzzy_search_directories [$env.HOME /media/ish/data/extra])"
+	cmd: "let $dir = (fuzzy_search_directories [$env.HOME /media/ish/data/extra]); if $dir != null { cd $dir }"
       }
     }
     # Keyboard quit on `C-g` just like emacs.
@@ -607,7 +607,22 @@ def fuzzy_search_directories [extra_dirs: list = []] {
 	      str trim
 	    );
   if ($dir | str length) != 0 {
-    $"\n($dir)" | save --append ($history_file_path)
+    if ($dir | path exists) {
+      $"($dir)\n" | save --append ($history_file_path);
+    } else {
+      let prompt = $"\"($dir)\"\ndoes not exist, delete from history? \(y/n\): "
+      loop {
+        let delete = input $prompt;
+        if $delete == "y" or $delete == "Y" {
+          let old_history_file_path = $"($history_file_path)~";
+          mv -f $history_file_path $old_history_file_path
+          cat $old_history_file_path | lines | filter {|line| $line != $dir} | save $history_file_path;
+          return;
+        } else if $delete == "n" or $delete == "N" {
+          return;
+        }
+      }
+    }
   }
   $dir
 }
