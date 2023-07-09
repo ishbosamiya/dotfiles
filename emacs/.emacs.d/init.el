@@ -756,7 +756,14 @@ user.
   (add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
   (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
   (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode))
-  )
+  ;; remove `_` from word syntax which is the default for `glsl-mode`,
+  ;; it only makes navigation more annoying
+  (setq glsl-mode-syntax-table
+    (let ((glsl-mode-syntax-table (make-syntax-table)))
+      (modify-syntax-entry ?/ ". 124b" glsl-mode-syntax-table)
+      (modify-syntax-entry ?* ". 23" glsl-mode-syntax-table)
+      (modify-syntax-entry ?\n "> b" glsl-mode-syntax-table)
+      glsl-mode-syntax-table)))
 
 ;; Be able to use rg from emacs
 (use-package rg
