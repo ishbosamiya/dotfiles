@@ -774,6 +774,8 @@ user.
 			    ;; via TRAMP too!
   (setq rg-default-alias-fallback "everything")
   (add-to-list 'rg-custom-type-aliases (cons "candcpp" "*.c *.h *.cpp *.hpp *.cc *.hh"))
+  (add-to-list 'rg-custom-type-aliases (cons "glsl" "*.glsl *.vert *.frag *.geom *.fxc"))
+  (add-to-list 'rg-custom-type-aliases (cons "glslandh" "*.glsl *.vert *.frag *.geom *.fxc *.h"))
   :bind (("M-s M-s" . 'rg-dwim)
 	 ("M-s s"   . 'rg-menu)))
 
