@@ -1003,3 +1003,8 @@ Set temporary buffer local key binding.
 (when (< emacs-major-version 29)
   (use-package csharp-mode
     :ensure t))
+
+;; typescript-mode
+(use-package typescript-mode
+  :ensure t
+  :defer 2)
