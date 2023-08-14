@@ -45,3 +45,11 @@ fi
 if command -v emacs >/dev/null; then
     export SUDO_EDITOR=`which emacs`
 fi
+
+# go
+if [ -d $HOME/.local/go/bin/ ]; then
+    export PATH="$HOME/.local/go/bin:$PATH"
+fi
+if [ -d $HOME/go/bin/ ]; then
+    export PATH="$HOME/go/bin:$PATH"
+fi
