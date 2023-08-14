@@ -474,6 +474,7 @@ mode is toggled globally but only the `buffer` (or
 	 (c-mode . lsp-deferred)
 	 (rust-mode . lsp-deferred)
 	 (csharp-mode . lsp-deferred)
+	 (go-mode . lsp-deferred)
 	 (lsp-mode . lsp-enable-which-key-integration))
   :bind (("C--" . lsp-iedit-highlights)
 	 ("C-c l c" . 'lsp-rust-analyzer-cargo-watch-command-toggle))
