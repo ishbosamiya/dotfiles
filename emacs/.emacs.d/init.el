@@ -1008,3 +1008,8 @@ Set temporary buffer local key binding.
 (use-package typescript-mode
   :ensure t
   :defer 2)
+
+;; go-mode
+(use-package go-mode
+  :ensure t
+  :defer 2)
