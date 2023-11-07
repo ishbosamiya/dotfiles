@@ -496,6 +496,20 @@ mode is toggled globally but only the `buffer` (or
   (setq lsp-signature-auto-activate nil)
   ;; disable annoying lens features
   (setq lsp-lens-enable nil)
+  ;; use the profile `rust-analyzer` so that it uses its own build
+  ;; directory within `target` to prevent it from locking
+  ;; `target/debug`
+  ;;
+  ;; for this to work, there must be a profile called `rust-analyzer`,
+  ;; easiest way to set it up would be to add
+  ;;
+  ;; ```
+  ;; [profile.rust-analyzer]
+  ;; inherits = "dev"
+  ;; ```
+  ;;
+  ;; to `~/.cargo/config.toml`.
+  (setq lsp-rust-analyzer-cargo-watch-args ["--profile=rust-analyzer"])
 
   ;; make `lsp-rust` work over tramp
   (with-eval-after-load "lsp-rust"
