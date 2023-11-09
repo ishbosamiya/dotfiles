@@ -255,6 +255,7 @@ Turns on display-line-numbers-mode if not already active."
   :delight
   :hook (after-init . global-company-mode)
   :bind (("C-<tab>" . company-complete))
+  :config (setq company-minimum-prefix-length 2)
   :custom (company-backends '(company-capf company-gtags)))
 
 ;; To use clang format for all c and c++ files
