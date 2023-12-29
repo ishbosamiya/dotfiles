@@ -37,6 +37,11 @@
 	     (concat user-emacs-directory
 		     (convert-standard-filename "emacs-nushell/")))
 
+;; `extern` directory to load path
+(add-to-list 'load-path
+	     (concat user-emacs-directory
+		     (convert-standard-filename "extern/")))
+
 ;; setup a default text height
 ;;
 ;; TODO: this might have to be different per system? 4k vs 1080p
@@ -202,6 +207,13 @@ Turns on display-line-numbers-mode if not already active."
   (bind-key* "M-<up>" 'windmove-up)
   (bind-key* "M-<down>" 'windmove-down)
   (windmove-default-keybindings))
+
+;; Similar to `windmove` but across frames.
+;;
+;; <https://www.emacswiki.org/emacs/FrameMove>
+(use-package framemove
+  :config
+  (setq framemove-hook-into-windmove t))
 
 ;; Let emacs learn and set style from a C file
 (defun infer-indentation-style ()
