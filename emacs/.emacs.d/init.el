@@ -600,6 +600,16 @@ it is better to have a custom function for this."
 (use-package dash
   :ensure t)
 
+;; HACK: a hacky way to prevent `no-delete-other-windows` from being
+;; set for the wrong window when trying to use
+;; `lsp-treemacs-errors-list`. This hack works because treemacs is not
+;; used for anything other than this specific use case where it is
+;; fine to delete the window with `delete-other-windows`.
+;;
+;; https://github.com/emacs-lsp/lsp-treemacs/issues/122
+(use-package treemacs
+  :custom (treemacs-no-delete-other-windows nil))
+
 ;; fold-this
 (use-package fold-this
   :ensure t
