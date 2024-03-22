@@ -1053,3 +1053,8 @@ Set temporary buffer local key binding.
 (use-package go-mode
   :ensure t
   :defer 2)
+
+;; lua-mode
+(use-package lua-mode
+  :ensure t
+  :defer 2)
