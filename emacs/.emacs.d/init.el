@@ -703,13 +703,14 @@ followed by the name of the file."
   (defun file-path-to-commit-heading (file-path)
     "Convert the given file path to a commit heading"
     (interactive "Ffile-path: ")
-    (let ((res (seq-reduce
-		(lambda (path r)
-		  (message "file-path-to-commit-heading: running `\"%s\" \"%s\"` on `%s`"
-			   (nth 0 r) (nth 1 r) path)
-		  (replace-regexp-in-string (nth 0 r) (nth 1 r) path))
-		file-path-to-commit-heading-replace-regexps
-		file-path)))
+    (let ((res (downcase
+		(seq-reduce
+		 (lambda (path r)
+		   (message "file-path-to-commit-heading: running `\"%s\" \"%s\"` on `%s`"
+			    (nth 0 r) (nth 1 r) path)
+		   (replace-regexp-in-string (nth 0 r) (nth 1 r) path))
+		 file-path-to-commit-heading-replace-regexps
+		 file-path))))
       (message "file-path-to-commit-heading: final heading: `%s`" res)
       res))
 
