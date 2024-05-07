@@ -1,5 +1,12 @@
 # Nushell Config File
 
+let config_for_version = "0.93.0";
+if (nu --version) != $config_for_version {
+  panic $"nushell config.nu is expected to work for version `($config_for_version)`.
+installed nushell version is `(nu --version)`.
+Verify the config works for installed nushell version and update `config_for_version`."
+}
+
 # For more information on defining custom themes, see
 # https://www.nushell.sh/book/coloring_and_theming.html
 # And here is the theme collection
