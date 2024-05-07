@@ -644,3 +644,6 @@ def delete_lines_matching [file: path, line: string, prompt: string] {
     }
   }
 }
+
+# use `carapace` for auto completions
+source ~/.cache/carapace/init.nu
