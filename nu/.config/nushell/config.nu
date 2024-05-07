@@ -173,16 +173,13 @@ let light_theme = {
 
 
 # The default config record. This is where much of your global configuration is setup.
-let-env config = {
+$env.config = {
   ls: {
     use_ls_colors: true # use the LS_COLORS environment variable to colorize output
     clickable_links: true # enable or disable clickable links. Your terminal has to support links.
   }
   rm: {
     always_trash: false # always act as if -t was given. Can be overridden with -p
-  }
-  cd: {
-    abbreviations: false # allows `cd s/o/f` to expand to `cd some/other/folder`
   }
   table: {
     mode: rounded # basic, compact, compact_double, light, thin, with_love, rounded, reinforced, heavy, none, other
@@ -586,7 +583,7 @@ source ~/.dotfiles/nu/.config/nushell/misc.nu
 
 # Fuzzy search the current directory with optional extra directories.
 def fuzzy_search_directories [extra_dirs: list = []] {
-  let extra_dirs = ($extra_dirs | str collect " ");
+  let extra_dirs = ($extra_dirs | str join " ");
   let history_file_dir = $"($env.HOME)/.local/share/fuzzy_search_directories";
   if not ($history_file_dir | path exists) {
     mkdir ($history_file_dir)
