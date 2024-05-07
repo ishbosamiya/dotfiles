@@ -31,13 +31,16 @@ there is no way to set a default terminal. The best way is to override
 the terminal opening shortcut to open `Alacritty` instead of
 `gnome-terminal`.
 
-## For Nu Shell
+## For Nushell
 
-Install [Nu](https://www.nushell.sh/) by compiling it.
+Install [nu](https://www.nushell.sh/) by compiling it. `cargo install
+nu` should work.
 
 The prompt used for `nu` is `oh-my-posh` and depends on a custom
 theme. This requires [oh-my-posh](https://ohmyposh.dev/) to be
 installed.
+
+Requires [carapace](https://carapace.sh/) for auto completions.
 
 ## For oh-my-posh
 
