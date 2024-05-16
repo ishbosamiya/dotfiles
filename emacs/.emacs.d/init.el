@@ -1041,6 +1041,11 @@ Set temporary buffer local key binding.
 		      (set-face-attribute 'default nil :height default-text-height)
 		      (message "Default font size is now %d" (face-attribute 'default :height))))))
 
+
+;; To be able to update the GPG keys.
+(use-package gnu-elpa-keyring-update
+  :ensure t)
+
 ;; C# support is added to emacs 29
 (when (< emacs-major-version 29)
   (use-package csharp-mode
