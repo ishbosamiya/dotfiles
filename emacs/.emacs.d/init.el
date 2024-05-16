@@ -491,6 +491,7 @@ mode is toggled globally but only the `buffer` (or
 	 (csharp-mode . lsp-deferred)
 	 (go-mode . lsp-deferred)
 	 (lua-mode . lsp-deferred)
+	 (java-mode . lsp-deferred)
 	 (lsp-mode . lsp-enable-which-key-integration))
   :bind (("C--" . lsp-iedit-highlights)
 	 ("C-c l c" . 'lsp-rust-analyzer-cargo-watch-command-toggle))
@@ -1063,5 +1064,10 @@ Set temporary buffer local key binding.
 
 ;; lua-mode
 (use-package lua-mode
+  :ensure t
+  :defer 2)
+
+;; lsp-java
+(use-package lsp-java
   :ensure t
   :defer 2)
