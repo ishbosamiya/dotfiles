@@ -24,6 +24,8 @@
 ;;
 ;; * `zone-pgm-jitter` of `zone`
 ;;
+;; * Camera shake <https://www.youtube.com/watch?v=tu-Qe66AvtY>
+;;
 ;; * <https://github.com/codeinthedark/awesome-power-mode>
 ;;
 ;; It seems to be called `power mode` in other editors.
@@ -43,6 +45,13 @@
     (setq buffer (current-buffer)))
   (with-current-buffer buffer
     (message "TODO")))
+(defun calc-screenshake-offset (max_offset shake)
+  "Calculate the screenshake offset."
+  ;; ideally would use perlin noise but that is not available, so not
+  ;; using, it would help make it time dependent but here it doesn't
+  ;; matter since there is no slowmo
+  (* max_offset shake (random-between-zero-and-one)))
+
 
 ;; create keymap for pizzazz mode
 (defvar pizzazz-keymap (let ((map (make-sparse-keymap)))
