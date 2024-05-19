@@ -34,6 +34,10 @@
   "Pizzazz for emacs"
   :group 'convenience)
 
+(defun random-between-zero-and-one ()
+  "Get a random float between 0.0 and 1.0"
+  (/ (random most-positive-fixnum) (float most-positive-fixnum)))
+
 (defun pizzazz--buffer (&optional buffer)
   (unless buffer
     (setq buffer (current-buffer)))
