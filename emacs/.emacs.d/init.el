@@ -1071,3 +1071,8 @@ Set temporary buffer local key binding.
 (use-package lsp-java
   :ensure t
   :defer 2)
+
+;; Add pizzazz to the buffer when enabled
+;;
+;; Custom defined - See nullc0d3r/pizzazz.el
+(use-package pizzazz)
