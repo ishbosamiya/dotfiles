@@ -669,8 +669,10 @@ it is better to have a custom function for this."
 
   (defcustom file-path-to-commit-heading-replace-regexps
     ;; the ordering matters, these are applied in sequence
-    '(;; remove `.emacs.d/init.el`
+    '(;; remove `/.emacs.d/init.el`
       ("/\\.emacs\\.d/init\\.el" "")
+      ;; remove `.emacs.d/`
+      ("\\.emacs\\.d/" "")
       ;; replace `gpu/gpu_proc_macros` with `gpu_proc_macros`
       ("gpu/gpu_proc_macros" "gpu_proc_macros")
       ;; remove `.config/nushell/`
