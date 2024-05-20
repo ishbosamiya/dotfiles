@@ -111,6 +111,15 @@ otherwise set to timer running screenshake")
   ;; character)
   (add-hook 'post-self-insert-hook #'pizzazz-mode--post-self-insert-hook))
 
+(defun pizzazz-mode--remove ()
+  "Removing `pizzazz-mode`"
+  (message "Removing `pizzazz-mode`")
+  ;; remove from `post-self-insert-hook`
+  (remove-hook 'post-self-insert-hook #'pizzazz-mode--post-self-insert-hook)
+  ;; reset timer
+  (when pizzazz--shake-timer
+    (cancel-timer pizzazz--shake-timer)
+    (setq pizzazz--shake-timer nil)))
 
 ;; create keymap for pizzazz mode
 (defvar pizzazz-keymap (let ((map (make-sparse-keymap)))
