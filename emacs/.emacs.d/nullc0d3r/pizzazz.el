@@ -56,6 +56,9 @@ otherwise set to timer running screenshake")
 (defvar pizzazz--shake-frame nil
   "Frame to screenshake")
 
+(defvar pizzazz--dummy-buffer nil
+  "Dummy buffer")
+
 (defun random-between-zero-and-one ()
   "Get a random float between 0.0 and 1.0"
   (/ (random most-positive-fixnum) (float most-positive-fixnum)))
@@ -90,6 +93,25 @@ otherwise set to timer running screenshake")
    "left: %s top: %s"
    (frame-parameter pizzazz--shake-frame 'left)
    (frame-parameter pizzazz--shake-frame 'top)))
+
+(defun pizzazz-mode--create-dummy-buffer ()
+  "Create a dummy buffer that has nothing visibile"
+  (let ((buffer (get-buffer-create " *pizzazz-mode-dummy-buffer*")))
+    (with-current-buffer buffer
+      (setq-local mode-line-format nil
+                  header-line-format nil
+                  frame-title-format ""
+                  truncate-lines t
+                  cursor-type nil
+                  cursor-in-non-selected-windows nil
+                  show-trailing-whitespace nil
+                  display-line-numbers nil
+                  left-fringe-width nil
+                  right-fringe-width nil
+                  left-margin-width nil
+                  right-margin-width nil
+                  fringes-outside-margins 0))
+    buffer))
 
 (defun pizzazz-mode--post-self-insert-hook ()
   "Hook into `post-self-insert-hook` for `pizzazz-mode`"
