@@ -53,6 +53,9 @@ but can go beyond 1")
   "Active screenshake timer. Is `nil` if no screenshake active,
 otherwise set to timer running screenshake")
 
+(defvar pizzazz--shake-frame nil
+  "Frame to screenshake")
+
 (defun random-between-zero-and-one ()
   "Get a random float between 0.0 and 1.0"
   (/ (random most-positive-fixnum) (float most-positive-fixnum)))
@@ -64,25 +67,29 @@ otherwise set to timer running screenshake")
   ;; matter since there is no slowmo
   (* max_offset shake (random-between-zero-and-one)))
 
-(defun pizzazz-mode--shake-frame (frame)
+(defun pizzazz-mode--shake-frame ()
   "Shake the given frame or reset the timer if no more trauma exists"
   (if (> pizzazz--shake-trauma 0.0)
       (progn
 	(let* ((shake (* pizzazz--shake-trauma pizzazz--shake-trauma))
 	       (left-offset (truncate (calc-screenshake-offset pizzazz-shake-max-amplitude shake)))
 	       (top-offset (truncate (calc-screenshake-offset pizzazz-shake-max-amplitude shake))))
-	  (modify-frame-parameters frame
+	  (modify-frame-parameters pizzazz--shake-frame
 				   '((left . left-offset)
 				     (top . top-offset)))
 	  (setq pizzazz--shake-trauma (- pizzazz--shake-trauma (/ pizzazz-shake-time pizzazz-shake-max-amplitude)))))
     ;; move frame back to 0 0
-    (modify-frame-parameters frame '((left . 0)
+    (modify-frame-parameters pizzazz--shake-frame '((left . 0)
 				     (top . 0)))
     ;; reset timer
     (cancel-timer pizzazz--shake-timer)
     (setq pizzazz--shake-timer nil)
     ;; ensure trauma is set back to 0.0, don't want it to be negative
-    (setq pizzazz--shake-trauma 0.0)))
+    (setq pizzazz--shake-trauma 0.0))
+  (message
+   "left: %s top: %s"
+   (frame-parameter pizzazz--shake-frame 'left)
+   (frame-parameter pizzazz--shake-frame 'top)))
 
 (defun pizzazz-mode--post-self-insert-hook ()
   "Hook into `post-self-insert-hook` for `pizzazz-mode`"
@@ -93,17 +100,25 @@ otherwise set to timer running screenshake")
   (unless pizzazz--shake-timer
     ;; set `pizzazz-mode--shake-frame` to be run every couple
     ;; milliseconds
-    (setq pizzazz--shake-timer (run-with-timer 0 0.0416 #'pizzazz-mode--shake-frame (selected-frame)))))
+    (setq pizzazz--shake-timer (run-with-timer 0 0.0416 #'pizzazz-mode--shake-frame))))
 
 (defun pizzazz-mode--init ()
   "Initialize `pizzazz-mode`"
   (message "Initializing `pizzazz-mode` in '%s' buffer" (current-buffer))
+
+  ;; TODO: need to create new child frame because the base frame
+  ;; cannot be modified
+  (unless pizzazz--shake-frame
+    (setq pizzazz--shake-frame (selected-frame)))
+
   ;; reset any timer
   (when pizzazz--shake-timer
     (cancel-timer pizzazz--shake-timer)
     (setq pizzazz--shake-timer nil))
+
   ;; reset trauma
   (setq pizzazz--shake-trauma 0.0)
+
   ;; add to `post-self-insert-hook` (hook run on insertion of a new
   ;; character)
   (add-hook 'post-self-insert-hook #'pizzazz-mode--post-self-insert-hook))
@@ -113,6 +128,11 @@ otherwise set to timer running screenshake")
   (message "Removing `pizzazz-mode` in '%s' buffer" (current-buffer))
   ;; remove from `post-self-insert-hook`
   (remove-hook 'post-self-insert-hook #'pizzazz-mode--post-self-insert-hook)
+
+  ;; TODO: need to restore the parent frame
+  (when pizzazz--shake-frame
+    (setq pizzazz--shake-frame nil))
+
   ;; reset timer
   (when pizzazz--shake-timer
     (cancel-timer pizzazz--shake-timer)
