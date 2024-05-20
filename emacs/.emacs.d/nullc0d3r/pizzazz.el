@@ -45,6 +45,14 @@
 (defvar pizzazz-shake-time 1.0
   "Amount of time in seconds for screenshake")
 
+(defvar pizzazz--shake-trauma 0.0
+  "Current trauma for screenshake, expected to be between 0 and 1
+but can go beyond 1")
+
+(defvar pizzazz--shake-timer nil
+  "Active screenshake timer. Is `nil` if no screenshake active,
+otherwise set to timer running screenshake")
+
 (defun random-between-zero-and-one ()
   "Get a random float between 0.0 and 1.0"
   (/ (random most-positive-fixnum) (float most-positive-fixnum)))
@@ -60,6 +68,26 @@
   ;; using, it would help make it time dependent but here it doesn't
   ;; matter since there is no slowmo
   (* max_offset shake (random-between-zero-and-one)))
+
+(defun pizzazz-mode--shake-frame (frame)
+  "Shake the given frame or reset the timer if no more trauma exists"
+  (if (> pizzazz--shake-trauma 0.0)
+      (progn
+	(let* ((shake (* pizzazz--shake-trauma pizzazz--shake-trauma))
+	       (left-offset (truncate (calc-screenshake-offset pizzazz-shake-max-amplitude shake)))
+	       (top-offset (truncate (calc-screenshake-offset pizzazz-shake-max-amplitude shake))))
+	  (modify-frame-parameters frame
+				   '((left . left-offset)
+				     (top . top-offset)))
+	  (setq pizzazz--shake-trauma (- pizzazz--shake-trauma (/ pizzazz-shake-time pizzazz-shake-max-amplitude)))))
+    ;; move frame back to 0 0
+    (modify-frame-parameters frame '((left . 0)
+				     (top . 0)))
+    ;; reset timer
+    (cancel-timer pizzazz--shake-timer)
+    (setq pizzazz--shake-timer nil)
+    ;; ensure trauma is set back to 0.0, don't want it to be negative
+    (setq pizzazz--shake-trauma 0.0)))
 
 
 ;; create keymap for pizzazz mode
