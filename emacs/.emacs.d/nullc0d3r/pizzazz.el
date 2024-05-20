@@ -89,6 +89,15 @@ otherwise set to timer running screenshake")
     ;; ensure trauma is set back to 0.0, don't want it to be negative
     (setq pizzazz--shake-trauma 0.0)))
 
+(defun pizzazz-mode--post-self-insert-hook ()
+  "Hook into `post-self-insert-hook` for `pizzazz-mode`"
+  ;; increment trauma
+  (setq pizzazz--shake-trauma (+ pizzazz--shake-trauma pizzazz-shake-trauma-increase))
+  (unless pizzazz--shake-timer
+    ;; set `pizzazz-mode--shake-frame` to be run every couple
+    ;; milliseconds
+    (setq pizzazz--shake-timer (run-with-timer 0 0.0416 #'pizzazz-mode--shake-frame (selected-frame)))))
+
 
 ;; create keymap for pizzazz mode
 (defvar pizzazz-keymap (let ((map (make-sparse-keymap)))
