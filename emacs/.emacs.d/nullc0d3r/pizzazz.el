@@ -36,7 +36,7 @@
   "Pizzazz for emacs"
   :group 'convenience)
 
-(defvar pizzazz-shake-max-amplitude 20.0
+(defvar pizzazz-shake-max-amplitude 50.0
   "Maximum amplitude at trauma 1.0 for screenshake in number of pixels")
 
 (defvar pizzazz-shake-trauma-increase 0.3
@@ -88,6 +88,8 @@ otherwise set to timer running screenshake")
   "Hook into `post-self-insert-hook` for `pizzazz-mode`"
   ;; increment trauma
   (setq pizzazz--shake-trauma (+ pizzazz--shake-trauma pizzazz-shake-trauma-increase))
+  (if (> pizzazz--shake-trauma 1.0)
+      (setq pizzazz--shake-trauma 1.0))
   (unless pizzazz--shake-timer
     ;; set `pizzazz-mode--shake-frame` to be run every couple
     ;; milliseconds
@@ -95,7 +97,7 @@ otherwise set to timer running screenshake")
 
 (defun pizzazz-mode--init ()
   "Initialize `pizzazz-mode`"
-  (message "Initializing `pizzazz-mode`")
+  (message "Initializing `pizzazz-mode` in '%s' buffer" (current-buffer))
   ;; reset any timer
   (when pizzazz--shake-timer
     (cancel-timer pizzazz--shake-timer)
@@ -108,7 +110,7 @@ otherwise set to timer running screenshake")
 
 (defun pizzazz-mode--remove ()
   "Removing `pizzazz-mode`"
-  (message "Removing `pizzazz-mode`")
+  (message "Removing `pizzazz-mode` in '%s' buffer" (current-buffer))
   ;; remove from `post-self-insert-hook`
   (remove-hook 'post-self-insert-hook #'pizzazz-mode--post-self-insert-hook)
   ;; reset timer
