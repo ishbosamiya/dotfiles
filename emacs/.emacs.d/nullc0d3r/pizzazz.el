@@ -56,6 +56,9 @@ otherwise set to timer running screenshake")
 (defvar pizzazz--shake-frame nil
   "Frame to screenshake")
 
+(defvar pizzazz--shake-frame-parent nil
+  "Frame for which `pizzazz--shake-frame` was created")
+
 (defvar pizzazz--dummy-buffer nil
   "Dummy buffer")
 
@@ -128,10 +131,49 @@ otherwise set to timer running screenshake")
   "Initialize `pizzazz-mode`"
   (message "Initializing `pizzazz-mode` in '%s' buffer" (current-buffer))
 
-  ;; TODO: need to create new child frame because the base frame
-  ;; cannot be modified
+  ;; create a dummy buffer
+  (unless pizzazz--dummy-buffer
+    (setq pizzazz--dummy-buffer (pizzazz-mode--create-dummy-buffer)))
+
+  ;; create new child frame and move all windows to this child frame
+  ;;
+  ;; without creating a child frame, the frame position cannot be
+  ;; modified to add the screenshake effect
   (unless pizzazz--shake-frame
-    (setq pizzazz--shake-frame (selected-frame)))
+    (let* ((frame (selected-frame))
+	   (frame-parameters (copy-alist (frame-parameters frame)))
+	   (frame-window-configuration (current-window-configuration)))
+      ;; Copy given frame parameters, overriding some of its options.
+      (dolist (pair `((parent-id . nil)
+                      (window-id . nil)
+                      (outer-window-id . nil)
+                      (left . 0)
+                      (top . 0)
+                      (parent-frame . ,frame)))
+	(setf (alist-get (car pair) frame-parameters nil t) (cdr pair)))
+
+      ;; TODO: just this much is not enough, there are a bunch of
+      ;; issues with it, need to figure out and fix them
+
+      ;; create new frame which will act as the base `frame`, this is
+      ;; done so that the frame can be moved around (unlike the base
+      ;; `frame` which cannot be
+      (let ((new-frame (make-frame frame-parameters)))
+	(select-frame-set-input-focus new-frame)
+	(setq pizzazz--shake-frame new-frame)
+	(setq pizzazz--shake-frame-parent frame))
+
+      ;; set `frame` to known state where it cannot be updated
+      (with-selected-frame frame
+	;; delete other windows, switch to dummy buffer
+	(delete-other-windows)
+	(switch-to-buffer pizzazz--dummy-buffer)
+	;; don't let other buffers be accessed
+	(set-window-dedicated-p (get-buffer-window (current-buffer) frame) t))
+
+      ;; TODO: might need to override some frame parameters to prevent
+      ;; some issues of frame contention
+      ))
 
   ;; reset any timer
   (when pizzazz--shake-timer
@@ -148,12 +190,25 @@ otherwise set to timer running screenshake")
 (defun pizzazz-mode--remove ()
   "Removing `pizzazz-mode`"
   (message "Removing `pizzazz-mode` in '%s' buffer" (current-buffer))
+
   ;; remove from `post-self-insert-hook`
   (remove-hook 'post-self-insert-hook #'pizzazz-mode--post-self-insert-hook)
 
-  ;; TODO: need to restore the parent frame
   (when pizzazz--shake-frame
-    (setq pizzazz--shake-frame nil))
+    ;; restore parent frame
+    (let ((buffer (with-selected-frame pizzazz--shake-frame (current-buffer))))
+      (delete-frame pizzazz--shake-frame)
+      (with-selected-frame pizzazz--shake-frame-parent
+	(set-window-dedicated-p
+	 (get-buffer-window (current-buffer) pizzazz--shake-frame-parent) nil)
+	(switch-to-buffer buffer)))
+
+    (setq pizzazz--shake-frame nil)
+    (setq pizzazz--shake-frame-parent nil))
+
+  ;; remove dummy buffer
+  (kill-buffer pizzazz--dummy-buffer)
+  (setq pizzazz--dummy-buffer nil)
 
   ;; reset timer
   (when pizzazz--shake-timer
