@@ -57,11 +57,6 @@ otherwise set to timer running screenshake")
   "Get a random float between 0.0 and 1.0"
   (/ (random most-positive-fixnum) (float most-positive-fixnum)))
 
-(defun pizzazz--buffer (&optional buffer)
-  (unless buffer
-    (setq buffer (current-buffer)))
-  (with-current-buffer buffer
-    (message "TODO")))
 (defun calc-screenshake-offset (max_offset shake)
   "Calculate the screenshake offset."
   ;; ideally would use perlin noise but that is not available, so not
@@ -133,7 +128,9 @@ otherwise set to timer running screenshake")
   :global nil
   :lighter " Pizzazz"
   :keymap pizzazz-keymap
-  (pizzazz--buffer))
+  (if pizzazz-mode
+      (pizzazz-mode--init)
+    (pizzazz-mode--remove)))
 
 (provide 'pizzazz)
 ;;; pizzazz.el ends here
