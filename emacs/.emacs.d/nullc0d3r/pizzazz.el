@@ -36,6 +36,15 @@
   "Pizzazz for emacs"
   :group 'convenience)
 
+(defvar pizzazz-shake-max-amplitude 20.0
+  "Maximum amplitude at trauma 1.0 for screenshake in number of pixels")
+
+(defvar pizzazz-shake-trauma-increase 0.3
+  "Amount to increase trauma by for screenshake effect")
+
+(defvar pizzazz-shake-time 1.0
+  "Amount of time in seconds for screenshake")
+
 (defun random-between-zero-and-one ()
   "Get a random float between 0.0 and 1.0"
   (/ (random most-positive-fixnum) (float most-positive-fixnum)))
