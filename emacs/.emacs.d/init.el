@@ -1074,6 +1074,13 @@ Set temporary buffer local key binding.
   :ensure t
   :defer 2)
 
+;; Save undo history to file so it can be loaded between sessions.
+(use-package undo-fu-session
+  :ensure t
+  :config
+  (undo-fu-session-global-mode)
+  (setq undo-fu-session-file-limit 10000))
+
 ;; Add pizzazz to the buffer when enabled
 ;;
 ;; Custom defined - See nullc0d3r/pizzazz.el
