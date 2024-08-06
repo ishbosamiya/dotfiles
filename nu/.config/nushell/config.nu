@@ -645,5 +645,7 @@ def delete_lines_matching [file: path, line: string, prompt: string] {
   }
 }
 
+alias ptpython = ptpython -i ~/.config/ptpython/autoload.py
+
 # use `carapace` for auto completions
 source ~/.cache/carapace/init.nu
