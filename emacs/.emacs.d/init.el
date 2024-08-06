@@ -400,15 +400,24 @@ Turns on display-line-numbers-mode if not already active."
   ;; mini buffer for the compilation buffer (comint functionality)
   (setq projectile-run-use-comint-mode t))
 
-;; Handle escape sequence colorization properly for compilation-mode
-;; See : https://emacs.stackexchange.com/a/38531
 (require 'ansi-color)
 (defun colorize-compilation-buffer ()
   "Colorize from `compilation-filter-start' to `point'."
   (let ((inhibit-read-only t))
     (ansi-color-apply-on-region
      compilation-filter-start (point))))
+
+;; Handle escape sequence colorization properly for compilation-mode
+;;
+;; Reference: https://emacs.stackexchange.com/a/38531
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+(defun display-ansi-colours ()
+  "Display the current buffer with ANSI colours.
+
+Useful when trying to read log files or similar."
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
 
 ;; sourcetrail is no longer available on melpa sadly, the project is
 ;; abandoned.
