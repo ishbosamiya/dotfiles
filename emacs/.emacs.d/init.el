@@ -215,15 +215,22 @@ Turns on display-line-numbers-mode if not already active."
   :config
   (setq framemove-hook-into-windmove t))
 
-;; Let emacs learn and set style from a C file
 (defun infer-indentation-style ()
+  "Infer and set the indentation style.
+
+# Note
+
+Currently, it infers based on how many lines start with ` ` vs
+`\t`. This may change in the future.
+"
   (interactive)
   ;; if our source file uses tabs, we use tabs, if spaces spaces, and
   ;; if neither, we use the tab mode
   (let ((space-count (how-many "^  " (point-min) (point-max)))
         (tab-count (how-many "^\t" (point-min) (point-max))))
     (if (> space-count tab-count) (setq indent-tabs-mode nil) (setq indent-tabs-mode t)))
-  (message "Inferred indentation"))
+  (message "Setting `indent-tabs-mode` to `%s`" indent-tabs-mode))
+
 (defun c-guess-and-set-style ()		; TODO: Check file size and
 					; ask for permission if too
 					; large, to speed things up
