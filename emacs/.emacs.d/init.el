@@ -824,7 +824,10 @@ user.
       (modify-syntax-entry ?/ ". 124b" glsl-mode-syntax-table)
       (modify-syntax-entry ?* ". 23" glsl-mode-syntax-table)
       (modify-syntax-entry ?\n "> b" glsl-mode-syntax-table)
-      glsl-mode-syntax-table)))
+      glsl-mode-syntax-table))
+  (add-hook 'glsl-mode-hook
+            (lambda ()
+	      (infer-indentation-style))))
 
 ;; Be able to use rg from emacs
 (use-package rg
