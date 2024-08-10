@@ -1105,3 +1105,9 @@ Set temporary buffer local key binding.
 ;;
 ;; Custom defined - See nullc0d3r/pizzazz.el
 (use-package pizzazz)
+
+(defun convert-indent-tabs-to-spaces ()
+  "Convert indentation tabs to spaces."
+  (interactive)
+  (setq indent-tabs-mode nil)
+  (whitespace-cleanup))
