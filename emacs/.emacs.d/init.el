@@ -228,7 +228,8 @@ Currently, it infers based on how many lines start with ` ` vs
   ;; if neither, we use the tab mode
   (let ((space-count (how-many "^  " (point-min) (point-max)))
         (tab-count (how-many "^\t" (point-min) (point-max))))
-    (if (> space-count tab-count) (setq indent-tabs-mode nil) (setq indent-tabs-mode t)))
+    ;; if they are equal, default to spaces
+    (if (>= space-count tab-count) (setq indent-tabs-mode nil) (setq indent-tabs-mode t)))
   (message "Setting `indent-tabs-mode` to `%s`" indent-tabs-mode))
 
 (defun c-guess-and-set-style ()		; TODO: Check file size and
