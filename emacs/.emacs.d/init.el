@@ -1111,3 +1111,12 @@ Set temporary buffer local key binding.
   (interactive)
   (setq indent-tabs-mode nil)
   (whitespace-cleanup))
+
+;; Major mode for sourcepawn files.
+(use-package sourcepawn-mode
+  :ensure t
+  :config
+  (add-hook 'sourcepawn-mode-hook
+	    (lambda ()
+	      (setq tab-width 2)
+	      (infer-indentation-style))))
