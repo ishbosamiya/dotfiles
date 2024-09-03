@@ -838,6 +838,7 @@ user.
   (setq rg-executable "rg") ;; Use rg from the $PATH; allows working
 			    ;; via TRAMP too!
   (setq rg-default-alias-fallback "everything")
+  (add-to-list 'rg-custom-type-aliases (cons "sourcepawn" "*.sp *.inc"))
   (add-to-list 'rg-custom-type-aliases (cons "glsl" "*.glsl *.vert *.frag *.geom *.fxc"))
   (add-to-list 'rg-custom-type-aliases (cons "glslandh" "*.glsl *.vert *.frag *.geom *.fxc *.h"))
   (add-to-list 'rg-custom-type-aliases (cons "candcpp" "*.c *.h *.cpp *.hpp *.cc *.hh *.cxx *.hxx"))
