@@ -1116,6 +1116,7 @@ Set temporary buffer local key binding.
 ;; Major mode for sourcepawn files.
 (use-package sourcepawn-mode
   :ensure t
+  :mode "\\.inc\\'"
   :config
   (add-hook 'sourcepawn-mode-hook
 	    (lambda ()
