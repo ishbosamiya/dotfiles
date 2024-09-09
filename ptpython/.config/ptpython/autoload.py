@@ -48,3 +48,11 @@ def csgo_forward_dir_to_angles_deg(forward):
     """Convert the given CSGO space forward direction to CSGO space
     angles in degrees."""
     return np.rad2deg(csgo_forward_dir_to_angles_rad(forward))
+
+def csgo_grenade_start_position(throw_position, throw_angles_deg, start_throw_forward_by):
+    """Get the grenade start position. Expects angles in degrees."""
+    throw_angles_rad = np.deg2rad(throw_angles_deg)
+    frac_pi_2 = math.pi / 2.0
+    throw_angles_rad[0] -= np.radians(10.0) * (frac_pi_2 - abs(throw_angles_rad[0])) / frac_pi_2
+    forward = csgo_angles_rad_to_forward_dir(throw_angles_rad)
+    return throw_position + forward * start_throw_forward_by
