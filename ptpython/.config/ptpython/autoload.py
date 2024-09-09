@@ -1,17 +1,21 @@
 import numpy as np
 import math
 
-def csgo_angles_deg_to_forward_dir(angles):
-    """Convert the given CSGO space angles in degrees to CSGO space
+def csgo_angles_rad_to_forward_dir(angles_rad):
+    """Convert the given CSGO space angles in radians to CSGO space
     forward direction."""
-    yaw = math.radians(angles[1]);
-    pitch = math.radians(angles[0]);
+    yaw = angles_rad[1]
+    pitch = angles_rad[0]
     sin_yaw =  np.sin(yaw)
     cos_yaw =  np.cos(yaw)
     sin_pitch =  np.sin(pitch)
     cos_pitch =  np.cos(pitch)
-
     return np.array([cos_pitch * cos_yaw, cos_pitch * sin_yaw, -sin_pitch])
+
+def csgo_angles_deg_to_forward_dir(angles_deg):
+    """Convert the given CSGO space angles in degrees to CSGO space
+    forward direction."""
+    return csgo_angles_rad_to_forward_dir(np.deg2rad(angles_deg))
 
 def csgo_forward_dir_to_angles_rad(forward):
     """Convert the given CSGO space forward direction to CSGO space
