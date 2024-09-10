@@ -83,6 +83,12 @@
 ;; Prevent C-z from accidentally sending the window to background
 (global-unset-key (kbd "C-z"))
 
+;; enable `upcase-region`.
+(put 'upcase-region 'disabled nil)
+
+;; enable `narrow-to-region`.
+(put 'narrow-to-region 'disabled nil)
+
 ;; Flyspell: on-the-fly spell checking
 (use-package flyspell
   :config
@@ -367,7 +373,6 @@ Currently, it infers based on how many lines start with ` ` vs
 (use-package unfill
   :ensure t
   :bind (("M-Q" . unfill-paragraph)))
-(put 'upcase-region 'disabled nil)
 
 ;; Shows key bindings
 (use-package which-key
