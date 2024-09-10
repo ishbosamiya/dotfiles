@@ -1,6 +1,10 @@
 import numpy as np
 import math
 
+def lerp(x, y, t):
+    """Linearly interpolate from `x` to `y` using `t`."""
+    return x * (1.0 - t) + y * t
+
 def csgo_angles_rad_to_forward_dir(angles_rad):
     """Convert the given CSGO space angles in radians to CSGO space
     forward direction."""
