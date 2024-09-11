@@ -1128,4 +1128,12 @@ Set temporary buffer local key binding.
   (add-hook 'sourcepawn-mode-hook
 	    (lambda ()
 	      (setq tab-width 2)
-	      (infer-indentation-style))))
+	      (infer-indentation-style)))
+  ;; remove `_` from word syntax which is the default for
+  ;; `sourcepawn-mode`, it only makes navigation more annoying
+  (setq sourcepawn-mode-syntax-table
+	(let ((sourcepawn-mode-syntax-table (make-syntax-table)))
+	  (modify-syntax-entry ?/ ". 124b" sourcepawn-mode-syntax-table)
+	  (modify-syntax-entry ?* ". 23" sourcepawn-mode-syntax-table)
+	  (modify-syntax-entry ?\n "> b" sourcepawn-mode-syntax-table)
+	  sourcepawn-mode-syntax-table)))
