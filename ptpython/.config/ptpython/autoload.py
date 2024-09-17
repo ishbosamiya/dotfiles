@@ -53,10 +53,15 @@ def csgo_forward_dir_to_angles_deg(forward):
     angles in degrees."""
     return np.rad2deg(csgo_forward_dir_to_angles_rad(forward))
 
-def csgo_grenade_start_position(eye_position, eye_angles_deg, start_throw_forward_by = 16.0):
-    """Get the grenade start position. Expects eye angles in degrees."""
-    throw_angles_rad = np.deg2rad(eye_angles_deg)
+def csgo_grenade_throw_angles_rad(eye_angles_rad):
+    """Get the grenade throw angles in radians. Expects eye angles in radians."""
+    throw_angles_rad = eye_angles_rad
     frac_pi_2 = math.pi / 2.0
     throw_angles_rad[0] -= np.radians(10.0) * (frac_pi_2 - abs(throw_angles_rad[0])) / frac_pi_2
+    return throw_angles_rad
+
+def csgo_grenade_start_position(eye_position, eye_angles_deg, start_throw_forward_by = 16.0):
+    """Get the grenade start position. Expects eye angles in degrees."""
+    throw_angles_rad = csgo_grenade_throw_angles_rad(np.deg2rad(eye_angles_deg))
     forward = csgo_angles_rad_to_forward_dir(throw_angles_rad)
     return eye_position + forward * start_throw_forward_by
