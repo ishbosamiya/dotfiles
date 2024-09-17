@@ -71,3 +71,9 @@ def csgo_grenade_start_velocity(eye_angles_deg, initial_speed = 675.0):
     throw_angles_rad = csgo_grenade_throw_angles_rad(np.deg2rad(eye_angles_deg))
     forward = csgo_angles_rad_to_forward_dir(throw_angles_rad)
     return forward * initial_speed
+
+def csgo_grenade_start_position_and_velocity(eye_position, eye_angles_deg, start_throw_forward_by = 16.0, initial_speed = 675.0):
+    """Get the grenade start position and velocity. Expects eye angles in degrees."""
+    throw_position = csgo_grenade_start_position(eye_position, eye_angles_deg, start_throw_forward_by)
+    throw_velocity = csgo_grenade_start_velocity(eye_angles_deg, initial_speed)
+    return (throw_position, throw_velocity)
