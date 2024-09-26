@@ -1137,3 +1137,15 @@ Set temporary buffer local key binding.
 	  (modify-syntax-entry ?* ". 23" sourcepawn-mode-syntax-table)
 	  (modify-syntax-entry ?\n "> b" sourcepawn-mode-syntax-table)
 	  sourcepawn-mode-syntax-table)))
+
+;; Turn on `compilation-mode` debugging.
+;;
+;; Every error line will have a debug text property with the matcher
+;; that fit the line and the match data. This information can be
+;; accessed using `describe-text-properties` with the cursor over a
+;; error line.
+;;
+;; NOTE: not sure how much this affects performance, can't see an
+;; immediate slowdown and it is useful information to have, so keeping
+;; it on for now.
+(setq compilation-debug t)
