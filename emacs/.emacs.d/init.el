@@ -1160,3 +1160,9 @@ Set temporary buffer local key binding.
     (cons re '(2 3 4 nil 1)))
   "Specifications for matching rust backtraces. See
 `compilation-error-regexp-alist` for help on their format.")
+
+(eval-after-load 'compile
+  '(progn
+     (add-to-list 'compilation-error-regexp-alist-alist
+		  (cons 'rustc-backtrace rustc-backtrace-compilation-regexps))
+     (add-to-list 'compilation-error-regexp-alist 'rustc-backtrace)))
