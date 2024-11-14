@@ -649,3 +649,6 @@ alias ptpython = ptpython -i ~/.config/ptpython/autoload.py
 
 # use `carapace` for auto completions
 source ~/.cache/carapace/init.nu
+
+# make ncdu safe (no delete) and fast (don't cross FS boundary)
+alias ncdu = ncdu -rx

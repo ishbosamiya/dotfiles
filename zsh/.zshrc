@@ -158,3 +158,7 @@ fzf-dir() {
 }
 zle -N fzf-dir
 bindkey "^L" fzf-dir
+
+if command -v ncdu >/dev/null; then
+    alias ncdu='ncdu -rx' # Make ncdu safe (no delete) and fast (don't cross FS boundary)
+fi
