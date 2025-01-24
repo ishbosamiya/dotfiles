@@ -859,6 +859,14 @@ user.
   :ensure t
   :mode ("\\.md\\'" . gfm-mode)
   :commands (markdown-mode gfm-mode)
+  ;; TODO: get rid of annoying backtick binding does not work, need to
+  ;; figure out why
+  ;;
+  ;; ;; get rid of the annoying backtick binding
+  ;; :bind ((:map markdown-mode-map
+  ;;              ("`" . nil))
+  ;;        (:map gfm-mode-map
+  ;;              ("`" . nil)))
   :config
   (setq markdown-command "pandoc -t html5"))
 
