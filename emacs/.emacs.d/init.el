@@ -221,6 +221,13 @@ Turns on display-line-numbers-mode if not already active."
   :config
   (setq framemove-hook-into-windmove t))
 
+;; TODO: need to figure out why `(setq-default indent-tabs-mode nil)`
+;; does not work
+;;
+;; ;; Disable `indent-tabs-mode` by default, `infer-indentation-style`
+;; ;; (if the major mode runs it) will enable it as necessary.
+;; (setq-default ident-tabs-mode nil)
+
 (defun infer-indentation-style ()
   "Infer and set the indentation style.
 
