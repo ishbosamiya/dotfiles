@@ -418,7 +418,12 @@ Currently, it infers based on how many lines start with ` ` vs
   :config
   ;; use comint mode for run command to allow user input through the
   ;; mini buffer for the compilation buffer (comint functionality)
-  (setq projectile-run-use-comint-mode t))
+  (setq projectile-run-use-comint-mode t)
+  ;; set minibuffer completion to `ido` so that autocomplete for
+  ;; things like `projectile-find-file` work
+  ;;
+  ;; reference: https://emacsredux.com/blog/2021/04/19/configuring-minibuffer-completion-in-projectile/
+  (setq projectile-completion-system 'ido))
 
 (require 'ansi-color)
 (defun colorize-compilation-buffer ()
