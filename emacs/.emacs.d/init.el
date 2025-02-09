@@ -245,6 +245,9 @@ Currently, it infers based on how many lines start with ` ` vs
     (if (>= space-count tab-count) (setq indent-tabs-mode nil) (setq indent-tabs-mode t)))
   (message "Setting `indent-tabs-mode` to `%s`" indent-tabs-mode))
 
+;; add `infer-indentation-style` to all programming modes
+(add-hook 'prog-mode-hook 'infer-indentation-style)
+
 (defun c-guess-and-set-style ()		; TODO: Check file size and
 					; ask for permission if too
 					; large, to speed things up
@@ -259,7 +262,6 @@ Currently, it infers based on how many lines start with ` ` vs
 (add-hook 'c-mode-common-hook
 	  (lambda ()
 	    (setq tab-width 2)
-	    (infer-indentation-style)
 	    ;; (c-guess-and-set-style)
 	    ;; ;; Disabled guessing by default, to speed up file
 	    ;; ;; opens for large files.
@@ -844,10 +846,7 @@ user.
       (modify-syntax-entry ?/ ". 124b" glsl-mode-syntax-table)
       (modify-syntax-entry ?* ". 23" glsl-mode-syntax-table)
       (modify-syntax-entry ?\n "> b" glsl-mode-syntax-table)
-      glsl-mode-syntax-table))
-  (add-hook 'glsl-mode-hook
-            (lambda ()
-	      (infer-indentation-style))))
+      glsl-mode-syntax-table)))
 
 ;; Be able to use rg from emacs
 (use-package rg
@@ -1147,8 +1146,7 @@ Set temporary buffer local key binding.
   :config
   (add-hook 'sourcepawn-mode-hook
 	    (lambda ()
-	      (setq tab-width 2)
-	      (infer-indentation-style)))
+	      (setq tab-width 2)))
   ;; remove `_` from word syntax which is the default for
   ;; `sourcepawn-mode`, it only makes navigation more annoying
   (setq sourcepawn-mode-syntax-table
