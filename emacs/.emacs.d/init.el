@@ -19,9 +19,9 @@
 (eval-when-compile
   (or (require 'use-package nil t)
       (progn
-	(package-refresh-contents)
-	(package-install 'use-package)
-	(message "On a new system. Just installed use-package!"))))
+        (package-refresh-contents)
+        (package-install 'use-package)
+        (message "On a new system. Just installed use-package!"))))
 
 ;; Load custom variables from custom_variables.el file
 (setq custom-file (locate-user-emacs-file "custom_variables.el"))
@@ -29,18 +29,18 @@
 
 ;; Allow loading customizations from the nullc0d3r directory
 (add-to-list 'load-path
-	     (concat user-emacs-directory
-		     (convert-standard-filename "nullc0d3r/")))
+             (concat user-emacs-directory
+                     (convert-standard-filename "nullc0d3r/")))
 
 ;; Add emacs-nushell to load-path
 (add-to-list 'load-path
-	     (concat user-emacs-directory
-		     (convert-standard-filename "emacs-nushell/")))
+             (concat user-emacs-directory
+                     (convert-standard-filename "emacs-nushell/")))
 
 ;; `extern` directory to load path
 (add-to-list 'load-path
-	     (concat user-emacs-directory
-		     (convert-standard-filename "extern/")))
+             (concat user-emacs-directory
+                     (convert-standard-filename "extern/")))
 
 ;; setup a default text height
 ;;
@@ -103,11 +103,11 @@
   :ensure t
   :config
   (add-hook 'text-mode-hook
-	  (lambda ()
-	    (flyspell-mode t)
-	    (flyspell-buffer)
-	    (writegood-mode t)
-	    (visual-line-mode t))))
+            (lambda ()
+              (flyspell-mode t)
+              (flyspell-buffer)
+              (writegood-mode t)
+              (visual-line-mode t))))
 
 ;; Adding a word to the flycheck dictionary causes it to stop showing
 ;; the rest of the underlined words. The following adds "advice" to
@@ -115,12 +115,12 @@
 (defun flyspell-buffer-after-pdict-save (&rest _)
   (flyspell-buffer))
 (advice-add 'ispell-pdict-save :after
-#'flyspell-buffer-after-pdict-save)
+            #'flyspell-buffer-after-pdict-save)
 
 ;; Set C-` to correct word using flyspell, and F9 to flyspell the
 ;; entire buffer. C-F9 to disable flyspell.
 (global-set-key (kbd "C-`")
-		'flyspell-correct-word-before-point)
+                'flyspell-correct-word-before-point)
 (defun flyspell-enable ()
   (interactive)
   (if (derived-mode-p 'prog-mode)
@@ -147,7 +147,7 @@
       scroll-up-aggressively 0.01
       scroll-down-aggressively 0.01)
 (setq-default scroll-up-aggressively 0.01
-	      scroll-down-aggressively 0.01)
+              scroll-down-aggressively 0.01)
 
 ;; Turn on line numbers for all buffers
 (cl-assert (version<= "26.0.50" emacs-version) t "Require emacs
@@ -165,7 +165,7 @@ Turns on display-line-numbers-mode if not already active."
     (setq buffer (current-buffer)))
   (with-current-buffer buffer
     (if (eq display-line-numbers-type 'relative)
-	(setq display-line-numbers-type t)
+        (setq display-line-numbers-type t)
       (setq display-line-numbers-type 'relative))
     (funcall 'display-line-numbers-mode nil)
     (funcall 'display-line-numbers-mode t)))
@@ -254,9 +254,9 @@ This is a collection of calls to required `infer-*` methods."
 (add-hook 'prog-mode-hook 'infer-indentation-style)
 
 (defun c-guess-and-set-style ()		; TODO: Check file size and
-					; ask for permission if too
-					; large, to speed things up
-					; for large files.
+                                        ; ask for permission if too
+                                        ; large, to speed things up
+                                        ; for large files.
   (interactive)
   (let
       ((stylename (concat "guessed-style-" (file-name-base))))
@@ -265,22 +265,22 @@ This is a collection of calls to required `infer-*` methods."
     (c-set-style stylename)
     (message (concat "Installed and set " stylename))))
 (add-hook 'c-mode-common-hook
-	  (lambda ()
-	    (setq tab-width 2)
-	    ;; (c-guess-and-set-style)
-	    ;; ;; Disabled guessing by default, to speed up file
-	    ;; ;; opens for large files.
-	    ))
+          (lambda ()
+            (setq tab-width 2)
+            ;; (c-guess-and-set-style)
+            ;; ;; Disabled guessing by default, to speed up file
+            ;; ;; opens for large files.
+            ))
 
 ;; c++ mode
 (c-add-style "c++-style"
-	     '("linux"
-	       (indent-tabs-mode . nil)
-	       (c-basic-offset . 2)
-	       (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
-				   (brace-list-open . 0)
-				   (statement-case-open . +)))
-	       ))
+             '("linux"
+               (indent-tabs-mode . nil)
+               (c-basic-offset . 2)
+               (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
+                                   (brace-list-open . 0)
+                                   (statement-case-open . +)))
+               ))
 (defun my-c++-mode-hook ()
   (c-set-style "c++-style")
   (auto-fill-mode)
@@ -399,10 +399,10 @@ This is a collection of calls to required `infer-*` methods."
   :ensure t
   :demand t
   :bind (; Replace with amx
-	 ("M-x" . amx)
-	 ("M-X" . amx-major-mode-commands)
-	 ; and maintain old M-x via C-c M-x
-	 ("C-c M-x" . execute-extended-command)))
+         ("M-x" . amx)
+         ("M-X" . amx-major-mode-commands)
+         ; and maintain old M-x via C-c M-x
+         ("C-c M-x" . execute-extended-command)))
 
 (use-package ido
   :ensure t
@@ -465,14 +465,14 @@ Useful when trying to read log files or similar."
   :ensure t
   :config
   (defun iedit-occurrence-context-lines-change (value &optional buffer)
-      "Change the value of `iedit-occurrence-context-lines` by the
+    "Change the value of `iedit-occurrence-context-lines` by the
 given value."
     (unless buffer
       (setq buffer (current-buffer)))
     (with-current-buffer buffer
       (setq iedit-occurrence-context-lines (+ iedit-occurrence-context-lines value))
       (if (< iedit-occurrence-context-lines 0)
-	  (setq iedit-occurrence-context-lines 0))
+          (setq iedit-occurrence-context-lines 0))
       (iedit-show/hide-context-lines)
       (iedit-show/hide-context-lines)
       (message "iedit-occurrence-context-lines set to %s" iedit-occurrence-context-lines)))
@@ -513,12 +513,12 @@ mode is toggled globally but only the `buffer` (or
       (setq buffer (current-buffer)))
     (with-current-buffer buffer
       (let ((set-mode-to (if (eq flycheck-highlighting-mode 'nil)
-			     'symbols
-			   'nil)))
-	(setq flycheck-highlighting-mode set-mode-to)
-	;; force flycheck to refresh by turning it off and back on
-	(funcall 'flycheck-mode nil)
-	(funcall 'flycheck-mode t))))
+                             'symbols
+                           'nil)))
+        (setq flycheck-highlighting-mode set-mode-to)
+        ;; force flycheck to refresh by turning it off and back on
+        (funcall 'flycheck-mode nil)
+        (funcall 'flycheck-mode t))))
   (define-key flycheck-mode-map (kbd "C-c f t") 'flycheck-toggle-highlighting-mode))
 
 ;; Language server using lsp-mode
@@ -527,15 +527,15 @@ mode is toggled globally but only the `buffer` (or
   :commands (lsp lsp-deferred)
   :init (setq lsp-keymap-prefix "C-c l")
   :hook ((c++-mode . lsp-deferred)
-	 (c-mode . lsp-deferred)
-	 (rust-mode . lsp-deferred)
-	 (csharp-mode . lsp-deferred)
-	 (go-mode . lsp-deferred)
-	 (lua-mode . lsp-deferred)
-	 (java-mode . lsp-deferred)
-	 (lsp-mode . lsp-enable-which-key-integration))
+         (c-mode . lsp-deferred)
+         (rust-mode . lsp-deferred)
+         (csharp-mode . lsp-deferred)
+         (go-mode . lsp-deferred)
+         (lua-mode . lsp-deferred)
+         (java-mode . lsp-deferred)
+         (lsp-mode . lsp-enable-which-key-integration))
   :bind (("C--" . lsp-iedit-highlights)
-	 ("C-c l c" . 'lsp-rust-analyzer-cargo-watch-command-toggle))
+         ("C-c l c" . 'lsp-rust-analyzer-cargo-watch-command-toggle))
   :custom
   ;; use cargo check as default, use
   ;; `lsp-rust-analyzer-cargo-watch-command-toggle` to toggle between
@@ -582,7 +582,7 @@ mode is toggled globally but only the `buffer` (or
       :library-folders-fn (lambda (_workspace) lsp-rust-analyzer-library-directories)
       :after-open-fn (lambda ()
                        (when lsp-rust-analyzer-server-display-inlay-hints
-			 (lsp-rust-analyzer-inlay-hints-mode)))
+                         (lsp-rust-analyzer-inlay-hints-mode)))
       :ignore-messages nil
       :server-id 'rust-analyzer-remote)))
 
@@ -622,8 +622,8 @@ it is better to have a custom function for this."
   :after (lsp-mode)
   :hook (lsp-mode-hook . lsp-ui-mode)
   :bind (:map lsp-ui-mode-map
-         ("C-?" . 'lsp-ui-doc-glance)
-         ("C-]" . 'lsp-ui-peek-find-references))
+              ("C-?" . 'lsp-ui-doc-glance)
+              ("C-]" . 'lsp-ui-peek-find-references))
   :init
   ;; Make sure lsp prefers flycheck over flymake
   (setq lsp-prefer-flymake nil)
@@ -658,9 +658,9 @@ it is better to have a custom function for this."
   :ensure t
   :demand t
   :bind (("C-c C-f" . fold-this-all)
-	 ("C-c C-S-f" . fold-this)
-	 ("C-c M-f" . fold-this-unfold-at-point)
-	 ("C-c M-F" . fold-this-unfold-all)))
+         ("C-c C-S-f" . fold-this)
+         ("C-c M-f" . fold-this-unfold-at-point)
+         ("C-c M-F" . fold-this-unfold-all)))
 
 ;; general: a easy way to setup keybindings
 (use-package general
@@ -686,7 +686,7 @@ it is better to have a custom function for this."
                                (list :type "gdb"
                                      :request "launch"
                                      :name "rust debug main"
-				     :gdbpath "rust-gdb"
+                                     :gdbpath "rust-gdb"
                                      :target "${workspaceFolder}/target/debug/main"
                                      :cwd nil))
 
@@ -695,7 +695,7 @@ it is better to have a custom function for this."
                                (list :type "gdb"
                                      :request "launch"
                                      :name "rust release main"
-				     :gdbpath "rust-gdb"
+                                     :gdbpath "rust-gdb"
                                      :target "${workspaceFolder}/target/release/main"
                                      :cwd nil)))
 
@@ -743,20 +743,20 @@ it is better to have a custom function for this."
 Number of lines added, followed by number of lines deleted,
 followed by the name of the file."
     (mapcar (lambda (line)
-	      (split-string line "\t" t))
-	    (magit-git-items "diff" "-z" "--numstat" "--cached")))
+              (split-string line "\t" t))
+            (magit-git-items "diff" "-z" "--numstat" "--cached")))
 
   (defun file-path-to-commit-heading (file-path)
     "Convert the given file path to a commit heading"
     (interactive "Ffile-path: ")
     (let ((res (downcase
-		(seq-reduce
-		 (lambda (path r)
-		   (message "file-path-to-commit-heading: running `\"%s\" \"%s\"` on `%s`"
-			    (nth 0 r) (nth 1 r) path)
-		   (replace-regexp-in-string (nth 0 r) (nth 1 r) path))
-		 file-path-to-commit-heading-replace-regexps
-		 file-path))))
+                (seq-reduce
+                 (lambda (path r)
+                   (message "file-path-to-commit-heading: running `\"%s\" \"%s\"` on `%s`"
+                            (nth 0 r) (nth 1 r) path)
+                   (replace-regexp-in-string (nth 0 r) (nth 1 r) path))
+                 file-path-to-commit-heading-replace-regexps
+                 file-path))))
       (message "file-path-to-commit-heading: final heading: `%s`" res)
       res))
 
@@ -765,23 +765,23 @@ followed by the name of the file."
 running `file-path-to-commit-heading` for each staged file. The
 user can then quickly delete the entires that are not required."
     (let* ((staged-files-stats (magit-staged-files-stats))
-	   (staged-files
-	    (mapcar
-	     (lambda (l)
-	       "Get the file name"
-	       (nth 2 l))
-	     (sort staged-files-stats
-		   (lambda (a b)
-		     "Sort by adding the added and deleted lines"
-		     (> (+ (string-to-number (nth 0 a)) (string-to-number (nth 1 a)))
-			(+ (string-to-number (nth 0 b)) (string-to-number (nth 1 b))))))))
-	   (headings (mapcar
-		      'file-path-to-commit-heading
-		      staged-files)))
+           (staged-files
+            (mapcar
+             (lambda (l)
+               "Get the file name"
+               (nth 2 l))
+             (sort staged-files-stats
+                   (lambda (a b)
+                     "Sort by adding the added and deleted lines"
+                     (> (+ (string-to-number (nth 0 a)) (string-to-number (nth 1 a)))
+                        (+ (string-to-number (nth 0 b)) (string-to-number (nth 1 b))))))))
+           (headings (mapcar
+                      'file-path-to-commit-heading
+                      staged-files)))
       (mapc (lambda (heading)
-	      (message "adding commit heading `%s`" heading)
-	      (insert heading))
-	    (mapconcat 'identity headings ": \n")))
+              (message "adding commit heading `%s`" heading)
+              (insert heading))
+            (mapconcat 'identity headings ": \n")))
     ;; insert the last `: `
     (insert ": "))
 
@@ -825,7 +825,7 @@ user.
   (interactive "D")
   (let ((alacritty-exists (call-process-shell-command "command -v alacritty")))
     (if alacritty-exists
-	(open-alacritty-in-directory dir)
+        (open-alacritty-in-directory dir)
       (open-gnome-terminal-in-directory dir))))
 
 (global-set-key (kbd "C-x C-t") 'open-terminal-in-directory)
@@ -847,26 +847,26 @@ user.
   ;; remove `_` from word syntax which is the default for `glsl-mode`,
   ;; it only makes navigation more annoying
   (setq glsl-mode-syntax-table
-    (let ((glsl-mode-syntax-table (make-syntax-table)))
-      (modify-syntax-entry ?/ ". 124b" glsl-mode-syntax-table)
-      (modify-syntax-entry ?* ". 23" glsl-mode-syntax-table)
-      (modify-syntax-entry ?\n "> b" glsl-mode-syntax-table)
-      glsl-mode-syntax-table)))
+        (let ((glsl-mode-syntax-table (make-syntax-table)))
+          (modify-syntax-entry ?/ ". 124b" glsl-mode-syntax-table)
+          (modify-syntax-entry ?* ". 23" glsl-mode-syntax-table)
+          (modify-syntax-entry ?\n "> b" glsl-mode-syntax-table)
+          glsl-mode-syntax-table)))
 
 ;; Be able to use rg from emacs
 (use-package rg
   :ensure t
   :defer 2
   :config
-  (setq rg-executable "rg") ;; Use rg from the $PATH; allows working
-			    ;; via TRAMP too!
+  ;; Use rg from the $PATH; allows working via TRAMP too!
+  (setq rg-executable "rg")
   (setq rg-default-alias-fallback "everything")
   (add-to-list 'rg-custom-type-aliases (cons "sourcepawn" "*.sp *.inc"))
   (add-to-list 'rg-custom-type-aliases (cons "glsl" "*.glsl *.vert *.frag *.geom *.fxc"))
   (add-to-list 'rg-custom-type-aliases (cons "glslandh" "*.glsl *.vert *.frag *.geom *.fxc *.h"))
   (add-to-list 'rg-custom-type-aliases (cons "candcpp" "*.c *.h *.cpp *.hpp *.cc *.hh *.cxx *.hxx"))
   :bind (("M-s M-s" . 'rg-dwim)
-	 ("M-s s"   . 'rg-menu)))
+         ("M-s s"   . 'rg-menu)))
 
 ;; Markdown mode stuff
 ;;
@@ -938,8 +938,8 @@ user.
   "Move the cursor to the middle line of the window"
   (interactive)
   (let* ((begin (line-number-at-pos (window-start)))
-	 (end (line-number-at-pos (window-end)))
-	 (middle (/ (+ end begin) 2)))
+         (end (line-number-at-pos (window-end)))
+         (middle (/ (+ end begin) 2)))
     (goto-line middle)))
 
 ;; Cycle between snake case, camel case, etc.
@@ -1001,8 +1001,8 @@ Set temporary buffer local key binding.
 (use-package hl-todo
   :ensure t
   :bind (("C-c t p" . hl-todo-previous)
-	 ("C-c t n" . hl-todo-next)
-	 ("C-c t o" . hl-todo-occur))
+         ("C-c t n" . hl-todo-next)
+         ("C-c t o" . hl-todo-occur))
   :config
   (setq hl-todo-wrap-movement nil)
   (global-hl-todo-mode))
@@ -1024,8 +1024,8 @@ Set temporary buffer local key binding.
 (use-package avy
   :ensure t
   :bind (("M-j" . avy-goto-char-timer)
-	 (:map isearch-mode-map
-	       ("M-j" . avy-isearch)))
+         (:map isearch-mode-map
+               ("M-j" . avy-isearch)))
   :config
   (setq avy-single-candidate-jump nil))
 
@@ -1086,15 +1086,15 @@ Set temporary buffer local key binding.
 (use-package default-text-scale
   :ensure t
   :bind (("C-M-=" . 'default-text-scale-increase)
-	 ("C-M--" . 'default-text-scale-decrease)
-	 ;; instead of using `default-text-scale-reset`, just set to
-	 ;; known `default-text-height` due to bug, see
-	 ;; <https://github.com/purcell/default-text-scale/issues/5>
-	 ("C-M-0" . (lambda ()
-		      (interactive)
-		      (setq default-text-scale--complement 0)
-		      (set-face-attribute 'default nil :height default-text-height)
-		      (message "Default font size is now %d" (face-attribute 'default :height))))))
+         ("C-M--" . 'default-text-scale-decrease)
+         ;; instead of using `default-text-scale-reset`, just set to
+         ;; known `default-text-height` due to bug, see
+         ;; <https://github.com/purcell/default-text-scale/issues/5>
+         ("C-M-0" . (lambda ()
+                      (interactive)
+                      (setq default-text-scale--complement 0)
+                      (set-face-attribute 'default nil :height default-text-height)
+                      (message "Default font size is now %d" (face-attribute 'default :height))))))
 
 
 ;; To be able to update the GPG keys.
@@ -1150,16 +1150,16 @@ Set temporary buffer local key binding.
   :mode "\\.inc\\'"
   :config
   (add-hook 'sourcepawn-mode-hook
-	    (lambda ()
-	      (setq tab-width 2)))
+            (lambda ()
+              (setq tab-width 2)))
   ;; remove `_` from word syntax which is the default for
   ;; `sourcepawn-mode`, it only makes navigation more annoying
   (setq sourcepawn-mode-syntax-table
-	(let ((sourcepawn-mode-syntax-table (make-syntax-table)))
-	  (modify-syntax-entry ?/ ". 124b" sourcepawn-mode-syntax-table)
-	  (modify-syntax-entry ?* ". 23" sourcepawn-mode-syntax-table)
-	  (modify-syntax-entry ?\n "> b" sourcepawn-mode-syntax-table)
-	  sourcepawn-mode-syntax-table)))
+        (let ((sourcepawn-mode-syntax-table (make-syntax-table)))
+          (modify-syntax-entry ?/ ". 124b" sourcepawn-mode-syntax-table)
+          (modify-syntax-entry ?* ". 23" sourcepawn-mode-syntax-table)
+          (modify-syntax-entry ?\n "> b" sourcepawn-mode-syntax-table)
+          sourcepawn-mode-syntax-table)))
 
 ;; Turn on `compilation-mode` debugging.
 ;;
@@ -1187,5 +1187,5 @@ Set temporary buffer local key binding.
 (eval-after-load 'compile
   '(progn
      (add-to-list 'compilation-error-regexp-alist-alist
-		  (cons 'rustc-backtrace rustc-backtrace-compilation-regexps))
+                  (cons 'rustc-backtrace rustc-backtrace-compilation-regexps))
      (add-to-list 'compilation-error-regexp-alist 'rustc-backtrace)))
