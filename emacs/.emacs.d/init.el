@@ -230,6 +230,7 @@ Turns on display-line-numbers-mode if not already active."
 
 (defun infer-indents-tabs-mode ()
   "Infer to set/unset `indent-tabs-mode`.
+
 # Note
 
 Currently, it infers based on how many lines start with ` ` vs
@@ -243,12 +244,26 @@ Currently, it infers based on how many lines start with ` ` vs
     (if (>= space-count tab-count) (setq indent-tabs-mode nil) (setq indent-tabs-mode t)))
   (message "Setting `indent-tabs-mode` to `%s`" indent-tabs-mode))
 
+(defun infer-tab-width ()
+  "Infer and set `tab-width` (and similar like `c-basic-offset`
+based on active mode).
+
+# Note
+
+Offset is determined by `tab-width` and offsets/levels set by
+individual modes like `c-basic-offset`, `js-indent-level`,
+etc. This method attempts to set the correct one based on the
+mode that is active."
+  (interactive)
+  (message "TODO: need to implement `infer-tab-width`"))
+
 (defun infer-indentation-style ()
   "Infer and set the indentation style.
 
 This is a collection of calls to required `infer-*` methods."
   (interactive)
-  (infer-indents-tabs-mode))
+  (infer-indents-tabs-mode)
+  (infer-tab-width))
 
 ;; add `infer-indentation-style` to all programming modes
 (add-hook 'prog-mode-hook 'infer-indentation-style)
