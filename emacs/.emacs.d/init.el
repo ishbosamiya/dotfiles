@@ -228,22 +228,27 @@ Turns on display-line-numbers-mode if not already active."
 ;; ;; (if the major mode runs it) will enable it as necessary.
 ;; (setq-default ident-tabs-mode nil)
 
-(defun infer-indentation-style ()
-  "Infer and set the indentation style.
-
+(defun infer-indents-tabs-mode ()
+  "Infer to set/unset `indent-tabs-mode`.
 # Note
 
 Currently, it infers based on how many lines start with ` ` vs
-`\t`. This may change in the future.
-"
+`\t`. This may change in the future"
   (interactive)
-  ;; if our source file uses tabs, we use tabs, if spaces spaces, and
-  ;; if neither, we use the tab mode
+  ;; set `indent-tabs-mode` based on how many lines start with spaces
+  ;; and tabs
   (let ((space-count (how-many "^  " (point-min) (point-max)))
         (tab-count (how-many "^\t" (point-min) (point-max))))
     ;; if they are equal, default to spaces
     (if (>= space-count tab-count) (setq indent-tabs-mode nil) (setq indent-tabs-mode t)))
   (message "Setting `indent-tabs-mode` to `%s`" indent-tabs-mode))
+
+(defun infer-indentation-style ()
+  "Infer and set the indentation style.
+
+This is a collection of calls to required `infer-*` methods."
+  (interactive)
+  (infer-indents-tabs-mode))
 
 ;; add `infer-indentation-style` to all programming modes
 (add-hook 'prog-mode-hook 'infer-indentation-style)
