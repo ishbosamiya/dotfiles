@@ -228,6 +228,17 @@ Turns on display-line-numbers-mode if not already active."
 ;; ;; (if the major mode runs it) will enable it as necessary.
 ;; (setq-default ident-tabs-mode nil)
 
+(defun for-each-line-in-buffer (func)
+  "Run the given func for each line in the buffer."
+  (save-excursion
+    (goto-char (point-min))
+    (while (not (eobp))
+      (let* ((line-start (line-beginning-position))
+             (line-end (line-end-position))
+             (line (buffer-substring-no-properties line-start line-end)))
+        (funcall func line))
+      (forward-line 1))))
+
 (defun infer-indents-tabs-mode ()
   "Infer to set/unset `indent-tabs-mode`.
 
@@ -245,7 +256,7 @@ Currently, it infers based on how many lines start with ` ` vs
   (message "Setting `indent-tabs-mode` to `%s`" indent-tabs-mode))
 
 (defun infer-tab-width ()
-  "Infer and set `tab-width` (and similar like `c-basic-offset`
+  "Infer and set `tab-width` (or similar like `c-basic-offset`
 based on active mode).
 
 # Note
