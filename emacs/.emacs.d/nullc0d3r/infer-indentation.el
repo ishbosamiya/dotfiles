@@ -68,20 +68,22 @@ on the major mode."
         (forward-line 1)))
     ;; don't want to count 0 spaces
     (remhash 0 num-spaces-to-count)
-    (message "num-spaces-to-count=%s" num-spaces-to-count)
     ;; make num-spaces-to-count into a list and sort by count
     (maphash (lambda (num-spaces count)
                (push num-spaces num-spaces-list))
              num-spaces-to-count)
     (sort num-spaces-list (lambda (a b)
                             (<= (gethash a num-spaces-to-count) (gethash b num-spaces-to-count))))
-    (message "num-spaces-list=%s" num-spaces-list)
-    (maphash (lambda (num-spaces count)
-               (setq gcd (if gcd (gcd gcd num-spaces) num-spaces)))
-             num-spaces-to-count)
-    (message "gcd=%s" gcd))
-  (message "TODO: need to implement `infer-tab-width`")
-  tab-width)
+    ;; find the gcd (that is not 1) of the most occurring
+    (while (and
+            (length> num-spaces-list 0)
+            (and
+             (setq gcd (gcd-of-list num-spaces-list))
+             (= gcd 1)))
+      (pop num-spaces-list))
+    (unless gcd
+      (message "WARN: `infer-tab-width` could not infer tab width of the file"))
+    gcd))
 
 (defun infer-indentation-style ()
   "Infer and set the indentation style.
