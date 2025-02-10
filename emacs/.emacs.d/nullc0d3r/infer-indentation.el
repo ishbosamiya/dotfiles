@@ -49,7 +49,9 @@ by individual modes like `c-basic-offset`, `js-indent-level`,
 etc. Caller must set the tab width returned by this method based
 on the major mode."
   (interactive)
-  (let ((num-spaces-to-count (make-hash-table)))
+  (let ((num-spaces-to-count (make-hash-table))
+        (num-spaces-list (make-list 0 0))
+        (gcd nil))
     (save-excursion
       (goto-char (point-min))
       (while (not (eobp))
@@ -63,14 +65,17 @@ on the major mode."
     ;; don't want to count 0 spaces
     (remhash 0 num-spaces-to-count)
     (message "num-spaces-to-count=%s" num-spaces-to-count)
-    (let ((gcd nil))
-      (maphash
-       (lambda (num-spaces count)
-         (setq gcd (if gcd
-                       (gcd gcd num-spaces)
-                     num-spaces)))
-       num-spaces-to-count)
-      (message "gcd=%s" gcd)))
+    ;; make num-spaces-to-count into a list and sort by count
+    (maphash (lambda (num-spaces count)
+               (push num-spaces num-spaces-list))
+             num-spaces-to-count)
+    (sort num-spaces-list (lambda (a b)
+                            (<= (gethash a num-spaces-to-count) (gethash b num-spaces-to-count))))
+    (message "num-spaces-list=%s" num-spaces-list)
+    (maphash (lambda (num-spaces count)
+               (setq gcd (if gcd (gcd gcd num-spaces) num-spaces)))
+             num-spaces-to-count)
+    (message "gcd=%s" gcd))
   (message "TODO: need to implement `infer-tab-width`")
   tab-width)
 
