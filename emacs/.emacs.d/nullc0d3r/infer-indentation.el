@@ -18,6 +18,12 @@
   "Indentation utils."
   :group 'convenience)
 
+(defun gcd (a b)
+  "Find the greatest common divisor (GCD) of the given to integers."
+  (if (= b 0)
+      a
+    (gcd b (% a b))))
+
 (defun infer-indent-tabs-mode ()
   "Infer and return if `indent-tabs-mode` should be enabled.
 
