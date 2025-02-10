@@ -43,6 +43,19 @@ by individual modes like `c-basic-offset`, `js-indent-level`,
 etc. Caller must set the tab width returned by this method based
 on the major mode."
   (interactive)
+  (let ((num-spaces-to-count (make-hash-table)))
+    (save-excursion
+      (goto-char (point-min))
+      (while (not (eobp))
+        (let* ((line-start (line-beginning-position))
+              (line-end (line-end-position))
+              (line (buffer-substring-no-properties line-start line-end))
+              (num-spaces (- (length line) (length (string-trim-left line)))))
+          (when num-spaces
+            (puthash num-spaces (+ (gethash num-spaces num-spaces-to-count 0) 1) num-spaces-to-count)))
+        (forward-line 1)))
+    (remhash 0 num-spaces-to-count)
+    (message "num-spaces-to-count=%s" num-spaces-to-count))
   (message "TODO: need to implement `infer-tab-width`")
   tab-width)
 
