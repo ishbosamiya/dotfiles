@@ -24,6 +24,10 @@
       a
     (gcd b (% a b))))
 
+(defun gcd-of-list (list)
+  "Find the greatest common divisor (GCD) of the given to list of integers."
+  (--reduce (gcd acc it) list))
+
 (defun infer-indent-tabs-mode ()
   "Infer and return if `indent-tabs-mode` should be enabled.
 
