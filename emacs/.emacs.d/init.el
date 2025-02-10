@@ -990,6 +990,11 @@ user.
   :config
   (global-navigation-mode))
 
+;; Infer indentation for files.
+;;
+;; Custom defined - See nullc0d3r/infer-indentation.el
+(use-package infer-indentation)
+
 ;; Set temporary (until next emacs session) buffer local key binding
 ;;
 ;; from: https://www.emacswiki.org/emacs/BufferLocalKeys with
