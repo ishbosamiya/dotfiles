@@ -73,7 +73,15 @@ on the major mode."
                (push num-spaces num-spaces-list))
              num-spaces-to-count)
     (sort num-spaces-list (lambda (a b)
-                            (<= (gethash a num-spaces-to-count) (gethash b num-spaces-to-count))))
+                            (let ((a-count (gethash a num-spaces-to-count))
+                                  (b-count (gethash b num-spaces-to-count)))
+                              (if (= a-count b-count)
+                                  ;; counts are equal, so pick the
+                                  ;; larger number of spaces to pop
+                                  ;; first
+                                  (> a b)
+                                (< a-count b-count)))))
+    (message "num-spaces-list=%s" num-spaces-list)
     ;; find the gcd (that is not 1) of the most occurring
     (while (and
             (length> num-spaces-list 0)
