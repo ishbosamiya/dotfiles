@@ -956,7 +956,7 @@ user.
 (use-package infer-indentation
   :config
   ;; add `infer-indentation-style` to all programming modes
-  (add-hook 'prog-mode-hook 'infer-indentation-style))
+  (add-hook 'prog-mode-hook 'infer-and-set-indentation-style))
 
 ;; Set temporary (until next emacs session) buffer local key binding
 ;;

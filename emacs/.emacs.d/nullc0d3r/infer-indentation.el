@@ -35,7 +35,6 @@
 
 Currently, it infers based on how many lines start with ` ` vs
 `\t`. This may change in the future"
-  (interactive)
   ;; set `indent-tabs-mode` based on how many lines start with spaces
   ;; and tabs
   (let ((space-count (how-many "^  " (point-min) (point-max)))
@@ -52,7 +51,6 @@ Offset is determined by `tab-width` or indent/offsets/levels set
 by individual modes like `c-basic-offset`, `js-indent-level`,
 etc. Caller must set the tab width returned by this method based
 on the major mode."
-  (interactive)
   (let ((num-spaces-to-count (make-hash-table))
         (num-spaces-list (make-list 0 0))
         (gcd nil))
@@ -89,32 +87,27 @@ on the major mode."
              (setq gcd (gcd-of-list num-spaces-list))
              (= gcd 1)))
       (pop num-spaces-list))
-    (unless gcd
-      (message "WARN: `infer-tab-width` could not infer tab width of the file"))
     gcd))
 
-(defun infer-indentation-style ()
+(defun infer-and-set-indentation-style ()
   "Infer and set the indentation style.
 
-This is a collection of calls to required `infer-*` methods."
+This is a collection of calls to required `infer-*` methods and
+sets the required variables."
   (interactive)
   ;; TODO: need to set not just `indent-tabs-mode` but this actually
   ;; depends on what the major mode is and what it uses for
   ;; indentation (possible to use custom indentation function that
   ;; means `indent-tabs-mode` and thus `tab-width` may not even be
   ;; used)
-  (setq indent-tabs-mode (infer-indent-tabs-mode))
-  (message "Setting `indent-tabs-mode` to `%s`" indent-tabs-mode)
-  (setq tab-width (infer-tab-width))
-  (message "Setting `tab-width` to `%s`" tab-width))
-
-;;;###autoload
-(define-minor-mode infer-indentation-mode
-  "Infer indentation used in the file"
-  :init-value nil
-  :group indentation
-  :global nil
-  :lighter " Infer Indentation")
+	(let ((new-indent-tabs-mode (infer-indent-tabs-mode))
+				(new-tab-width (infer-tab-width)))
+		(message "Setting `indent-tabs-mode` to `%s` was `%s`" new-indent-tabs-mode indent-tabs-mode)
+		(setq indent-tabs-mode new-indent-tabs-mode)
+		(if new-tab-width
+				((message "Setting `tab-width` to `%s` was `%s`" new-tab-width tab-width)
+				 (setq indent-tabs-mode new-indent-tabs-mode))
+			(message "WARN: couldn't infer tab width for buffer, not changing"))))
 
 (provide 'infer-indentation)
 ;;; infer-indentation.el ends here
