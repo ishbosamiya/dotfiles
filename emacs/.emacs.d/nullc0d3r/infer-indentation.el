@@ -105,8 +105,9 @@ sets the required variables."
     (message "setting `indent-tabs-mode` to `%s` was `%s`" new-indent-tabs-mode indent-tabs-mode)
     (setq indent-tabs-mode new-indent-tabs-mode)
     (if new-tab-width
-        ((message "setting `tab-width` to `%s` was `%s`" new-tab-width tab-width)
-         (setq indent-tabs-mode new-indent-tabs-mode))
+        (progn
+	  (message "setting `tab-width` to `%s` was `%s`" new-tab-width tab-width)
+          (setq indent-tabs-mode new-indent-tabs-mode))
       (message "WARN: couldn't infer tab width for buffer, not changing"))))
 
 (provide 'infer-indentation)
