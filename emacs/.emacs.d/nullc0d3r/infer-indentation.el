@@ -60,15 +60,15 @@ Currently, it infers based on how many lines start with ` ` vs
     ;; if they are equal, default to spaces
     (>= space-count tab-count)))
 
-(defun infer-tab-width ()
-  "Infer and return tab width used in the file.
+(defun infer-indentation--infer-indent ()
+  "Infer the indent used in the file.
 
 # Note
 
-Offset is determined by `tab-width` or indent/offsets/levels set
-by individual modes like `c-basic-offset`, `js-indent-level`,
-etc. Caller must set the tab width returned by this method based
-on the major mode."
+Offset is determined by `standard-indent` or
+indent/offsets/levels set by individual modes like
+`c-basic-offset`, `js-indent-level`, etc. Caller must set the
+indent returned by this method based on the major mode."
   (let ((num-spaces-to-count (make-hash-table))
         (num-spaces-list (make-list 0 0))
         (gcd nil))
@@ -115,18 +115,18 @@ sets the required variables."
   (interactive)
   ;; TODO: need to set not just `indent-tabs-mode` but this actually
   ;; depends on what the major mode is and what it uses for
-  ;; indentation (possible to use custom indentation function that
-  ;; means `indent-tabs-mode` and thus `tab-width` may not even be
-  ;; used)
+  ;; indentation
   (let ((new-indent-tabs-mode (infer-indent-tabs-mode))
-        (new-tab-width (infer-tab-width)))
+        (new-indent (infer-indentation--infer-indent)))
     (message "setting `indent-tabs-mode` to `%s` was `%s`" new-indent-tabs-mode indent-tabs-mode)
     (setq indent-tabs-mode new-indent-tabs-mode)
-    (if new-tab-width
-        (progn
-	  (message "setting `tab-width` to `%s` was `%s`" new-tab-width tab-width)
-          (setq indent-tabs-mode new-indent-tabs-mode))
-      (message "WARN: couldn't infer tab width for buffer, not changing"))))
+    (if new-indent
+        (if-let ((indent-variable (cdr (infer-indentation--indent-variable-of-major-mode major-mode))))
+	    (progn
+	      (message "setting `%s` to `%s` was `%s`" indent-variable new-indent indent-variable)
+              (setq indent-variable new-indent))
+	  (message "ERROR: no default indent variable to set"))
+      (message "WARN: couldn't infer indent for buffer, not changing"))))
 
 (provide 'infer-indentation)
 ;;; infer-indentation.el ends here
