@@ -18,6 +18,24 @@
   "Indentation utils."
   :group 'convenience)
 
+(defcustom infer-indentation-major-mode-to-indent-alist
+  '((c-mode . c-basic-offset)
+    (js-mode . js-indent-level)
+    (default . standard-indent))
+  "Alist mapping major mode to variable to set indentation for that
+specific major mode."
+  :type '(alist)
+  :group 'indentation)
+
+(defun infer-indentation--indent-variable-of-major-mode (mode)
+  "Get the variable to use for indentation for the given major
+mode."
+  (if mode
+      (or (assoc mode infer-indentation-major-mode-to-indent-alist)
+	  ;; try to get it from the major mode it is derived from
+	  (infer-indentation--indent-variable-of-major-mode (get mode 'derived-mode-parent)))
+    (assoc 'default infer-indentation-major-mode-to-indent-alist)))
+
 (defun gcd (a b)
   "Find the greatest common divisor (GCD) of the given to integers."
   (if (= b 0)
