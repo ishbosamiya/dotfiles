@@ -955,8 +955,21 @@ user.
 ;; Custom defined - See nullc0d3r/infer-indentation.el
 (use-package infer-indentation
   :config
+  ;; NOTE: not using in favour of `dtrt-indent`
+  ;;
   ;; add `infer-indentation-style` to all programming modes
-  (add-hook 'prog-mode-hook 'infer-and-set-indentation-style))
+  ;; (add-hook 'prog-mode-hook 'infer-and-set-indentation-style)
+  )
+
+;; Infer indentation for files.
+;;
+;; # Related
+;;
+;; * `infer-indentation`.
+(use-package dtrt-indent
+  :ensure t
+  :config
+  (dtrt-indent-global-mode))
 
 ;; Set temporary (until next emacs session) buffer local key binding
 ;;
