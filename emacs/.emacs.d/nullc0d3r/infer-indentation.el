@@ -55,10 +55,10 @@ Currently, it infers based on how many lines start with ` ` vs
 `\t`. This may change in the future"
   ;; set `indent-tabs-mode` based on how many lines start with spaces
   ;; and tabs
-  (let ((space-count (how-many "^  " (point-min) (point-max)))
+  (let ((space-count (how-many "^ " (point-min) (point-max)))
         (tab-count (how-many "^\t" (point-min) (point-max))))
     ;; if they are equal, default to spaces
-    (>= space-count tab-count)))
+    (> tab-count space-count)))
 
 (defun infer-indentation--infer-indent ()
   "Infer the indent used in the file.
