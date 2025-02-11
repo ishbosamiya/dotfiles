@@ -46,7 +46,7 @@ mode."
   "Find the greatest common divisor (GCD) of the given to list of integers."
   (--reduce (gcd acc it) list))
 
-(defun infer-indent-tabs-mode ()
+(defun infer-indentation--infer-indent-tabs-mode ()
   "Infer and return if `indent-tabs-mode` should be enabled.
 
 # Note
@@ -116,15 +116,16 @@ sets the required variables."
   ;; TODO: need to set not just `indent-tabs-mode` but this actually
   ;; depends on what the major mode is and what it uses for
   ;; indentation
-  (let ((new-indent-tabs-mode (infer-indent-tabs-mode))
+  (let ((new-indent-tabs-mode (infer-indentation--infer-indent-tabs-mode))
         (new-indent (infer-indentation--infer-indent)))
     (message "setting `indent-tabs-mode` to `%s` was `%s`" new-indent-tabs-mode indent-tabs-mode)
     (setq indent-tabs-mode new-indent-tabs-mode)
     (if new-indent
-        (if-let ((indent-variable (cdr (infer-indentation--indent-variable-of-major-mode major-mode))))
+        (if-let* ((indent-variable (cdr (infer-indentation--indent-variable-of-major-mode major-mode)))
+		  (indent (symbol-value indent-variable)))
 	    (progn
-	      (message "setting `%s` to `%s` was `%s`" indent-variable new-indent indent-variable)
-              (setq indent-variable new-indent))
+	      (message "setting `%s` to `%s` was `%s`" indent-variable new-indent indent)
+              (set (make-local-variable indent-variable) new-indent))
 	  (message "ERROR: no default indent variable to set"))
       (message "WARN: couldn't infer indent for buffer, not changing"))))
 
