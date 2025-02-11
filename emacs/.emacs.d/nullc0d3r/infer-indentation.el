@@ -100,14 +100,14 @@ sets the required variables."
   ;; indentation (possible to use custom indentation function that
   ;; means `indent-tabs-mode` and thus `tab-width` may not even be
   ;; used)
-	(let ((new-indent-tabs-mode (infer-indent-tabs-mode))
-				(new-tab-width (infer-tab-width)))
-		(message "Setting `indent-tabs-mode` to `%s` was `%s`" new-indent-tabs-mode indent-tabs-mode)
-		(setq indent-tabs-mode new-indent-tabs-mode)
-		(if new-tab-width
-				((message "Setting `tab-width` to `%s` was `%s`" new-tab-width tab-width)
-				 (setq indent-tabs-mode new-indent-tabs-mode))
-			(message "WARN: couldn't infer tab width for buffer, not changing"))))
+  (let ((new-indent-tabs-mode (infer-indent-tabs-mode))
+        (new-tab-width (infer-tab-width)))
+    (message "setting `indent-tabs-mode` to `%s` was `%s`" new-indent-tabs-mode indent-tabs-mode)
+    (setq indent-tabs-mode new-indent-tabs-mode)
+    (if new-tab-width
+        ((message "setting `tab-width` to `%s` was `%s`" new-tab-width tab-width)
+         (setq indent-tabs-mode new-indent-tabs-mode))
+      (message "WARN: couldn't infer tab width for buffer, not changing"))))
 
 (provide 'infer-indentation)
 ;;; infer-indentation.el ends here
