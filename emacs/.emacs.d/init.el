@@ -69,7 +69,9 @@
 (setq gdb-many-windows t)
 
 ;; Make minibuffer history persist across sessions
-(savehist-mode 1)
+(use-package savehist
+  :init
+  (savehist-mode))
 
 ;; Ensure that copying from another program and then running a kill
 ;; command in emacs doesn't cause things to disappear from the
