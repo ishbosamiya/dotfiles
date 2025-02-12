@@ -71,7 +71,16 @@
 ;; Make minibuffer history persist across sessions
 (use-package savehist
   :init
-  (savehist-mode))
+  (savehist-mode)
+  :config
+  ;; TODO: `projectile` does add `projectile-project-command-history`
+  ;; to `savehist-additional-variables` but it seems like that might
+  ;; be run only when projectile is invoked, so
+  ;; `projectile-project-command-history` probably gets removed from
+  ;; the list when projectile is not invoked, this is a test to see if
+  ;; explicitly adding `projectile-project-command-history` to
+  ;; `savehist-additional-variables` helps preserve the history
+  (add-to-list 'savehist-additional-variables 'projectile-project-command-history))
 
 ;; Ensure that copying from another program and then running a kill
 ;; command in emacs doesn't cause things to disappear from the
