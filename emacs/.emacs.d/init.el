@@ -1169,6 +1169,7 @@ Set temporary buffer local key binding.
   :config
   (add-hook 'sourcepawn-mode-hook
             (lambda ()
+              (setq indent-tabs-mode nil)
               (setq tab-width 2)))
   ;; remove `_` from word syntax which is the default for
   ;; `sourcepawn-mode`, it only makes navigation more annoying
