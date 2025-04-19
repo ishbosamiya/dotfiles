@@ -528,33 +528,51 @@ $env.config = {
       mode: [emacs, vi_normal, vi_insert]
       event: { send: menu name: commands_with_description }
     }
-    # Keybinding to change directory with fd and fzf (fuzzy search
-    # directory) for current directory and its sub directories.
+    # Keybinding to change directory with `zi` (zoxide with fuzzy
+    # search).
+    #
+    # NOTE: requires `zoxide` (and `fzf` for the fuzzy search, used by
+    # `zoxide` internally) installed and configured for nushell.
     {
-      name: change_dir_with_fd_fzf
+      name: change_dir_with_zi
       modifier: control
       keycode: Char_l
       mode: emacs
       event: {
         send: executehostcommand,
-        cmd: "let $dir = (fuzzy_search_directories); if $dir != null { cd $dir }"
+        cmd: "zi"
       }
     }
-    # Keybinding to change directory with fd and fzf (fuzzy search
-    # directory) for current directory, $env.HOME, /media/ish/data/extra.
+    # TODO: need to remove `change_dir_with_fd_fzf` and
+    # `change_dir_with_fd_fzf_all` if using `zoxide` works well enough
     #
-    # TODO: need to find a way for the "user" to specify which
-    # directories to search in.
-    {
-      name: change_dir_with_fd_fzf_all
-      modifier: alt
-      keycode: Char_L
-      mode: emacs
-      event: {
-        send: executehostcommand,
-	cmd: "let $dir = (fuzzy_search_directories [$env.HOME /media/ish/data/extra]); if $dir != null { cd $dir }"
-      }
-    }
+    # # Keybinding to change directory with fd and fzf (fuzzy search
+    # # directory) for current directory and its sub directories.
+    # {
+    #   name: change_dir_with_fd_fzf
+    #   modifier: control
+    #   keycode: Char_l
+    #   mode: emacs
+    #   event: {
+    #     send: executehostcommand,
+    #     cmd: "let $dir = (fuzzy_search_directories); if $dir != null { cd $dir }"
+    #   }
+    # }
+    # # Keybinding to change directory with fd and fzf (fuzzy search
+    # # directory) for current directory, $env.HOME, /media/ish/data/extra.
+    # #
+    # # TODO: need to find a way for the "user" to specify which
+    # # directories to search in.
+    # {
+    #   name: change_dir_with_fd_fzf_all
+    #   modifier: alt
+    #   keycode: Char_L
+    #   mode: emacs
+    #   event: {
+    #     send: executehostcommand,
+    #     cmd: "let $dir = (fuzzy_search_directories [$env.HOME /media/ish/data/extra]); if $dir != null { cd $dir }"
+    #   }
+    # }
     # Keyboard quit on `C-g` just like emacs.
     {
       name: keyboard_quit
