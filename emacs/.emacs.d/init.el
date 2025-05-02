@@ -1192,17 +1192,17 @@ Set temporary buffer local key binding.
 ;; it on for now.
 (setq compilation-debug t)
 
-;; Since `rust-mode` does not handle backtraces in compilation buffers
-;; for `compile-goto-error`, need to define custom regex to handle it.
-;;
-;; There is an open issue for this
-;; <https://github.com/rust-lang/rust-mode/issues/452>.
 (defvar rustc-backtrace-compilation-regexps
   (let ((re (concat "^ *at " rustc-compilation-location)))
     (cons re '(2 3 4 nil 1)))
   "Specifications for matching rust backtraces. See
 `compilation-error-regexp-alist` for help on their format.")
 
+;; Since `rust-mode` does not handle backtraces in compilation buffers
+;; for `compile-goto-error`, need to define custom regex to handle it.
+;;
+;; There is an open issue for this
+;; <https://github.com/rust-lang/rust-mode/issues/452>.
 (eval-after-load 'compile
   '(progn
      (add-to-list 'compilation-error-regexp-alist-alist
