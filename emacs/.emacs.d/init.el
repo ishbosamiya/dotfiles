@@ -1211,4 +1211,5 @@ Set temporary buffer local key binding.
 
 ;; support navigation through zoxide
 (use-package zoxide
-  :ensure t)
+  :ensure t
+  :bind (("C-c z f" . 'zoxide-travel)))
