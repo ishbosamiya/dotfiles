@@ -1208,3 +1208,7 @@ Set temporary buffer local key binding.
      (add-to-list 'compilation-error-regexp-alist-alist
                   (cons 'rustc-backtrace rustc-backtrace-compilation-regexps))
      (add-to-list 'compilation-error-regexp-alist 'rustc-backtrace)))
+
+;; support navigation through zoxide
+(use-package zoxide
+  :ensure t)
