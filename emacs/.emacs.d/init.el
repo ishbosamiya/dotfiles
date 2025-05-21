@@ -1213,3 +1213,9 @@ Set temporary buffer local key binding.
 (use-package zoxide
   :ensure t
   :bind (("C-c z f" . 'zoxide-travel)))
+
+;; emulate a terminal
+;;
+;; mainly used for running TUI applications within emacs
+(use-package eat
+  :ensure t)
