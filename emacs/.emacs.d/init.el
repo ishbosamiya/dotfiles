@@ -427,7 +427,26 @@ Turns on display-line-numbers-mode if not already active."
   ;; things like `projectile-find-file` work
   ;;
   ;; reference: https://emacsredux.com/blog/2021/04/19/configuring-minibuffer-completion-in-projectile/
-  (setq projectile-completion-system 'ido))
+  (setq projectile-completion-system 'ido)
+  ;; setup command for running with `eat`
+  (when (featurep 'eat)
+    (defun projectile-run-project-eat (arg)
+      "Run project run command within `eat`. Based on
+`projectile-run-project`."
+      (interactive "P")
+      (let* ((command (projectile-run-command (projectile-compilation-dir)))
+             (project-root (projectile-project-root))
+             (default-directory (projectile-compilation-dir))
+             (command (projectile-maybe-read-command arg
+                                                     command
+                                                     "Run command (in eat): ")))
+        (when projectile-per-project-compilation-buffer
+          (setq compilation-buffer-name-function #'projectile-compilation-buffer-name)
+          (setq compilation-save-buffers-predicate #'projectile-current-project-buffer-p))
+        (unless (file-directory-p default-directory)
+          (mkdir default-directory))
+        (eat-other-window command)
+        command))))
 
 (require 'ansi-color)
 (defun colorize-compilation-buffer ()
