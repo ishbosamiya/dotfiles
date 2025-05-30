@@ -447,7 +447,7 @@ Turns on display-line-numbers-mode if not already active."
           (mkdir default-directory))
         (eat-other-window command)
         command))
-    (bind-key "C-c p x u" 'projectile-run-project-eat)))
+    (define-key projectile-command-map (kbd "x u") #'projectile-run-project-eat)))
 
 (require 'ansi-color)
 (defun colorize-compilation-buffer ()
