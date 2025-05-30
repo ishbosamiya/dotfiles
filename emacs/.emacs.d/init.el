@@ -435,16 +435,37 @@ Turns on display-line-numbers-mode if not already active."
 `projectile-run-project`."
       (interactive "P")
       (let* ((command (projectile-run-command (projectile-compilation-dir)))
+             ;; reuse same command map as `projectile-run-project` if
+             ;; it should be used
+             (command-map (if (projectile--cache-project-commands-p) projectile-run-cmd-map))
              (project-root (projectile-project-root))
              (default-directory (projectile-compilation-dir))
              (command (projectile-maybe-read-command arg
                                                      command
                                                      "Run command (in eat): ")))
+        ;; add command to history
+        (when command-map
+          (puthash default-directory command command-map)
+          (let ((hist (projectile--get-command-history project-root)))
+            (cond
+             ((eq projectile-cmd-hist-ignoredups t)
+              (unless (string= (car-safe (ring-elements hist)) command)
+                (ring-insert hist command)))
+             ((eq projectile-cmd-hist-ignoredups 'erase)
+              (let ((idx (ring-member hist command)))
+                (while idx
+                  (ring-remove hist idx)
+                  (setq idx (ring-member hist command))))
+              (ring-insert hist command))
+             (t (ring-insert hist command)))))
+        ;; setup buffers as per user config
         (when projectile-per-project-compilation-buffer
           (setq compilation-buffer-name-function #'projectile-compilation-buffer-name)
           (setq compilation-save-buffers-predicate #'projectile-current-project-buffer-p))
+        ;; create default directory if it does not exist
         (unless (file-directory-p default-directory)
           (mkdir default-directory))
+        ;; run command in `eat`
         (eat-other-window command)
         command))
     (define-key projectile-command-map (kbd "x u") #'projectile-run-project-eat)))
