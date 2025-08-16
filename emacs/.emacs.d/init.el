@@ -756,6 +756,8 @@ it is better to have a custom function for this."
       ("gpu/gpu_proc_macros" "gpu_proc_macros")
       ;; remove `.config/nushell/`
       (".config/nushell/" "")
+      ;; replace `tmux/.tmux.conf` with `tmux`
+      ("tmux/.tmux.conf" "tmux")
       ;; remove `.config/ptpython/`
       (".config/ptpython/" "")
       ;; remove `bin/`
