@@ -435,9 +435,9 @@ font:
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-# Use `nu` as the shell. Since `nu` is not yet stable, in case
-# something goes wrong, comment out this entire section to switch back
-# to the login shell which is likely to be `zsh`.
+# Use `nu` (nushell) as the shell. Since `nu` is not yet stable, in
+# case something goes wrong, comment out this entire section to switch
+# back to the login shell which is likely to be `zsh`.
 #
 # TODO: It might make sense to at least symlink nu to /bin/nu so that
 # a true absolute path can be used. For whatever reason
