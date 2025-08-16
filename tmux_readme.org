@@ -1,0 +1,16 @@
+* Shortcuts to remember
+
+| Shortcut                         | What it does                          |
+|----------------------------------+---------------------------------------|
+| `prefix ?`                       | List common shortcuts (not all sadly) |
+| `prefix s`                       | List sessions                         |
+| `prefix s` scroll to session `x` | Kill selected session                 |
+| `prefix d`                       | Detach session                        |
+| `prefix :`                       | Run tmux command                      |
+
+* Useful commands to run
+
+** Show value of an option set in tmux
+
+Run `tmux show-option -g option-whose-value-must-be-known` in the
+terminal.
