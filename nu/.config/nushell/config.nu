@@ -7,6 +7,13 @@ installed nushell version is `(nu --version)`.
 Verify the config works for installed nushell version and update `config_for_version`."
 }
 
+# jump into tmux if available and not already in a tmux session
+#
+# reference: https://unix.stackexchange.com/a/113768
+if ((which tmux | length) > 0; $nu.is-interactive; not ($env.TERM | str starts-with 'tmux'); $env.TMUX? | is-empty) {
+  exec tmux
+}
+
 # For more information on defining custom themes, see
 # https://www.nushell.sh/book/coloring_and_theming.html
 # And here is the theme collection
