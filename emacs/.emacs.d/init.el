@@ -1023,7 +1023,10 @@ user.
 (use-package dtrt-indent
   :ensure t
   :config
-  (dtrt-indent-global-mode))
+  (dtrt-indent-global-mode)
+  ;; determine for `glsl-mode` by using `c/c++/java` indenting and
+  ;; modifying `c-basic-offset`
+  (add-to-list 'dtrt-indent-hook-mapping-list '(glsl-mode c/c++/java c-basic-offset)))
 
 ;; Set temporary (until next emacs session) buffer local key binding
 ;;
