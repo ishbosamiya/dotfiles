@@ -1267,3 +1267,9 @@ Set temporary buffer local key binding.
 ;; mainly used for running TUI applications within emacs
 (use-package eat
   :ensure t)
+
+;; suggest elisp code that can transform some input into some output
+;;
+;; <https://github.com/Wilfred/suggest.el>
+(use-package suggest
+  :ensure t)
