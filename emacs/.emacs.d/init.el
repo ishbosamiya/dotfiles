@@ -349,6 +349,14 @@ Turns on display-line-numbers-mode if not already active."
 
 ;; Org mode settings
 (setq org-src-fontify-natively t)
+;; allow each image to specify the width using `#+ATTR_ORG: :width
+;; 400` instead of having only one specific width be used for every
+;; preview of the image
+(setq org-image-actual-width nil)
+;; preview images by default in org-mode files, use
+;; `org-toggle-inline-images` to toggle between previewing and not
+;; previewing
+(setq org-startup-with-inline-images t)
 
 ;; Rust configuration
 (use-package rust-mode
