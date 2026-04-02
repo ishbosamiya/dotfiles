@@ -280,9 +280,7 @@ Turns on display-line-numbers-mode if not already active."
                ))
 (defun my-c++-mode-hook ()
   (c-set-style "c++-style")
-  (auto-fill-mode)
-  (c-toggle-auto-hungry-state 1)
-  )
+  (auto-fill-mode))
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (add-hook 'c++-mode-hook (lambda() (setq comment-start "/* " comment-end "*/")))
 
