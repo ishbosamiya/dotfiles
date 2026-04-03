@@ -269,6 +269,16 @@ Turns on display-line-numbers-mode if not already active."
             ;; ;; opens for large files.
             ))
 
+(defun set-c-comment-style ()
+  "Set `comment-style` and related params for CC modes"
+  ;; TODO: need to determine based on current file or project files,
+  ;; can default to own preference
+  (setq comment-start "//")
+  (setq comment-end "")
+  (setq comment-style 'indent))
+
+(add-hook 'c-mode-common-hook 'set-c-comment-style)
+
 ;; c++ mode
 (c-add-style "c++-style"
              '("linux"
@@ -282,7 +292,6 @@ Turns on display-line-numbers-mode if not already active."
   (c-set-style "c++-style")
   (auto-fill-mode))
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
-(add-hook 'c++-mode-hook (lambda() (setq comment-start "/* " comment-end "*/")))
 
 ;; Turn on global auto completion
 (use-package company
