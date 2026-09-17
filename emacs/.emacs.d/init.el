@@ -16,7 +16,7 @@
 ;; https://github.com/raxod502/radian/issues/180#issuecomment-485284949
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
-;; (scroll-bar-mode -1)
+(scroll-bar-mode -1)
 
 (eval-when-compile
   (or (require 'use-package nil t)
