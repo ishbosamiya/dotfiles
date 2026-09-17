@@ -1290,3 +1290,8 @@ Set temporary buffer local key binding.
 ;; <https://github.com/Wilfred/suggest.el>
 (use-package suggest
   :ensure t)
+
+;; highlight uncommited changes on the side
+(use-package diff-hl
+  :ensure t
+  :config (global-diff-hl-mode))
