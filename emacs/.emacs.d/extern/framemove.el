@@ -1,4 +1,4 @@
-;;; framemove.el --- directional frame selection routines
+;;; framemove.el --- directional frame selection routines  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2010
 ;;
