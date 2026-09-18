@@ -377,7 +377,10 @@ Turns on display-line-numbers-mode if not already active."
             (lambda ()
               (setq indent-tabs-mode nil)
               ;; Prevent rust from hijacking the nice fold-this mode
-              (define-key rust-mode-map (kbd "C-c C-f") nil))))
+              (define-key rust-mode-map (kbd "C-c C-f") nil)))
+  ;; use treesitter mode
+  (unless (version< emacs-version "29.1")
+    (setq rust-mode-treesitter-derive t)))
 (use-package cargo
   :ensure t
   :after rust-mode
