@@ -379,8 +379,9 @@ Turns on display-line-numbers-mode if not already active."
               ;; Prevent rust from hijacking the nice fold-this mode
               (define-key rust-mode-map (kbd "C-c C-f") nil)))
   ;; use treesitter mode
-  (unless (version< emacs-version "29.1")
-    (setq rust-mode-treesitter-derive t))
+  (if (version<= "29.1" emacs-version)
+      (setq rust-mode-treesitter-derive t)
+    ("upgrade emacs to use treesitter for rust-mode"))
   ;; HACK: rustfmt doesn't know which edition to use since it doesn't
   ;; parse `Cargo.toml`, so defaults to 2015 thus it is not aware of a
   ;; lot of things like async, rust-mode used to set the edition
@@ -636,6 +637,9 @@ mode is toggled globally but only the `buffer` (or
   ;;
   ;; to `~/.cargo/config.toml`.
   (setq lsp-rust-analyzer-cargo-watch-args ["--profile=rust-analyzer"])
+
+  ;; support range formatting when using lsp to format for rust
+  (setq lsp-rust-analyzer-rustfmt-rangeformatting-enable t)
 
   ;; make `lsp-rust` work over tramp
   (with-eval-after-load "lsp-rust"
