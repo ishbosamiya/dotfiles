@@ -570,6 +570,7 @@ given value."
   :config
   ;; disable underlining of errors and warnings by default
   (setq flycheck-highlighting-mode nil)
+
   (defun flycheck-toggle-highlighting-mode (&optional buffer)
     "Toggle `flycheck-highlighting-mode` between no underlining
 and underlining symbols.
@@ -588,7 +589,11 @@ mode is toggled globally but only the `buffer` (or
         ;; force flycheck to refresh by turning it off and back on
         (funcall 'flycheck-mode nil)
         (funcall 'flycheck-mode t))))
-  (define-key flycheck-mode-map (kbd "C-c f t") 'flycheck-toggle-highlighting-mode))
+  (define-key flycheck-mode-map (kbd "C-c f t") 'flycheck-toggle-highlighting-mode)
+
+  ;; open flycheck error list buffer as defined by `display-buffer`
+  ;; default method, so using `split-window-preferred-direction`.
+  (setq flycheck-error-list-display-buffer-action nil))
 
 ;; Language server using lsp-mode
 (use-package lsp-mode
@@ -1248,6 +1253,7 @@ Set temporary buffer local key binding.
 ;; Major mode for sourcepawn files.
 (use-package sourcepawn-mode
   :ensure t
+  :defer 2
   :mode "\\.inc\\'"
   :config
   (add-hook 'sourcepawn-mode-hook
@@ -1295,6 +1301,7 @@ Set temporary buffer local key binding.
 ;; support navigation through zoxide
 (use-package zoxide
   :ensure t
+  :defer 2
   :bind (("C-c z f" . 'zoxide-travel)))
 
 ;; emulate a terminal
