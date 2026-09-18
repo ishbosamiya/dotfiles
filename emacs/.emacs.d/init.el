@@ -391,7 +391,7 @@ Turns on display-line-numbers-mode if not already active."
   ;;
   ;; TODO: need to figure out a way to figure out the manifest toml
   ;; for the buffer and fetch the edition from that
-  (setq rust-rustfmt-switches "--edition 2024"))
+  (setq rust-rustfmt-switches '("--edition" "2024")))
 (use-package cargo
   :ensure t
   :after rust-mode
