@@ -380,7 +380,17 @@ Turns on display-line-numbers-mode if not already active."
               (define-key rust-mode-map (kbd "C-c C-f") nil)))
   ;; use treesitter mode
   (unless (version< emacs-version "29.1")
-    (setq rust-mode-treesitter-derive t)))
+    (setq rust-mode-treesitter-derive t))
+  ;; HACK: rustfmt doesn't know which edition to use since it doesn't
+  ;; parse `Cargo.toml`, so defaults to 2015 thus it is not aware of a
+  ;; lot of things like async, rust-mode used to set the edition
+  ;; earlier but no longer does
+  ;;
+  ;; reference: <https://github.com/rust-lang/rust-mode/issues/572>
+  ;;
+  ;; TODO: need to figure out a way to figure out the manifest toml
+  ;; for the buffer and fetch the edition from that
+  (setq rust-rustfmt-switches "--edition 2024"))
 (use-package cargo
   :ensure t
   :after rust-mode
