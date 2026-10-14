@@ -1316,7 +1316,11 @@ Set temporary buffer local key binding.
 (use-package suggest
   :ensure t)
 
-;; highlight uncommited changes on the side
-(use-package diff-hl
-  :ensure t
-  :config (global-diff-hl-mode))
+;; disabling `diff-hl` for now, it is buggy, sometimes it renders,
+;; sometimes it doesn't, sometimes it updates when buffer updates,
+;; sometimes it doesn't, this makes it quite distracting
+;;
+;; ;; highlight uncommited changes on the side
+;; (use-package diff-hl
+;;   :ensure t
+;;   :config (global-diff-hl-mode))
